@@ -60,6 +60,7 @@ public class Authentification extends HttpServlet {
 			     session.setAttribute("userLastName_Ar", utilisateur.getNom_Ar());
 			     session.setAttribute("userFirstName_Ar", utilisateur.getPrenom_Ar());
 			     session.setAttribute("userRole", utilisateur.getComptes().get(0).getRole().getNom_Fr());
+			     session.setAttribute("userRoleCode", utilisateur.getComptes().get(0).getRole().getCode());
 			     session.setAttribute("userCompte", utilisateur.getComptes().get(0).getId());
 			     session.setAttribute("userPhoto", utilisateur.getPhoto());
 			     succes=true;
@@ -67,7 +68,7 @@ public class Authentification extends HttpServlet {
 			   // Note pour le projet : Authentification
 			     
 			   //TODO : 
-			    	// Charger les permission du role de l'utilisateur à partir de la base de donnée
+			    	// Charger les permission du role de l'utilisateur ï¿½ partir de la base de donnï¿½e
 			    	// Configurer Spring secutity pour le role en question
 			     	//....
 			        
@@ -79,6 +80,8 @@ public class Authentification extends HttpServlet {
 				    	homePage="/WEB-INF/E.Scolarite/index.jsp";
 				    }else if(utilisateur.getComptes().get(0).getRole().getCode().equalsIgnoreCase("DIRECTEUR-ETUDES")) {
 				    	homePage="/WEB-INF/E.DirecteurEtudes/index.jsp";
+				    }else if(utilisateur.getComptes().get(0).getRole().getCode().equalsIgnoreCase("INSPECTEUR")){
+				    	homePage="/WEB-INF/E.Inspecteur/index.jsp";
 				    
 				    	/*
 				    	 * .....
@@ -102,7 +105,7 @@ public class Authentification extends HttpServlet {
 		}
 		if(succes){
 			
-			//Redirigé vers page approprié
+			//Redirigï¿½ vers page appropriï¿½
 			RequestDispatcher view = request.getRequestDispatcher(homePage);
 			view.forward(request, response);
 		}else{

@@ -16,6 +16,9 @@ public class CahierTexte {
 	//TODO : Peut etre ajouter une association avec Chapitre : CahierTexte---------> Chapitre
 	public CahierTexte() {
 		super();
+		this.activites = new ArrayList<AcrivitePedagogique>();
+		this.concepts  = new ArrayList<Concept>();
+
 	}
 	public CahierTexte(int id, String texte, String observation, String etat, Seance seance) {
 		super();

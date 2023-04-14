@@ -12,7 +12,7 @@ public class SeanceGenerique {
 	private String jour;
 	private String heureDebut;
 	private String heureFin;
-	private short duree;
+	private int duree;
 	private String observation;
 	private Classe classe;
 	private Professeur professeur;
@@ -40,7 +40,7 @@ public class SeanceGenerique {
 		this.periode = periode;
 		this.matiere = matiere;
 		/*
-		 * Intialier pour une Matière qui ne contient pas de Modules
+		 * Intialier pour une Matiï¿½re qui ne contient pas de Modules
 		 */
 		this.module = null;
 	}
@@ -68,11 +68,11 @@ public class SeanceGenerique {
 	public void setHeureFin(String heureFin) {
 		this.heureFin = heureFin;
 	}
-	public short getDuree() {
+	public int getDuree() {
 		return duree;
 	}
-	public void setDuree(short duree) {
-		this.duree = duree;
+	public void setDuree(int duree2) {
+		this.duree = duree2;
 	}
 	public String getObservation() {
 		return observation;

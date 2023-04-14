@@ -43,7 +43,6 @@ public class AnneeScolaireUpdate extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		String message=null;
 		boolean result=false;
@@ -60,9 +59,9 @@ public class AnneeScolaireUpdate extends HttpServlet {
 				anneeScolaire.setDateDebut(dateDebut);
 				anneeScolaire.setDateFin(dateFin);
 				anneeScolaireDAO.update(anneeScolaire);
-				message="L'année scolaire à été modifiée avec succès";
+				message="L'annï¿½e scolaire ï¿½ ï¿½tï¿½ modifiï¿½e avec succï¿½s";
 			} catch (SQLException e) {
-				message="Impossible de modifier l'année scolaire";
+				message="Impossible de modifier l'annï¿½e scolaire";
 				e.printStackTrace();
 			}
 		} catch (ParseException e1) {

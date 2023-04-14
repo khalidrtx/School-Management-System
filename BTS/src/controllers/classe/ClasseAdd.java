@@ -48,9 +48,6 @@ public class ClasseAdd extends HttpServlet {
 	}
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cycleId=Integer.parseInt(request.getParameter("cycle"));
@@ -86,7 +83,7 @@ public class ClasseAdd extends HttpServlet {
 			classeGenerique.setFiliere(filiere);
 			classeGenerique.setNiveau(niveau);
 			classeGenerique.setCode();
-			//Si une classe générique correspondante à la classe que l'on veut créer existe.
+			//Si une classe gï¿½nï¿½rique correspondante ï¿½ la classe que l'on veut crï¿½er existe.
 			ClasseGenerique classeGeneriqueT = classeGeneriqueDAO.exists(classeGenerique);
 			if(classeGeneriqueT != null){
 			    Classe classe = new Classe();
@@ -94,20 +91,19 @@ public class ClasseAdd extends HttpServlet {
 			    classe.setAnneeScolaire(anneeScolaire);
 			    classe.setLabel(label);
 			    classe.setCode();
-			    //Si la classe que l'on veut créer existe déjà
+			    //Si la classe que l'on veut crï¿½er existe dï¿½jï¿½
 			    Classe classeToAdd = classeDAO.exists(classe);
 			    if(classeToAdd ==null){
-					classeDAO.insert(classe);
 					success=true;
-					message="La classe à élé ajoutée avec succès ";
+					message="La classe ï¿½ ï¿½lï¿½ ajoutï¿½e avec succï¿½s ";
 			    }else{
 			    	success=false;
-					message="Impossible d'ajouter la classe, cette classe existe déjà";	
+					message="Impossible d'ajouter la classe, cette classe existe dï¿½jï¿½";	
 			    }
 				
 			}else{
 				success=false;
-				message="Impossible de créer la classe avant d'avoir créer la classe générique correspondante";
+				message="Impossible de crï¿½er la classe avant d'avoir crï¿½er la classe gï¿½nï¿½rique correspondante";
 			}
 			
 			

@@ -67,9 +67,9 @@ public class EtudiantAdd extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		
 		 request.setCharacterEncoding("UTF-8");
-		 
 		 String titre = request.getParameter("titre").trim();
 		 String sexe = request.getParameter("sexe").trim();
 		 String	nomFr = request.getParameter("nomFr").trim();
@@ -179,25 +179,25 @@ public class EtudiantAdd extends HttpServlet {
 		parent.setDateNais(null);
 		
 		
-		// Récuperer le dossirer de sauvegarde des données de l'application
+		// Rï¿½cuperer le dossirer de sauvegarde des donnï¿½es de l'application
 		Properties prop = new Properties();
    	 	InputStream input = null;
    	 	// Ouvrir le fichier de configuration de l'application
    	 	input = getClass().getClassLoader().getResourceAsStream("config.properties");
-        // Charger les propriétés
+        // Charger les propriï¿½tï¿½s
    	 	prop.load(input);
    	 	String storagePath=prop.getProperty("storagePath");
    	 	String uploadDir="upload";
    	 	String usersPhotoDirectory = storagePath+"\\users\\usersphotos";
 		new File(usersPhotoDirectory).mkdirs();
 		
-		// Traitement la photo de l'étudiant
+		// Traitement la photo de l'ï¿½tudiant
 		String photoEtudiantDoc = null;
    	 	if(photoEtudiant!="" ){
 			String savePath=storagePath+File.separator+uploadDir+ File.separator + photoEtudiant;
 		   	File photoEtudiantTemp=new File(savePath);
 		   	if(photoEtudiantTemp.exists()){
-		   		//Convertir le nom du fichier en iso pour éviter les caratère accetués qui peuvent causé des problème
+		   		//Convertir le nom du fichier en iso pour ï¿½viter les caratï¿½re accetuï¿½s qui peuvent causï¿½ des problï¿½me
 	        	String photoEtudiant2= Normalizer.normalize(photoEtudiant, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 		   		File destination = new File(usersPhotoDirectory+File.separator + photoEtudiant2);
 				// Copier la photo vers le dossier : UsersPhotos 
@@ -218,7 +218,7 @@ public class EtudiantAdd extends HttpServlet {
 			String savePath=storagePath+File.separator+uploadDir+ File.separator + photoParent;
 		   	File photoParentTemp=new File(savePath);
 		   	if(photoParentTemp.exists()){
-		   		//Convertir le nom du fichier en iso pour éviter les caratère accetués qui peuvent causé des problème
+		   		//Convertir le nom du fichier en iso pour ï¿½viter les caratï¿½re accetuï¿½s qui peuvent causï¿½ des problï¿½me
 	        	String photoParent2= Normalizer.normalize(photoParent, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 		   		File destination = new File(usersPhotoDirectory+File.separator + photoParent2);
 				// Copier la photo vers le dossier : UsersPhotos 
@@ -236,7 +236,7 @@ public class EtudiantAdd extends HttpServlet {
 			
 			
 			int etudiantid = utilisateurDAO.insert(etudiant);
-			//Créer le dossier de l'étudiant
+			//Crï¿½er le dossier de l'ï¿½tudiant
 			String etudiantDirectory = storagePath+"\\users\\user_"+etudiantid;
 			new File(etudiantDirectory).mkdirs();
 			etudiant.setId(etudiantid);
@@ -245,10 +245,10 @@ public class EtudiantAdd extends HttpServlet {
 			parentDAO.insert(parent);
 			etudiant.setParent(parent);
 			etudiantDAO.insert(etudiant);
-			//Créer le dossier du parent
+			//Crï¿½er le dossier du parent
 			String parentDirectory = storagePath+"\\users\\user_"+parentId;
 			new File(parentDirectory).mkdirs();
-			//Creer le compte de l'étudiant
+			//Creer le compte de l'ï¿½tudiant
 			Role roleEtudiant= new Role();
 			RoleDAO roleDAO = new RoleDAO();
 			Calendar now = Calendar.getInstance(); 
@@ -260,7 +260,7 @@ public class EtudiantAdd extends HttpServlet {
 			compteEtuidiant.setRole(roleEtudiant);
 			compteEtuidiant.setDateCreation(now.getTime());
 			compteEtuidiant.setLogin(etudiant.getEmail());
-			//TODO : Remplacer plus tard ceci par une fonction de genération de mot de passe
+			//TODO : Remplacer plus tard ceci par une fonction de genï¿½ration de mot de passe
 			compteEtuidiant.setMotPass(etudiant.getNom_Fr());
 			compteEtuidiant.setEtat("Active");
 			compteEtuidiant.setOnLine(false); 
@@ -274,7 +274,7 @@ public class EtudiantAdd extends HttpServlet {
 			compteParent.setRole(roleparent);
 			compteParent.setDateCreation(now.getTime());
 			compteParent.setLogin(parent.getEmail());
-			//TODO : Replacer plus tard ceci par une fonction de genération de mot de passe : generatePassWord()
+			//TODO : Replacer plus tard ceci par une fonction de genï¿½ration de mot de passe : generatePassWord()
 			compteParent.setMotPass(parent.getNom_Fr());
 			compteParent.setEtat("Active");
 			compteParent.setOnLine(false); 
@@ -282,9 +282,9 @@ public class EtudiantAdd extends HttpServlet {
 			compteDAO.insert(compteParent);
 			
 		
-			result="L'étudiant à été ajouté avec succès";
+			result="L'ï¿½tudiant ï¿½ ï¿½tï¿½ ajoutï¿½ avec succï¿½s";
 		} catch (SQLException e) {
-			result="Impossible d'ajouter l'étudiant";
+			result="Impossible d'ajouter l'ï¿½tudiant";
 			e.printStackTrace();
 		}
 		
@@ -296,11 +296,11 @@ public class EtudiantAdd extends HttpServlet {
 		out.flush();
 	}
 	private String generatePassWord(){
-		// TODO : Concevoir la fonction de génération du mot de passe
+		// TODO : Concevoir la fonction de gï¿½nï¿½ration du mot de passe
 		return null;
 	}
 	private String generateSecreteCode(){
-		// TODO : Concevoir une fonction de génération des codes de récupération des compte
+		// TODO : Concevoir une fonction de gï¿½nï¿½ration des codes de rï¿½cupï¿½ration des compte
 		// Lors de perte ou d'oubli de mot de passe.
 		return null;
 	}

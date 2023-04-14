@@ -250,6 +250,9 @@
 					    <a id="tab_Modules" href="#content-tab-Modules" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="content-tab-Modules" aria-selected="false">
 					        <i class="fa fa-stream mr-2"></i> Modules
 					    </a>
+					     <a id="tab_Chapitres" href="#content_tab_chapitre" class="nav-item nav-link " data-toggle="tab" role="tab" aria-controls="content_tab_chapitre" aria-selected="false">
+					        <i class="fa fa-list-khalid mr-2"></i> chapitres
+					    </a>
 					</nav>
 			</div>
 		    <div class="panel-body">
@@ -646,6 +649,156 @@
 							 <!-- Fin : Modal Details Module -->
 						</div>
 						<!-- /Content tab 3	: Modules-->
+						<!-- llllllllllllllllllllllllllllllllllllllll
+						the probleme was ==> class="tab-pane active"
+						it should be inactive
+						 -->
+						<!-- Content tab 4	: chapitre-->
+						<div id="content_tab_chapitre" class="tab-pane" role="tabpanel" aria-labelledby="content-tab-Chapitres">
+					   		<div class="alert bg-light text-secondary" role="alert">
+					   			<i class="fa fa-list-khalid mr-2"></i>
+					   			Chaiptres
+						        <a href="#" data-toggle="modal" data-target="#classe_Add_Modal" class="btn btn-outline-info float-right" title="Ajouter une chapitre"><i class="fa fa-plus"></i></a>
+						    </div>
+							<table id="data_table_chapitres" class="table table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>N°</th>
+										<th>Nom</th>
+										<th>Description</th>
+							            <th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+							<!-- Début : Modal Add New chapitre -->
+				<div id="classe_Add_Modal" class="modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog">
+					<form id="classe_Add_Form" method="POST" action="../Chapitre/Add" >
+				      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+				          	<div class="modal-header bg-info">
+				        		<h4 class="modal-title text-white">
+				        			Ajouter une Chapitre 
+				        		</h4>
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			    					<span aria-hidden="true">&times;</span>
+			  					</button>
+				        	</div>
+				          	<div class="modal-body">
+								<div class="form-group row">
+								  <label for="classe_Label" class="col-sm-3 control-label">Nom de chapitre</label>
+								  <div class="col-sm-9">
+								    <input id="classe_Label"  type="text" class="form-control" name="chapitre" required  />
+								  </div>
+								</div>
+				          		<div class="form-group row">
+						    		<label for="classe_code" class="col-sm-3 control-label">Matiere</label>
+								    <div class="col-sm-9">
+								      <select id="classe_Cycle" class="form-control" name="Matiere"  required>
+								      </select>
+								    </div>
+						  		</div>
+								<div class="form-group row">
+								  <label for="classe_Filiere" class="col-sm-3 control-label">Module</label>
+								  <div class="col-sm-9">
+								    <select id="classe_Filiere" class="form-control" name="Module" required>
+								    </select>
+								  </div>
+								</div>
+								<div class="form-group row">
+								  <label for="classe_Label" class="col-sm-3 control-label">Description</label>
+								  <div class="col-sm-9">
+								    <textarea id="classe_Label"   class="form-control" name="descri">
+								    </textarea>
+								  </div>
+								</div>
+								
+								
+				      	</div>
+				        <div class="modal-footer ">
+			        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+			      		</div>
+				        </div>
+				   	</form>
+					</div>
+			    </div>
+			
+					 <!-- Fin : Modal Add New chapitre -->
+							 <!-- Début : Modal Update chapitre -->
+								<div id="#" class="modal" tabindex="-1" role="dialog">
+									<div class="modal-dialog">
+									<form id="unite_Update_Form" method="POST" action="../Unite/Update" >
+								      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+								          	<div class="modal-header bg-info">
+								        		<h4 class="modal-title text-white">
+								        			Modifier chapitre
+								        		</h4>
+								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							    					<span aria-hidden="true">&times;</span>
+							  					</button>
+								        	</div>
+								          	<div class="modal-body">
+								          		<div class="form-group row">
+										    		<label for="unite_code" class="col-sm-3 control-label">Code unité</label>
+												    <div class="col-sm-9">
+												      <input  type="hidden" class="form-control" name="id" />
+												      <input id="unite_code" type="text" class="form-control" name="code" placeholder="Code du unite"/>
+												    </div>
+										  		</div>
+												<div class="form-group row">
+												  <label for="unite_Nom_Fr" class="col-sm-3 control-label">Nom de l'unité</label>
+												  <div class="col-sm-9">
+												    <input id="unite_Nom_Fr" type="text" class="form-control" name="nom_Fr" placeholder="Nom du unite"/>
+												  </div>
+												</div>
+										  		<div class="form-group row">
+												  <label for="unite_Nom_Ar" class="col-sm-3 control-label">إسم الوحدة</label>
+												  <div class="col-sm-9">
+												    <input id="unite_Nom_Ar" type="text" class="form-control" name="nom_Ar" dir="rtl" placeholder="إسم السلك بالعربية"/>
+												  </div>
+												</div>
+								      	</div>
+								        <div class="modal-footer ">
+							        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+							      		</div>
+								        </div>
+								   	</form>
+									</div>
+							    </div>
+							 <!-- Fin : Modal Update Chapitre -->
+							 <!-- Début : Modal Details chapitre -->
+								<div id="#" class="modal" tabindex="-1" role="dialog">
+									<div class="modal-dialog">
+								      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+								          	<div class="modal-header bg-info">
+								        		<h4 class="modal-title text-white">
+								        			Détails de chapitre
+								        		</h4>
+								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							    					<span aria-hidden="true">&times;</span>
+							  					</button>
+								        	</div>
+								          	<div class="modal-body">
+								          		<ul class="list-group">
+													<!-- Affichage dynamique des détails du unite-->
+												</ul>
+											</div>
+											<div class="modal-footer ">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fermer</button>
+											</div>
+								        </div>
+									</div>
+							    </div>
+							 <!-- Fin : Modal Details Chapitre -->
+						</div>
+			<!-- /Content tab 1	: Chapitre-->	
+						
+						
+<!-- teeeeeeeeeeeeeeeeeeeeeeeeest -->
+						
 				</div>
 				<!-- /Tab content -->
 			 </div>
@@ -866,12 +1019,11 @@
 				        }
 				});
 			};
+			
 			/*
 			/* Au chargement de la page charger la listes des unités
 			*/
-			
 			populateUniteDataTable();
-			
 			/* Au click sur le tab Unites : 
 			/* On charger la liste des Unites dans la TableData Unites
 			*/
@@ -1577,6 +1729,251 @@
 			});
   		
   	});
+  	
+  	
+  	
+  	
+  	
+  	
+  
+  	
+	/************** DataTable du Tab : chapitres **************/
+	// Initialisation du DataTable chapitres
+	$('#data_table_chapitres').DataTable(
+		{	
+			"paging": true,
+			"autoWidth": true,
+			"columnDefs": [
+				{ "orderable": false, "targets": 3 }
+			],
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 
+	            'csv', 
+	            'excel', 
+	            'pdf', 
+	            'print'
+	        ]
+		}
+	);
+	/******* fonction pour charger la liste des chapitres dans la TableData chapitres ******/
+		function populateChapitreDataTable(){
+			var tableData = $('#data_table_chapitres').DataTable();
+			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
+			$.ajax({
+				url : "../Chapitre/List",
+				type: "GET",
+				dataType: 'json',
+				success: function(response,textStatus ,jqXHR){
+					for(i=0;i<response.length;i++){
+						var rang=i+1;
+						var btns='<div class="btn-group dropleft"> \
+							  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
+							  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
+							    <span class="sr-only">Toggle Dropdown</span> \
+							  </button> \
+							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
+							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
+						        <div class="dropdown-divider"></div> \
+							  	<a class="dropdown-item classe-details text-primary" href="#" chapitreId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Infos</a> \
+							  	<a class="dropdown-item classe-update text-primary" href="#" chapitreId="'+response[i].id+'"><span class="fa fa-pen mr-4"></span>Modifier</a> \
+							  	<a class="dropdown-item classe-delete text-primary" href="#" chapitreId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
+							  	<div class="dropdown-divider"></div> \
+							  	<a class="dropdown-item classe-full-details text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ClasseDetails?id='+response[i].id+'" classeId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Détails</a> \
+							  </div> \
+							</div> ';
+						tableData.row.add( [
+						             rang,
+						             response[i].nom,
+						             response[i].description,
+
+						             btns
+						         ] ).draw( false );
+					}
+			    },
+			    error: function(response,textStatus ,jqXHR){
+			    	$("#modalError .modal-body p").html("");
+					$("#modalError .modal-body p").html(jqXHR.responseText);
+			   		$('#modalError .modal-body p').modal('show'); 
+			        }
+			});
+		};
+		
+	
+			/* Au click sur le tab chapitre : 
+	/* On charger la liste des Unites dans la TableData Unites
+	*/
+	//Effacer dabord le formulaire
+
+	$('#tab_Chapitres').on('click', function(e){
+			// Effacer le DataTable Unites
+			$('#data_table_chapitres').DataTable().rows().remove().draw();
+			// Charger la liste des unites dans le DataTable Unites
+  			populateChapitreDataTable();
+			e.preventDefault();
+	});
+	
+	/********** Ajouter un nouveau Chapitre **********************/
+		$('#Chapitre_Add_Modal').on('shown.bs.modal', function(evt){
+			$('#chapitre_Add_Form').trigger('reset');
+		});
+		//Envoyer le formulaire via ajax
+		$("#chapitre_Add_Form").submit(function(event){ 
+		var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
+		var request_method = $(this).attr("method"); 	//Lire la méthode du formulaire  GET/POST 
+		var form_data = $(this).serialize(); 			//Encoder les données du formulaire pour envoie
+		$('#Chapitre_Add_Modal').modal('hide');			//Fermer la fenetre modal apres envoie du formulaire
+		$.ajax({
+			url : post_url,
+			type: request_method,
+			data : form_data,
+			dataType: 'json',
+			contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+			success: function(response,textStatus ,jqXHR){
+				$("#modalSuccess .modal-body p").html("");
+				$("#modalSuccess .modal-body p").html(response);
+		   		$('#modalSuccess').modal('show');
+		    	//setTimeout(function() { $('#modalSuccess').modal('hide'); }, 5000);
+		    },
+		    error: function(response,textStatus ,jqXHR){
+                $("#modalError .modal-body p").html("");
+				$("#modalError .modal-body p").html(jqXHR.responseText);
+		   		$('#modalError').modal('show'); 
+		        },
+			complete: function (response,textStatus ,jqXHR) {
+		    	
+				//Effacer le DataTable Unites
+				$('#data_table_chapitres').DataTable().rows().remove().draw();
+	  			//Raffrichir le DataTable Unites
+				populateChapitreDataTable();    
+		    }
+		});
+		return false;
+	});	
+		////////new added/////////////////////
+		
+		/************** DataTable du Tab : Classes **************/
+  		// Initialisation du DataTable Classes
+
+  	
+  	
+ 
+  		//Chargement des Matieres dans Select filiere
+		$.ajax({
+		url : "../Matiere/List",
+		type: "GET",
+		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
+		success: function(response,textStatus ,jqXHR){
+			$("#classe_Add_Form select[name=Matiere]").html("");
+			for(i=0;i<response.length;i++){
+				var item  ='<option value="'+response[i].id+'">'+response[i].code+'</option>';
+				$("#classe_Add_Form select[name=Matiere]").append(item);       
+			}	
+	    },
+	    error: function(response,textStatus ,jqXHR){
+	    	$("#modalError .modal-body p").html("");
+			$("#modalError .modal-body p").html(jqXHR.responseText);
+	   		$('#modalError .modal-body p').modal('show'); 
+	        }
+	});
+  		//Chargement des Modules dans Select Module
+  	    $.ajax({
+		url : "../Module/List",
+		type: "GET",
+		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
+		success: function(response,textStatus ,jqXHR){
+			$("#classe_Add_Form select[name=Module]").html("");
+			for(i=0;i<response.length;i++){
+				var item  ='<option value="'+response[i].id+'">'+response[i].code+'</option>';
+				$("#classe_Add_Form select[name=Module]").append(item);       
+			}	
+	    },
+	    error: function(response,textStatus ,jqXHR){
+	    	$("#modalError .modal-body p").html("");
+			$("#modalError .modal-body p").html(jqXHR.responseText);
+	   		$('#modalError .modal-body p').modal('show'); 
+	        }
+	});
+  		////////////////////////////////////////////////
+  		//Envoie du formulaire d'ajout de la Classe
+  			$("#classe_Add_Form").submit(function(event){ 
+				var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
+				var request_method = $(this).attr("method"); 	//Lire la méthode du formulaire  GET/POST 
+				var form_data = $(this).serialize(); 			//Encoder les données du formulaire pour envoie
+				$('#classe_Add_Modal').modal('hide');			//Fermer la fenetre modal apres envoie du formulaire
+				$.ajax({
+					url : post_url,
+					type: request_method,
+					data : form_data,
+					dataType: 'json',
+					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+					success: function(response,textStatus ,jqXHR){
+						if(response.success){
+							$("#modalSuccess .modal-body p").html("");
+							$("#modalSuccess .modal-body p").html(response.message);
+					   		$('#modalSuccess').modal('show');		
+						}else{
+							$("#modalError .modal-body p").html("");
+							$("#modalError .modal-body p").html(response.message);
+					   		$('#modalError').modal('show'); 
+						}
+				    },
+				    error: function(response,textStatus ,jqXHR){
+	                    $("#modalError .modal-body p").html("");
+						$("#modalError .modal-body p").html(jqXHR.responseText);
+				   		$('#modalError').modal('show'); 
+				   },
+				   complete: function (response,textStatus ,jqXHR) {
+					 	//Effacer le DataTable Classes
+						$('#data_table_chapitres').DataTable().rows().remove().draw();
+			  			//Raffrichir le DataTable Classes
+						populateChapitreDataTable();
+			  			    
+				    }
+				});
+				return false;
+			});	
+  			/*********** Suppression d'une chapitre ****************
+  			/* 1 - Récuperer l' Id du Classe séléctionner sur la DataTable Classes
+  			/* 2 - Supprimer via ajax le Classe concerné
+  			*****************************************************/
+  			
+  			$('#data_table_chapitres').on('click','.classe-delete', function(evt){
+				$this = $(this);
+				var id= $this.attr('chapitreId');
+				$('#modalConfirm').modal('show');
+				$('#modalConfirm').on('click', '#delete', function(e) {
+						$.ajax({
+							url : "../Chapitre/Delete?id="+id,
+							type: "GET",
+							dataType: 'json',
+							success: function(response,textStatus ,jqXHR){
+								
+								$("#modalSuccess .modal-body p").html("");
+								$("#modalSuccess .modal-body p").html(response);
+						   		$('#modalSuccess').modal('show');
+						    	//setTimeout(function() { $('#modalSuccess').modal('hide'); }, 5000);
+						    },
+						    error: function(response,textStatus ,jqXHR){
+						    
+						    	$("#modalError .modal-body p").html("");
+								$("#modalError .modal-body p").html(jqXHR.responseText);
+						   		$('#modalError').modal('show'); 
+						    },
+						    complete: function (response,textStatus ,jqXHR) {
+							 	//Effacer le DataTable Classes
+								$('#data_table_chapitres').DataTable().rows().remove().draw();
+					  			//Raffrichir le DataTable Classes
+								populateChapitreDataTable();
+					  			    
+						    }
+						});
+				  });
+				return false;
+			});
+  			
     </script>
    
 </body>

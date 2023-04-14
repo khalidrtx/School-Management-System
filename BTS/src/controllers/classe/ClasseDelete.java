@@ -32,7 +32,7 @@ public class ClasseDelete extends HttpServlet {
 		String message =null;
 		try {
 			classeDAO.delete(classe);
-			message="La classe à été supprimée avec succès";
+			message="La classe ï¿½ ï¿½tï¿½ supprimï¿½e avec succï¿½s";
 			
 		} catch (SQLException e) {
 			message="Impossible de supprimer la classe";

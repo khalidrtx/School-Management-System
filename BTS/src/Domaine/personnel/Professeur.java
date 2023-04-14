@@ -7,18 +7,15 @@ import Domaine.personnel.AbsenceProfesseur;
 import Domaine.classe.Cycle;
 
 public class Professeur extends Personnel {
-	private ArrayList<AbsenceProfesseur> absences;
 	private Specialite specialite;
 	private Cycle cycle;
 	
 	public Professeur() {
 		super();
-		this.absences = new ArrayList<AbsenceProfesseur>();
 	}
 	public Professeur(Specialite specialite,Cycle cycle) {
 		super();
 		// TODO Auto-generated constructor stub
-		this.absences = new ArrayList<AbsenceProfesseur>();
 		this.specialite = specialite;
 		this.cycle = cycle;
 	}
@@ -32,17 +29,11 @@ public class Professeur extends Personnel {
 				dateNais, lieuNais_Fr, lieuNais_Ar, adresse_Fr, adresse_Ar, email,
 				situationF, titre, teleMobile, teleDomicile, photo);
 		// TODO Auto-generated constructor stub
-		this.absences = new ArrayList<AbsenceProfesseur>();
 		this.specialite = specialite;
 		this.cycle = cycle;
 	}
-	public ArrayList<AbsenceProfesseur> getAbsencesProfesseur() {
-		return absences;
-		
-	}
-	public void addAbsences(AbsenceProfesseur absence) {
-		this.absences.add(absence);
-	}
+
+	
 	public Specialite getSpecialite() {
 		return specialite;
 	}

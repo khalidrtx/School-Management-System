@@ -113,6 +113,101 @@ public class ClasseDAO {
 		return classes;
 				
 	}
+	public ArrayList<Classe> getAllclassbyprof(int userID) throws SQLException{
+		String query="SELECT DISTINCT\r\n"
+				+ "    `utilisateur`.`ID`,\r\n"
+				+ "    `professeur`.`UtilisateurID`,\r\n"
+				+ "    `seancegenerique`.`ProfesseurUtilisateurID`,\r\n"
+				+ "    `seancegenerique`.`ClasseID`,\r\n"
+				+ "    `classe`.`ID`,\r\n"
+				+ "    `classe`.`Label` as 'classeLabel',\r\n"
+
+				+ "    `classe`.`ClasseGeneriqueID`,\r\n"
+				+ "    `classegenerique`.`ID`,\r\n"
+				+ "    `classegenerique`.`NiveauID` AS niveauID,\r\n"
+				+ "    `classegenerique`.`FiliereID` AS filiereID,\r\n"
+				+ "    `classegenerique`.`CycleID` AS cycleID,\r\n"
+				+ "    `niveau`.`ID`,\r\n"
+				+ "    `filiere`.`ID`,\r\n"
+				+ "    `cycle`.`ID`,\r\n"
+				+ "    `classe`.`AnneeScolaireID`,\r\n"
+				+ "    `anneescolaire`.`ID` As 'anneescolaireID',\r\n"
+				+ "    `anneescolaire`.`DateDebut` as 'anneescolaireDateDebut',\r\n"
+				+ "    `anneescolaire`.`DateFin` as 'anneescolaireDateFin' ,\r\n"
+				+ "    `anneescolaire`.`Code` as 'anneescolaireCode' ,\r\n"
+				+ "     `classegenerique`.`Description`,\r\n"
+				+ "    `filiere`.`Code` AS filiereCode,\r\n"
+				+ "    `cycle`.`Code` AS cycleCode,\r\n"
+				+ "    `niveau`.`Code` AS niveauCode\r\n"
+				+ "\r\n"
+				+ "FROM\r\n"
+				+ "    `utilisateur`\r\n"
+				+ "INNER JOIN `professeur` ON `professeur`.`UtilisateurID` = `utilisateur`.`ID`\r\n"
+				+ "INNER JOIN `seancegenerique` ON `seancegenerique`.`ProfesseurUtilisateurID` = `professeur`.`UtilisateurID`\r\n"
+				+ "INNER JOIN `classe` ON `seancegenerique`.`ClasseID` = `classe`.`ID`\r\n"
+				+ "INNER JOIN `classegenerique` ON `classe`.`ClasseGeneriqueID` = `classegenerique`.`ID`\r\n"
+				+ "INNER JOIN `niveau` ON `classegenerique`.`NiveauID` = `niveau`.`ID`\r\n"
+				+ "INNER JOIN `filiere` ON `classegenerique`.`FiliereID` = `filiere`.`ID`\r\n"
+				+ "INNER JOIN `cycle` ON `classegenerique`.`CycleID` = `cycle`.`ID`\r\n"
+				+ "INNER JOIN `anneescolaire` ON `classe`.`AnneeScolaireID` = `anneescolaire`.`ID`\r\n"
+				+ "INNER JOIN  `anneescolairecourante` on `anneescolairecourante`.`AnneeScolaireID`=`anneescolaire`.`ID`\r\n"
+				+ " where `professeur`.`UtilisateurID` = ? ;\r\n"
+				+ "";
+	
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement(query);
+		statement.setInt(1, userID);
+		ResultSet rs = statement.executeQuery();
+		ArrayList<Classe> Classes = new ArrayList<Classe>();
+		
+		while (rs.next()) {
+			
+			ClasseGenerique classeGenerique =new ClasseGenerique();
+			Cycle cycle= new Cycle();
+			cycle.setId(rs.getInt("cycleID"));
+			cycle.setCode(rs.getString("cycleCode"));
+			cycle.setNom_Fr(null);
+			cycle.setNom_Ar(null);
+			
+			Filiere filiere = new Filiere();
+			filiere.setId(rs.getInt("filiereID"));
+			filiere.setCode(rs.getString("filiereCode"));
+			filiere.setNom_Fr(null);
+			filiere.setNom_Ar(null);
+			
+			Niveau niveau= new Niveau();
+			niveau.setId(rs.getInt("niveauID"));
+			niveau.setCode(rs.getString("niveauCode"));
+			niveau.setNom_Fr(null);
+			niveau.setNom_Ar(null);
+			
+			classeGenerique.setCycle(cycle);
+			classeGenerique.setFiliere(filiere);
+			classeGenerique.setNiveau(niveau);
+			
+			classeGenerique.setId(rs.getInt("classegeneriqueID"));
+			classeGenerique.setDescription(rs.getString("Description"));
+			classeGenerique.setCode();
+			
+			Classe classe=new Classe();
+			AnneeScolaire anneescolaire=new AnneeScolaire();
+			anneescolaire.setId(rs.getInt("anneescolaireID"));
+			anneescolaire.setDateDebut(rs.getDate("anneescolaireDateDebut"));
+			anneescolaire.setDateDebut(rs.getDate("anneescolaireDateFin"));
+			anneescolaire.setCode(rs.getString("anneescolaireCode"));
+			
+			classe.setClasseGenerique(classeGenerique);
+			classe.setAnneeScolaire(anneescolaire);
+			
+			classe.setId(rs.getInt("ClasseID"));
+			classe.setLabel(rs.getString("classeLabel"));
+			classe.setCode();
+			Classes.add(classe);
+		}
+		rs.close();
+		statement.close();
+		return Classes;
+	}
+	
 	public Classe getById(int id) throws SQLException{
 		String query = "SELECT \r\n" + 
 		"	`classe`.`ID` AS `classeID`,\r\n" + 

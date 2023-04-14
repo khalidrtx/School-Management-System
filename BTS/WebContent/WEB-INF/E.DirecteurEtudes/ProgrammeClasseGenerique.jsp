@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstap.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css" >
-		
 	<style type="text/css">
 	body{
 			background-color:#fff;
@@ -721,6 +720,57 @@
 									</div>
 							    </div>
 							 <!-- Fin : Modal Details Module -->
+							 <!-- Début : Modal Add New chapitre -->
+								<div id="chapitre_Add_Modal" class="modal" tabindex="-1" role="dialog">
+									<div class="modal-dialog">
+									<form id="chapitre_Add_Form" method="POST" action="../ClasseGenerique/Unite/Add" >
+								      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+								          	<div class="modal-header bg-info">
+								        		<h4 class="modal-title text-white">
+								        			Ajouter une chapitre au programme
+								        		</h4>
+								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							    					<span aria-hidden="true">&times;</span>
+							  					</button>
+								        	</div>
+								      <div class="modal-body">
+												<div class="form-group row">
+												  <label for="classe_Label" class="col-sm-3 control-label">Nom de chapitre</label>
+												  <div class="col-sm-9">
+												    <input id="classe_Label"  type="text" class="form-control" name="chapitre" required  />
+												  </div>
+												</div>
+								          		<div class="form-group row">
+										    		<label for="classe_code" class="col-sm-3 control-label">Matiere</label>
+												    <div class="col-sm-9">
+												      <select id="classe_Cycle" class="form-control" name="Matiere"  required>
+												      </select>
+												    </div>
+										  		</div>
+												<div class="form-group row">
+												  <label for="classe_Filiere" class="col-sm-3 control-label">Module</label>
+												  <div class="col-sm-9">
+												    <select id="classe_Filiere" class="form-control" name="Module" required>
+												    </select>
+												  </div>
+												</div>
+												<div class="form-group row">
+												  <label for="classe_Label" class="col-sm-3 control-label">Description</label>
+												  <div class="col-sm-9">
+												    <textarea id="classe_Label"   class="form-control" name="descri">
+												    </textarea>
+												  </div>
+												</div>								
+								      	</div>
+								        <div class="modal-footer ">
+							        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+							      		</div>
+								        </div>
+								   	</form>
+									</div>
+							    </div>
+							 <!-- Fin : Modal Add New chapitre -->
 						</div>
 						<!-- /Content tab 1	: Programme-->
 						<!-- Content tab 2 	: Examens-->
@@ -972,6 +1022,7 @@
 										        <div class="dropdown-divider"></div> \
 											  	<a class="dropdown-item module-details text-primary" href="#" moduleId="'+response[i].configurationMatieres[j].configurationModules[k].module.id+'" configurationModuleId="'+response[i].configurationMatieres[j].configurationModules[k].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
 											  	<a class="dropdown-item module-update text-primary" href="#" moduleId="'+response[i].configurationMatieres[j].configurationModules[k].module.id+'" configurationModuleId="'+response[i].configurationMatieres[j].configurationModules[k].id+'"><span class="fa fa-pen mr-4"></span>Modifier</a> \
+											  	<a class="dropdown-item chapitre-Ajouter text-primary" href="#" moduleId="'+response[i].configurationMatieres[j].configurationModules[k].module.id+'" configurationModuleId="'+response[i].configurationMatieres[j].configurationModules[k].id+'"><span class="fa fa-pen mr-4"></span>Ajouter un chapitre</a> \
 											  	<a class="dropdown-item module-delete text-primary" href="#" moduleId="'+response[i].configurationMatieres[j].configurationModules[k].module.id+'" configurationModuleId="'+response[i].configurationMatieres[j].configurationModules[k].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
 											  </div> \
 											</div> ';
@@ -1033,6 +1084,7 @@
 				});
   				
   			});
+  			
   			//Envoyer le formulaire via ajax
   			$("#unite_Add_Form").submit(function(event){ 
 				var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
@@ -1123,6 +1175,7 @@
 				
 				return false;
 			});
+  			
   			/* 5- Envoie du formulaire de modification */
   			
   			$("#unite_Update_Form").submit(function(event){ 
@@ -1616,6 +1669,7 @@
 				   		$('#modalError .modal-body p').modal('show'); 
 				        }
 				});
+  				
   				//Charger toutes les formes d'examen dans le select Forme Controle
   				$.ajax({
 					url : "../FormeEvaluation/List",
@@ -1666,6 +1720,10 @@
 				});
 				return false;
 			});	
+  			
+  			
+  			
+  			
   			
   			/*********** Modification d'un Module *************
   			/* 1 - Récuperer l'Id du module séléctionné sur la DataTable unites
@@ -1808,7 +1866,8 @@
 				});
 				return false;
 			});
-  			
+
+
   			/*********** Suppression d'un Module ****************
   			/* 1 - Récuperer l' Id du Module séléctionné sur la DataTable Unites
   			/* 2 - Supprimer par ajax le Module concerné
@@ -1848,7 +1907,10 @@
 				
 				return false;
 			});
+
+
   			
+
   			/*********** Affichage des détails d'un Module ****************
   			/* 1 - Récuperer l' Id du Module séléctionné sur la DataTable Unites
   			/* 2 - Charger par ajax le Module concerné
@@ -1892,18 +1954,25 @@
 				
 				return false;
 			});
-  			
-  			
-  			
-  			
-  			
-  			
-  			
-  			
-  			
+		
   			
   	
   	});
+  	
+  
+  		 /********** Ajouter une nouvelle chapitre **********************/
+  		//Effacer dabord le formulaire
+  		$('#data_table_unites').on('click','.chapitre-Ajouter', function(evt){
+  			//Effacer le formulaire
+  			$('#chapitre_Add_Form').trigger('reset');
+  			//Effacer les select du formulaire
+  			$('#chapitre_Add_Form select[name=Matiere]').html("");
+  			$('#chapitre_Add_Form select[name=Module]').html("");
+  			$('#chapitre_Add_Modal').modal('show');
+  		});
+  			
+        // Chargement des chapitres dans Select chapitre
+
     </script>
    
 </body>

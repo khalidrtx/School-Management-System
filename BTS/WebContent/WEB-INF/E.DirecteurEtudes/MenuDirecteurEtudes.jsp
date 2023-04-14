@@ -53,7 +53,7 @@
 	            <a href="#"><span class="fa fa-newspaper"></span>Actualités</a>
 	          </li>
 			  <li>
-	            <a href="#"><span class="far fa-file-alt"></span>Cahiers du texte</a>
+	            <a href="${pageContext.request.contextPath}/E.DirecteurEtudes/CahierTexteProfesseur"><span class="far fa-file-alt"></span>Cahiers du texte</a>
 	          </li>
 			  <li>
 	            <a href="#"><span class="fa fa-project-diagram"></span>Projets</a>

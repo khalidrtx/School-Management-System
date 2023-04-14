@@ -648,6 +648,9 @@
 				        }
 				});
   				//Chargement des Filiers dans Select filiere
+  				
+  	
+  				
   				$.ajax({
 					url : "../Filiere/List",
 					type: "GET",

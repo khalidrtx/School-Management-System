@@ -1924,6 +1924,7 @@
 					    }
 					});
 				});
+  			
 		  		//Chargement des etablissement de la select etablissement
 		  			$("#etudiant_Add_Form select[name=province]").change(function(){
 					

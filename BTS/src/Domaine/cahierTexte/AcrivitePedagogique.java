@@ -1,5 +1,4 @@
 package Domaine.cahierTexte;
-
 public class AcrivitePedagogique {
 	private int id;
 	private String code;

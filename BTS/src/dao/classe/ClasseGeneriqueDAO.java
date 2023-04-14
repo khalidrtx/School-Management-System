@@ -1,5 +1,6 @@
 package dao.classe;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -167,8 +168,8 @@ public class ClasseGeneriqueDAO {
 		statement.close();
 	}
 	/*
-	 * Méthode pour vérifier si une Classe Générique existe déjà
-	 * Renvoie la classe générique si elle existe 
+	 * Mï¿½thode pour vï¿½rifier si une Classe Gï¿½nï¿½rique existe dï¿½jï¿½
+	 * Renvoie la classe gï¿½nï¿½rique si elle existe 
 	 * Renvoie null sinon
 	 */
 	
@@ -237,5 +238,98 @@ public class ClasseGeneriqueDAO {
 		statement.close();
 		return classeGeneriqueResult;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+//	public ArrayList<ClasseGenerique> getAllclassbyprof(int userID,java.util.Date ddebut,java.util.Date dfin) throws SQLException{
+//		String query="SELECT\r\n"
+//				+ "    `seancegenerique`.`ID`,\r\n"
+//				+ "    `utilisateur`.`ID`,\r\n"
+//				+ "    `professeur`.`UtilisateurID`,\r\n"
+//				+ "    `seancegenerique`.`ProfesseurUtilisateurID`,\r\n"
+//				+ "    `seancegenerique`.`ClasseID`,\r\n"
+//				+ "    `classe`.`ID`,\r\n"
+//				+ "    `classe`.`ClasseGeneriqueID`,\r\n"
+//				+ "    `classegenerique`.`ID`  As classegeneriqueID ,\r\n"
+//				+ "    `classegenerique`.`NiveauID` AS niveauID,\r\n"
+//				+ "    `classegenerique`.`FiliereID` AS filiereID,\r\n"
+//				+ "    `classegenerique`.`CycleID` AS cycleID,\r\n"
+//				+ "    `niveau`.`ID`,\r\n"
+//				+ "    `filiere`.`ID`,\r\n"
+//				+ "    `cycle`.`ID`,\r\n"
+//				+ "    `classe`.`AnneeScolaireID`,\r\n"
+//				+ "    `anneescolaire`.`ID`,\r\n"
+//				+ "    `anneescolaire`.`DateDebut` ,\r\n"
+//				+ "    `anneescolaire`.`DateFin` ,\r\n"
+//				+ "     `classegenerique`.`Description`,\r\n"
+//				+ "    `filiere`.`Code` AS filiereCode,\r\n"
+//				+ "    `cycle`.`Code` AS cycleCode,\r\n"
+//				+ "    `niveau`.`Code` AS niveauCode\r\n"
+//				+ "\r\n"
+//				+ "FROM\r\n"
+//				+ "    `utilisateur`\r\n"
+//				+ "INNER JOIN `professeur` ON `professeur`.`UtilisateurID` = `utilisateur`.`ID`\r\n"
+//				+ "INNER JOIN `seancegenerique` ON `seancegenerique`.`ProfesseurUtilisateurID` = `professeur`.`UtilisateurID`\r\n"
+//				+ "INNER JOIN `classe` ON `seancegenerique`.`ClasseID` = `classe`.`ID`\r\n"
+//				+ "INNER JOIN `classegenerique` ON `classe`.`ClasseGeneriqueID` = `classegenerique`.`ID`\r\n"
+//				+ "INNER JOIN `niveau` ON `classegenerique`.`NiveauID` = `niveau`.`ID`\r\n"
+//				+ "INNER JOIN `filiere` ON `classegenerique`.`FiliereID` = `filiere`.`ID`\r\n"
+//				+ "INNER JOIN `cycle` ON `classegenerique`.`CycleID` = `cycle`.`ID`\r\n"
+//				+ "INNER JOIN `anneescolaire` ON `classe`.`AnneeScolaireID` = `anneescolaire`.`ID` where `professeur`.`UtilisateurID` = ? "
+//				+ "and `anneescolaire`.`DateDebut`= ?  and `anneescolaire`.`DateFin`= ? \r\n"
+//				+ "";
+//	
+//		PreparedStatement statement = (PreparedStatement) con.prepareStatement(query);
+//		statement.setInt(1, userID);
+//		statement.setDate(2, (Date) ddebut);
+//		statement.setDate(3, (Date) dfin);
+//		ResultSet rs = statement.executeQuery();
+//		ArrayList<ClasseGenerique> classesGeneriques = new ArrayList<ClasseGenerique>();
+//		
+//		while (rs.next()) {
+//			
+//			ClasseGenerique classeGenerique =new ClasseGenerique();
+//			Cycle cycle= new Cycle();
+//			cycle.setId(rs.getInt("cycleID"));
+//			cycle.setCode(rs.getString("cycleCode"));
+//			cycle.setNom_Fr(null);
+//			cycle.setNom_Ar(null);
+//			
+//			Filiere filiere = new Filiere();
+//			filiere.setId(rs.getInt("filiereID"));
+//			filiere.setCode(rs.getString("filiereCode"));
+//			filiere.setNom_Fr(null);
+//			filiere.setNom_Ar(null);
+//			
+//			Niveau niveau= new Niveau();
+//			niveau.setId(rs.getInt("niveauID"));
+//			niveau.setCode(rs.getString("niveauCode"));
+//			niveau.setNom_Fr(null);
+//			niveau.setNom_Ar(null);
+//			
+//			classeGenerique.setCycle(cycle);
+//			classeGenerique.setFiliere(filiere);
+//			classeGenerique.setNiveau(niveau);
+//			
+//			classeGenerique.setId(rs.getInt("classegeneriqueID"));
+//			classeGenerique.setDescription(rs.getString("Description"));
+//			
+//			classeGenerique.setCode();
+//			
+//			classesGeneriques.add(classeGenerique);
+//		}
+//		rs.close();
+//		statement.close();
+//		return classesGeneriques;
+//	}
+	
+	
+	
+	
+	
+	
 }
