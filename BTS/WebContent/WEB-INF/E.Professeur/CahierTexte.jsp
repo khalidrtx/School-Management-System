@@ -236,19 +236,24 @@
 	<div class="container"> 
 		<div class="row">
 		<div class="col-md-9"> <!-- Col 1 -->
-<div class="alert bg-light text-secondary d-flex justify-content-between" role="alert">
-    <div>
-        <i class="fa fa-chalkboard mr-2"></i>
-        Classe:
-        <span id="ClasseInfo"></span>
-    </div>
-    <div>
-        <span id="AnneeScolaireInfo"></span>
-        <span id="MatiereInfo" style="margin-left: 160px;"></span>
-    </div>
-</div>
-
-			
+	<div class="alert bg-light text-secondary d-flex justify-content-between" role="alert">
+	    <div>
+      	  <i class="fa fa-chalkboard mr-2"></i>
+    	    Classe:
+       	 <span id="ClasseInfo"></span>
+				<span id="AnneeScolaireInfo" style="margin-left: 90px;"></span>
+    	</div>
+   	 <div class="form-group row">
+			   <div class="col-md-6 d-flex justify-content-end ">
+			        <span id="MatiereInfo"></span>
+			  </div>
+			   <div class="col-md-6">
+			        <select id="MatiereProf" class="form-control" name="MatiereProf">
+			        </select>	
+    			</div>
+	</div>
+    
+	</div>
 		    <div class="alert bg-light text-secondary" role="alert">
 	   			Ajouter une seance:	   			 
 		        <a href="#" data-toggle="modal" data-target="#cahierText_Add_Modal" class="btn btn-outline-info float-right" title="Ajouter une Classe génirique"><i class="fa fa-plus"></i></a>
@@ -258,7 +263,7 @@
 					<tr>
 						<th>Seance</th>
 					    <th>activiter</th>
-						<th>Texte</th>
+						<th>Texte  	 </th>
 					    <th>Etat</th>
 			            <th>Action</th>
 					</tr>
@@ -331,10 +336,14 @@
 								                           <div class="form-group row">
 								                            <label for="adresseFr" class="control-label col-md-4">Etat de seance</label> 
 								                            <div class="col-md-8">
-								                            	<input type="text" name="Etat" class="form-control" placeholder="Etat.."></textarea>
+								                            	<select name="Etat" class="form-control">
+								                            		<option value="passe">passe</option>
+								                            		<option value="abcence">abcense</option>
+								                            		<option value="annuler">annuler</option>
+								                            		<option value="jour ferie">jour ferie</option>
+								                            	</select>
 								                            </div>
 								                        </div>
-								                        
 							                   		</div>
 							                        <!-- colone Arabe -->
 							                        <div class="col-md-6">
@@ -353,8 +362,7 @@
 								                            	<select name="Module" class="form-control" readonly>
 								                            		
 								                            	</select>
-								                            	</div>
-								                    
+								                       	</div>
 								                 	       </div>
 								                              <div class="form-group row">
 								                            <label for="Chapitre" class="control-label col-md-4">Chapitre</label> 
@@ -441,7 +449,14 @@
 								                           <div class="form-group row">
 								                            <label for="adresseFr" class="control-label col-md-4">Etat de seance</label> 
 								                            <div class="col-md-8">
-								                            	<input type="text" name="Etat" class="form-control" placeholder="Etat.."></textarea>
+								                            	<!--  <input type="text" name="Etat" class="form-control" placeholder="Etat.."></textarea>-->
+								                            	<select name="Etat" class="form-control">
+								                            		<option value="passe">passe</option>
+								                            		<option value="abcence">abcense</option>
+								                            		<option value="annuler">annuler</option>
+								                            		<option value="jour ferie">jour ferie</option>
+								                            		
+								                            	</select>
 								                            </div>
 								                        </div>
 								                        
@@ -659,9 +674,15 @@
 	<script src="${pageContext.request.contextPath}/js/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/buttons.print.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/jspdf.js" type="text/javascript"></script>
-	
-	<script type="text/javascript">
+	<script src="${pageContext.request.contextPath}/js/jspdf.plugin.autotable.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/jspdf.plugin.autotable.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/pdfmake.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/jspdf.plugin.autotable.mjs" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
 
+	<script type="text/javascript">
+	var data;
   	$(document).ready(function() {
   		/**************** Début : Ajax Load Animation *************************/
   		$(document).ajaxStart(function(){
@@ -673,7 +694,7 @@
   	  // Ajouter l'événement click sur le bouton "Télécharger"
   	  $('#btn-download-pdf-ChaierTexte').on('click', function() {
   	    // Appeler la fonction pour générer le PDF
-  	    generatePDF();
+  	    generatePDF(data);
   	  });
   	  
 	});
@@ -715,12 +736,9 @@
 		            'pdf', 
 		            'print'
 		        ]
-
 		  }
 		);
-
 		  /******* Fonction pour charger la liste des Cahiers de Textes dans la DataTable "cahierTexte" ******/
-
 		function populateCahierTexteDataTable(){
 			var tableData = $('#data_table_cahierTexte').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
@@ -730,6 +748,7 @@
 				type: "GET",
 				dataType: 'json',
 				success: function(response,textStatus ,jqXHR){
+	                data = response; // assign response to data variable
 					for(i=0;i<response.length;i++){
 						var rang=i+1;
 						var btns='<div class="btn-group dropleft"> \
@@ -740,20 +759,20 @@
 							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
 						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
+							  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].seance.id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
 							  	<a class="dropdown-item CahierTexte-update text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-pen mr-4"></span>Modifier</a> \
 							  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
 							  			</div> \
 							</div> ';
-							
 						tableData.row.add([
 							  response[i].seance.date,
 							  response[i].activites[0].nom_Fr,
 							  "<div style='width: 200px;'><strong>Matière : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
 							  "</div style='width: 200px;'><div><strong>Module : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
+							  "</div style='width: 200px;'><div><strong>Chapitre: </strong>" + response[i].concepts[0].chapitre.nom +
 							  "</div style='width: 200px;'><div><strong>Concepts : </strong>" + response[i].concepts[0].nom +
 							  "</div style='width: 200px;'><br><div><strong>Texte : </strong>" + response[i].texte + "</div>",
-							  response[i].seance.observation, 
+							  response[i].etat, 
 							  btns
 							]).draw(false);
 					}
@@ -763,87 +782,162 @@
 					$("#modalError .modal-body p").html(jqXHR.responseText);
 			   		$('#modalError .modal-body p').modal('show'); 
 			        }
-			});
+			});			
 		};
 		
 		// Chargement des Cahiers de Textes dans le DataTable "cahierTexte"
-			populateCahierTexteDataTable();	
-		
+				populateCahierTexteDataTable();	
 		//Genertation du cahier de texte sous format PDF
-			function generatePDF() {
+			function generatePDF(data) {
 				  // Récupérer les informations à ajouter dans le PDF
-				  var nom = "${sessionScope.userLastName_Fr}";
-				  var prenom = "${sessionScope.userFirstName_Fr}";
-				  var nomClasse = $('#ClasseInfo').text();
-
-				  var moduleList = $('#MatiereInfo').text();
-				  var schoolYear = $('#AnneeScolaireInfo').text();;
-
+				  var nom        = "${sessionScope.userLastName_Fr}";
+				  var prenom     = "${sessionScope.userFirstName_Fr}";
+				  var nomClasse  = $('#ClasseInfo').text();
+			 	  var Matiers = $('#MatiereInfo').text();
+				  var schoolYear = $('#AnneeScolaireInfo').text();
 				  // Initialiser la bibliothèque jsPDF
 				  var doc = new jsPDF();
-
 				  // Ajouter les informations dans la première page du PDF
 				  doc.setFontSize(22);
 				  doc.setTextColor(255, 0, 0); // changer la couleur du texte en rouge
-				  doc.text("Informations générales", 15, 20);
+				  doc.text("Informations générales", 60, 20);
 
 				  doc.setFontSize(16);
 				  doc.setTextColor("black"); // réinitialiser la couleur du texte en noir
 				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
-				  doc.text("Classes : " + nomClasse, 15, 50);
-				  doc.text( moduleList, 15, 60);
-				  doc.text( schoolYear, 15, 70);
+				  doc.text("Classes :" +nomClasse,15, 50);
+				  doc.text(Matiers, 15, 60);
+				  doc.text(schoolYear, 15, 70);
 
 				  // Ajouter une nouvelle page
 				  doc.addPage();
-
 				  // Ajouter un titre pour la nouvelle page
 				  doc.setFontSize(22);
 				  doc.setTextColor(255, 0, 0);
-				  doc.text("Tableau des Cahiers de Textes", 15, 20);
+				  doc.text("Cahiers de Textes", 15, 20);
 
-				  // Définir les en-têtes de colonnes pour votre tableau
-				  var headers = ['Date', 'Activité', 'Matière/Module/Concepts', 'Observation', 'Actions'];
-
-				  // Collecter les données pour votre tableau à partir de la DataTable
-				  var tableData = $('#data_table_cahierTexte').DataTable().rows().data().toArray();
-
-				  // Générer un tableau à partir des en-têtes de colonnes et des données collectées
-			/* 	  doc.autoTable({
-				    startY: 40,
+				  // Ajouter le tableau des données
+				  var headers = ["Seance", "Activité", "Texte", "État"];
+				  var donne = [];
+				  for (var i = 0; i < data.length; i++) {
+					  var rowData = [        
+						  data[i].seance.date,
+					    data[i].activites[0].nom_Fr,
+					   "Matiere : " + data[i].seance.seanceGenerique.matiere.code + "\n" +
+					   "Module  : " + data[i].seance.seanceGenerique.module.nom_Fr + "\n" +
+					   "Chapitre: " + data[i].concepts[0].chapitre.nom + "\n" +
+					   "Concepts: " +  data[i].concepts[0].nom + "\n" +
+					   "Texte   : " + data[i].texte,
+					    data[i].etat
+					  ];
+					  donne.push(rowData);
+					}
+				  doc.autoTable({
 				    head: [headers],
-				    body: tableData,
-				    columnStyles: {
-				      0: {cellWidth: 30},
-				      1: {cellWidth: 50},
-				      2: {cellWidth: 80},
-				      3: {cellWidth: 30},
-				      4: {cellWidth: 30}
-				    },
-				    styles: {
-				      cellPadding: 1,
-				      fontSize: 10
-				    }
-				  }); */
-
-				  // Télécharger le PDF mis à jour
+				    body: donne,
+				    startY: 30
+				  });
+				  var totalPages = doc.internal.pages.length;
+			// Télécharger le PDF 
 				  doc.save('document.pdf');
-				}
+			
+				  // Convert the image to a data URL
+/* 				  var canvas = document.createElement("canvas");
+				  var ctx = canvas.getContext("2d");
+				  var img = new Image();
 
+				  img.onload = function () {
+				    canvas.width = img.width;
+				    canvas.height = img.height;
+				    ctx.drawImage(img, 0, 0, img.width, img.height);
+				
+				    var imageData = canvas.toDataURL("image/jpeg"); // Convert the image to a data URL
+				
+				    // Add the image to the PDF
+				    doc.addImage(imageData, "JPEG", x, y, width, height); // Adjust the coordinates and dimensions as needed
+				
+				    // Generate the PDF
+				    doc.save("document.pdf");
+			};
+			img.src= "C:\Users\khali\OneDrive\Documents\GitHub\School-Management-System\BTS\WebContent\images\MINISTERE-1024x192.jpg";
 
-	
+			 */
+			
+}
+			
+		//fonction pour l'affichage du datatable cahierText par matiere
+		
+		$("#MatiereProf").change(function() {
+			  // Retrieve the selected value of MatiereProf
+			 var MatiereId = $(this).val();
+			 var tableData = $('#data_table_cahierTexte').DataTable();
+			 tableData.rows().remove().draw();		// Vider la TableData 
+			var profId = "${sessionScope.userID}";
+			if (MatiereId === 'default') {
+			    // Show all rows in the datatable
+			    populateCahierTexteDataTable();
+			  } else {
+					$.ajax({
+							url : "../CahierTexteListByMatiere?id=" + <%= request.getParameter("id") %> + "&profId=" + profId + "&MatiereId="+MatiereId,
+							type: "GET",
+							dataType: 'json',
+							success: function(response,textStatus ,jqXHR){
+				                data = response; // assign response to data variable
+								for(i=0;i<response.length;i++){
+									var rang=i+1;
+									var btns='<div class="btn-group dropleft"> \
+										  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
+										  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
+										    <span class="sr-only">Toggle Dropdown</span> \
+										  </button> \
+										  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
+										    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
+									        <div class="dropdown-divider"></div> \
+										  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].seance.id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
+										  	<a class="dropdown-item CahierTexte-update text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-pen mr-4"></span>Modifier</a> \
+										  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
+										  			</div> \
+										</div> ';
+									tableData.row.add([
+										  response[i].seance.date,
+										  response[i].activites[0].nom_Fr,
+										  "<div style='width: 200px;'><strong>Matière : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
+										  "</div style='width: 200px;'><div><strong>Module : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
+										  "</div style='width: 200px;'><div><strong>Chapitre: </strong>" + response[i].concepts[0].chapitre.nom +
+										  "</div style='width: 200px;'><div><strong>Concepts : </strong>" + response[i].concepts[0].nom +
+										  "</div style='width: 200px;'><br><div><strong>Texte : </strong>" + response[i].texte + "</div>",
+										  response[i].etat, 
+										  btns
+										]).draw(false);
+								}
+						    },
+						    error: function(response,textStatus ,jqXHR){
+						    	$("#modalError .modal-body p").html("");
+								$("#modalError .modal-body p").html(jqXHR.responseText);
+						   		$('#modalError .modal-body p').modal('show'); 
+						        }
+						});
+			  }
+			  		
+				});
+
 		
 		
-			//Effacer dabord le formulaire
-  			$('#cahierText_Add_Modal').on('shown.bs.modal', function(evt){
+		
+			
+		
+		
+		//Effacer dabord le formulaire d'ajout
+			$('#cahierText_Add_Modal').on('shown.bs.modal', function(evt){
   				$('#seance_Add_Form').trigger('reset');
   			});
+			
 		//Envoie du formulaire d'ajout de cahier texte
   			$("#seance_Add_Form").submit(function(event){ 
 				var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
 				var request_method = $(this).attr("method"); 	//Lire la méthode du formulaire  GET/POST 
 				var form_data = $(this).serialize(); 			//Encoder les données du formulaire pour envoie
-				$('#cahierText_Add_Modal').modal('hide');			//Fermer la fenetre modal apres envoie du formulaire
+				$('#cahierText_Add_Modal').modal('hide');		//Fermer la fenetre modal apres envoie du formulaire
 				$.ajax({
 					url : post_url,
 					type: request_method,
@@ -860,7 +954,6 @@
 							$("#modalError .modal-body p").html(response.message);
 					   		$('#modalError').modal('show'); 
 						}
-						
 				    },
 				    error: function(response,textStatus ,jqXHR){
 	                    $("#modalError .modal-body p").html("");
@@ -868,80 +961,67 @@
 				   		$('#modalError').modal('show'); 
 				   },
 				   complete: function (response,textStatus ,jqXHR) {
-					 	//Effacer le DataTable Classes
+					 	//Effacer le DataTable cahier texte
 						$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-			  			//Raffrichir le DataTable Classes
+			  			//Raffrichir le DataTable cahier texte
 							populateCahierTexteDataTable();
 			  			}
 				});
 				return false;
 			});	
-			
-  			/*********** Suppression d'un cahier texte ****************
-  			/* 1 - Récuperer l' Id du cahierTexte séléctionner sur la DataTable cahierTexte
-  			/* 2 - Supprimer via ajax le cahierTexte concerné
-  			*****************************************************/
-  			
-  			$('#data_table_cahierTexte').on('click','.CahierTexte-delete', function(evt){
-				$this = $(this);
-				var id= $this.attr('CahierTexteId');
-				$('#modalConfirm').modal('show');
-				$('#modalConfirm').on('click', '#delete', function(e) {
-						$.ajax({
-							url : "../CahierTexteDelete?id="+id,
-							type: "GET",
-							dataType: 'json',
-						success: function(response,textStatus ,jqXHR){
-								
-								$("#modalSuccess .modal-body p").html("");
-								$("#modalSuccess .modal-body p").html(response);
-						   		$('#modalSuccess').modal('show');
-						    	//setTimeout(function() { $('#modalSuccess').modal('hide'); }, 5000);
-						    },
-						    error: function(response,textStatus ,jqXHR){
-						    
-						    	$("#modalError .modal-body p").html("");
-								$("#modalError .modal-body p").html(jqXHR.responseText);
-						   		$('#modalError').modal('show'); 
-						    },
-						    complete: function (response,textStatus ,jqXHR) {
-							 	//Effacer le DataTable Classes
-								$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-					  			//Raffrichir le DataTable Classes
-								populateCahierTexteDataTable();
-						    },
-						});
-				  });
-				return false;
-			});
-  			
- 
-  			
-/////////////////Chargement des seanceGeneriques
-  			$.ajax({
-  			url : "../seanceGeneriqueList?id="+<%= request.getParameter("id")%>,
-  			type: "GET",
-  			dataType: 'json',
-  			contentType: "application/json; charset=UTF-8",
-  			success: function(response,textStatus ,jqXHR){
-  			// the matiere info
-		        $('#MatiereInfo').html('<i class="fa fa-book mr-2"></i> Matière: ' + response[0].matiere.code);
-		     
-  				$("#seance_Add_Form select[name=seanceGenerique]").html("");
-  				$("#seance_Add_Form select[name=seanceGenerique] ").append("<option values=' '>All</option> ");  
+			 
+  		//charegement des SeanceGeneriques..	
+	$.ajax({
+	  url: "../seanceGeneriqueList?id=" + <%= request.getParameter("id") %>,
+	  type: "GET",
+	  dataType: 'json',
+	  contentType: "application/json; charset=UTF-8",
+	  success: function (response, textStatus, jqXHR) {
+		  var MatiereListe = []; // Crée un tableau vide pour stocker les combinaisons uniques de matiere et d'ID
+		  for (var i = 0; i < response.length; i++) {
+		      var matiere = response[i].matiere.code; // Récupère le code de la matière à partir de la réponse
+		      var matiereID = response[i].matiere.id; // Récupère l'ID de la matière à partir de la réponse
+		      
+		      // Vérifie si l'ID de la matière n'existe pas déjà dans le tableau
+		      if (!MatiereListe.some(m => m.id === matiereID)) {
+		          MatiereListe.push({ matiere: matiere, id: matiereID }); // Ajoute la matière et son ID dans le tableau
+		      }
+		  }
+		  // Efface les options existantes dans la liste déroulante (select)
+		  $("#MatiereProf").html("");
 
-  				for(i=0;i<response.length;i++){
-  					var item  ='<option value="'+response[i].id+'">'+ response[i].jour +' de '+ response[i].heureDebut +' a '+ response[i].heureFin +'</option>';
-  					$("#seance_Add_Form select[name=seanceGenerique] ").append(item);       
-  				}	
-  				
-  		    },
-  		    error: function(response,textStatus ,jqXHR){
-  		    	$("#modalError .modal-body p").html("");
-  				$("#modalError .modal-body p").html(jqXHR.responseText);
-  		   		$('#modalError .modal-body p').modal('show'); 
-  		        }
-  		});
+		  // Ajoute l'option par défaut
+		  $("#MatiereProf").append("<option value='default'>-------</option>");
+
+		  // Ajoute chaque matière comme option dans la liste déroulante avec l'ID de la matière comme attribut ID
+		  for (var i = 0; i < MatiereListe.length; i++) {
+		      var matiereOption = '<option value="' + MatiereListe[i].id + '">' + MatiereListe[i].matiere + '</option>';
+		      $("#MatiereProf").append(matiereOption);
+		  }
+		 
+		    $('#MatiereInfo').html('<i class="fa fa-book mr-2"></i> Matières: ' );
+		    
+		    
+		      $("#seance_Add_Form select[name=seanceGenerique]").html("");
+		      $("#seance_Add_Form select[name=seanceGenerique]").append("<option value=''>veuillez choisir</option>");
+		
+		      for (var i = 0; i < response.length; i++) {
+		        var item = '<option value="' + response[i].id + '">' + response[i].jour + ' de ' + response[i].heureDebut + ' à ' + response[i].heureFin + '</option>';
+		        $("#seance_Add_Form select[name=seanceGenerique]").append(item);
+		      }
+		    
+  		},
+	  error: function (jqXHR, textStatus, errorThrown) {
+	    // En cas d'erreur, afficher le message d'erreur dans une fenêtre modale
+	    $("#modalError .modal-body p").html("");
+	    $("#modalError .modal-body p").html(jqXHR.responseText);
+	    $('#modalError').modal('show');
+	 	 }
+});
+
+
+
+  		
   		
  /////////////////////Chargement des AcrivitePedagogique
   			$.ajax({
@@ -963,8 +1043,7 @@
   		        }
   		});  		
  
-
-///////////////les Matieres et les modules de la seancegenerique séléctionnée
+//les Matieres et les modules de la seancegenerique séléctionnée
 // Lorsque l'utilisateur sélectionne une séance générique dans le formulaire d'ajout de séance,
 //cette fonction s'exécute pour charger les matières et les modules associés à cette séance. 
 //Elle utilise deux appels AJAX : le premier pour récupérer les informations sur les matières et les modules,
@@ -1022,6 +1101,7 @@
 		        }
 		    });
 		});
+		
 //////////////Chargement des conceptes dans la select conceptes
 		$("#seance_Add_Form select[name=Chapitre]").change(function(){
 			    // On recupere l concept Id du chapitre
@@ -1051,7 +1131,8 @@
 			        }
 			    });
 		});
-  		
+		
+
 		/*********** Modification de Cahiertexte
 			*****************************************************/
 			
@@ -1064,7 +1145,6 @@
 			$("#seance_Update_Form input[name=Seance]").html('');
 			$("#seance_Update_Form textarea[name=Contenu]").html('');
 			$("#seance_Update_Form input[name=Seance]").html('');
-
 			$this = $(this);
 			var id= $this.attr('CahierTexteId');
 			//Ajouter les valeur initiales  les selects
@@ -1078,8 +1158,8 @@
 					var itemModule ='<option class="bg-danger text-white" value="'+response.seance.seanceGenerique.module.id+'">'+response.seance.seanceGenerique.module.nom_Fr+'</option>';
 					$("#seance_Update_Form input[name=CahierTexteId]").val(response.id);
 					$("#seance_Update_Form input[name=seanceId]").val(response.seance.id);
-					$("#seance_Update_Form textarea[name=Observation]").val(response.seance.observation);
-					$("#seance_Update_Form input[name=Etat]").val(response.seance.etat);
+					$("#seance_Update_Form textarea[name=Observation]").val(response.observation);
+					$("#seance_Update_Form input[name=Etat]").val(response.etat);
 
 					//$("#seance_Update_Form select[name=Activite]").prepend(itemActivite);
 					$("#seance_Update_Form select[name=Matiere]").prepend(itemMatiere);
@@ -1091,7 +1171,6 @@
 
 					// Set the input field value to the formatted date
 					$("#seance_Update_Form input[name=Seance]").val(formattedDate)
-					
 					$('#cahierText_Update_Modal').modal('show');
 			    },
 			    error: function(response,textStatus ,jqXHR){
@@ -1174,7 +1253,6 @@
 			    }
 			});
 		});
-		
   		
 
 /* 5- Envoie du formulaire de modification */
@@ -1222,7 +1300,6 @@
   			//l'état de la séance, la matière et le module de la séance.
   			//Si une erreur se produit pendant la requête ajax, un modal d'erreur est affiché avec le message d'erreur.
 
-
   			$('#data_table_cahierTexte').on('click','.CahierTexte-details', function(evt){
   				$this = $(this);
   				var id= $this.attr('CahierTexteId');
@@ -1260,18 +1337,51 @@
   				return false;
   			});
   			
-			/*********** Charger les infos de la classe  courante ********/
+  			/*********** Suppression d'un cahier texte ****************
+  			/* 1 - Récuperer l' Id du cahierTexte séléctionner sur la DataTable cahierTexte
+  			/* 2 - Supprimer via ajax le cahierTexte concerné
+  			*****************************************************/
+  			$('#data_table_cahierTexte').on('click','.CahierTexte-delete', function(evt){
+				$this = $(this);
+				var id= $this.attr('CahierTexteId');
+				$('#modalConfirm').modal('show');
+				$('#modalConfirm').on('click', '#delete', function(e) {
+						$.ajax({
+							url : "../CahierTexteDelete?id="+id,
+							type: "GET",
+							dataType: 'json',
+						success: function(response,textStatus ,jqXHR){
+								
+								$("#modalSuccess .modal-body p").html("");
+								$("#modalSuccess .modal-body p").html(response);
+						   		$('#modalSuccess').modal('show');
+						    },
+						    error: function(response,textStatus ,jqXHR){
+						    
+						    	$("#modalError .modal-body p").html("");
+								$("#modalError .modal-body p").html(jqXHR.responseText);
+						   		$('#modalError').modal('show'); 
+						    },
+						    complete: function (response,textStatus ,jqXHR) {
+								$('#data_table_cahierTexte').DataTable().rows().remove().draw();
+					  			//Raffrichir le DataTable 
+								populateCahierTexteDataTable();
+						    },
+						});
+				  });
+				return false;
+			});
+  			
+  			
+			/*********** Charger les infos de l'annee  courante ********/
   			$.ajax({
   					url : '../Classe/Details?id='+<%= request.getParameter("id")%>,
   					type: "GET",
   					dataType: 'json',
   					success: function(response,textStatus ,jqXHR){
-  						
   					$('#ClasseInfo').html(response.code);
   				// AnneeScolaireInfo
-					$('#AnneeScolaireInfo').html('<i class="fa fa-calendar-alt mr-2"></i> Année scolaire: ' + response.anneeScolaire.code);
-
-  						
+					$('#AnneeScolaireInfo').html('<i class="fa fa-calendar-alt mr-2"></i>' + response.anneeScolaire.code);
   				    },
   				    error: function(response,textStatus ,jqXHR){
   				    	$("#modalError .modal-body p").html("");
@@ -1279,7 +1389,6 @@
   				   		$('#modalError .modal-body p').modal('show'); 
   				        }
   				});
-
     </script>
 </body>
 </html>

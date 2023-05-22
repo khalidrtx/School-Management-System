@@ -1,5 +1,4 @@
 package dao.programme;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,11 +25,10 @@ public class ChapitreDAO {
 		statement.execute();
 		statement.close();
 	}
-	public ArrayList<Chapitre> getAll() {
+	public ArrayList<Chapitre> getAll() throws SQLException {
 		String sql="select chapitre.ID as chapitreID ,chapitre.Nom as chapitreNom ,chapitre.Description as chapitreDescription\r\n"
 				+ ",matiere.code as matierecode, module.Code as moduleCode  from chapitre,module ,matiere where chapitre.MatiereID=matiere.ID and chapitre.ModuleID=module.ID";
-		
-		try {
+	
 			Statement statement = (Statement) con.createStatement();
 			ResultSet rs= statement.executeQuery(sql);
 			ArrayList<Chapitre> Chapitres = new ArrayList<Chapitre>();
@@ -51,10 +49,37 @@ public class ChapitreDAO {
 				
 				}
 			return Chapitres;
-		} catch (Exception e) {
-			return null;
-		}
+	
 	}	
+	public Chapitre getById(int id) throws SQLException {
+		String sql="select chapitre.ID as chapitreID ,chapitre.Nom as chapitreNom ,chapitre.Description as chapitreDescription\r\n"
+				+ ",matiere.code as matierecode, module.Code as moduleCode  from chapitre,module ,matiere where chapitre.MatiereID=matiere.ID and chapitre.ModuleID=module.ID and chapitre.ID= ? ";
+		
+		
+		PreparedStatement statement =  (PreparedStatement) con.prepareStatement(sql);
+		statement.setInt(1, id);
+			ResultSet rs= statement.executeQuery();
+			Chapitre chapitre = null;
+			while(rs.next()) {
+				chapitre=new Chapitre();
+				chapitre.setId(rs.getInt("chapitreID"));
+				chapitre.setNom(rs.getString("chapitreNom"));
+				chapitre.setDescription(rs.getString("chapitreDescription"));
+
+				Matiere Matiere= new Matiere();
+				Matiere.setCode(rs.getString("matierecode"));
+				Module  Module =new Module();
+				Module.setCode(rs.getString("moduleCode"));
+				chapitre.setMatiere(Matiere);
+				chapitre.setModule(Module);
+				
+				}
+			return chapitre;
+		
+	}	
+		
+	
+	
 		public void Delete(Chapitre Chapitre) throws SQLException {
 			String s="delete from chapitre where ID=?";
 				PreparedStatement st=(PreparedStatement) con.prepareStatement(s);

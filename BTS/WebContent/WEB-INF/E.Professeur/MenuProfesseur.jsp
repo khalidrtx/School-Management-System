@@ -8,6 +8,9 @@
 	           <li> 
 	              <a href="${pageContext.request.contextPath}/E.Professeur/Classe"><span class="fa fa-chalkboard-teacher"></span>Classes</a>
 	          </li>
+	            <li>
+	            <a href="${pageContext.request.contextPath}/E.Professeur/TableauService"><span class="fa fa-user-tie"></span>Tableau De Service</a>
+	          </li>
 			  <li> 
 	              <a href="#"><span class="far fa-calendar-alt"></span>Emplois</a>
 	          </li>

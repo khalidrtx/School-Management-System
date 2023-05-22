@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import Domaine.matiere.Matiere;
 import Domaine.matiere.Module;
-
+import Domaine.classe.AnneeScolaire;
 import Domaine.classe.Classe;
-
-
+import Domaine.classe.ClasseGenerique;
+import Domaine.classe.Cycle;
 import Domaine.classe.Filiere;
 import Domaine.classe.Niveau;
 import Domaine.emploiDuTemps.SeanceGenerique;
@@ -164,6 +164,116 @@ private Connection con;
 		statement.close();
 		return tab;
 	}
+	public ArrayList<SeanceGenerique> getEmploiByProf(int id) throws SQLException{
+		String query="SELECT\r\n"
+				+ "    `matiere`.`code` AS matiere, "
+				+ "    seancegenerique.ID as seancegeneriqueID,\r\n"
+				+ "    module.code AS module,\r\n"
+				+ "    `classe`.`label` AS label,"
+				+ "    `classe`.`ID` as classeID,\r\n"
+				+ "    `salle`.`Code` AS salle,\r\n"
+				+ "    `jour`,\r\n"
+				+ "    `HeureDebut` AS Debut,\r\n"
+				+ "    `HeureFin` AS Fin,\r\n"
+				+ "    classegenerique.ID as classegeneriqueID ,\r\n"
+				+ "    classegenerique.FiliereID classegeneriqueFiliereID,\r\n"
+				+ "    filiere.Code as filiereCode ,\r\n"
+				+ "    anneescolaire.ID as anneescolaireID ,\r\n"
+				+ "    anneescolaire.Code as anneescolaireCode,  "
+				+ "    cycle.Code as cycleCode ,\r\n"
+				+ "    niveau.Code as niveauCode \r\n"
+				+ "    \r\n"
+				+ "    \r\n"
+				+ "FROM\r\n"
+				+ "    `matiere`,\r\n"
+				+ "    module,\r\n"
+				+ "    `professeur`,\r\n"
+				+ "    `salle`,\r\n"
+				+ "    `seancegenerique`,\r\n"
+				+ "    `utilisateur`,\r\n"
+				+ "    classe,\r\n"
+				+ "    classegenerique,\r\n"
+				+ "    filiere,\r\n"
+				+ "    anneescolaire,"
+				+ "     cycle,\r\n"
+				+ "    niveau\r\n"
+				+ "WHERE\r\n"
+				+ "    `professeur`.`UtilisateurID` = `utilisateur`.`ID` "
+				+ "AND `seancegenerique`.`ProfesseurUtilisateurID` = `professeur`.`UtilisateurID` "
+				+ "AND `salle`.`ID` = `seancegenerique`.`SalleID` AND `seancegenerique`.`MatiereID` = `matiere`.`ID` "
+				+ "AND seancegenerique.ClasseID = classe.ID AND seancegenerique.ModuleID = module.ID "
+				+ "AND classegenerique.ID=classe.ClasseGeneriqueID and classegenerique.FiliereID=filiere.ID "
+				+ "AND classe.AnneeScolaireID=anneescolaire.ID AND classegenerique.NiveauID=niveau.ID and classegenerique.CycleID=cycle.ID  AND seancegenerique.ProfesseurUtilisateurID = ?";
+		/*
+		 * String query =
+		 * "SELECT  `matiere`.`code` as matiere ,module .code as module,`classe`.`label` as label,`salle`.`Code` as salle,`jour`,`HeureDebut` as Debut,`HeureFin` as Fin\r\n"
+		 * +
+		 * "						FROM `matiere`	,module, `professeur` , `salle` ,`seancegenerique`	, `utilisateur`,classe where `professeur`.`UtilisateurID` = `utilisateur`.`ID`and "
+		 * +
+		 * "`seancegenerique`.`ProfesseurUtilisateurID`= `professeur`.`UtilisateurID`	and `salle`.`ID`=`seancegenerique`.`SalleID`and `seancegenerique`.`MatiereID`=`matiere`.`ID` "
+		 * +
+		 * "and seancegenerique.ClasseID=classe.ID and seancegenerique.ModuleID=module.ID and seancegenerique.ProfesseurUtilisateurID=?; "
+		 * ;
+		 */
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement(query);
+		statement.setInt(1, id);
+		ResultSet rs = statement.executeQuery();
+		ArrayList<SeanceGenerique> sgn = new ArrayList();
+		
+		while (rs.next()) {
+			  
+			Salle salle=new Salle();
+			salle.setCode(rs.getString("salle"));
+			
+			Matiere matiere =new Matiere();
+			matiere.setCode(rs.getString("matiere"));
+			Module module=new Module();
+			module.setCode(rs.getString("module"));
+			 
+			Niveau Niveau=new Niveau();
+			Niveau.setCode(rs.getString("niveauCode"));
+			
+			Cycle Cycle=new Cycle();
+			Cycle.setCode(rs.getString("cycleCode"));
+			
+			Filiere  Filiere=new Filiere();
+			Filiere.setCode(rs.getString("filiereCode"));
+			ClasseGenerique ClasseGenerique= new ClasseGenerique();
+			ClasseGenerique.setId(rs.getInt("classegeneriqueID"));
+			ClasseGenerique.setFiliere(Filiere);
+			ClasseGenerique.setNiveau(Niveau);
+			ClasseGenerique.setCycle(Cycle);
+			ClasseGenerique.setCode();
+			
+			AnneeScolaire AnneeScolaire=new AnneeScolaire();
+			AnneeScolaire.setCode(rs.getString("anneescolaireCode"));
+			
+			Classe classe=new Classe();
+			classe.setId(rs.getInt("classeID"));
+			classe.setClasseGenerique(ClasseGenerique);
+			classe.setLabel(rs.getString("label"));
+			classe.setAnneeScolaire(AnneeScolaire);
+			classe.setCode();
+			
+			SeanceGenerique seg=new SeanceGenerique();
+			seg.setId(rs.getInt("seancegeneriqueID"));
+			seg.setHeureFin(rs.getString("Fin"));
+			seg.setHeureDebut(rs.getString("Debut"));
+			seg.setJour(rs.getString("jour"));
+			//seg.setId(rs.getInt("ID"));
+			seg.setClasse(classe);
+			seg.setMatiere(matiere);
+			seg.setSalle(salle);
+			seg.setModule(module);
+			sgn.add(seg);
+			}
+		rs.close();
+		statement.close();
+		return sgn;
+						
+			
+}
+	
 	public  ArrayList<SeanceGenerique> getMatiereModulebyseancegen(int seancegen) throws SQLException{
 		String sql="SELECT\r\n"
 				+ "    `seancegenerique`.`ID` AS 'seancegeneriqueID',\r\n"
@@ -210,6 +320,44 @@ private Connection con;
 			return tab;
 		
 	}
+	public ArrayList<SeanceGenerique> getAll(int id) throws SQLException{
+		String query = "SELECT   `seancegenerique`.ID  as ID,`matiere`.`code` as matiere,module.code as module, `utilisateur`.`Nom_Fr`as professeur, `salle`.`Code` as salle,`jour`,`HeureDebut` as Debut,`HeureFin` as Fin\r\n"
+				+ "				FROM `matiere`	,module , `professeur` , `salle` ,`seancegenerique`	, `utilisateur`,classe where `professeur`.`UtilisateurID` = `utilisateur`.`ID`and `seancegenerique`.`ProfesseurUtilisateurID`= `professeur`.`UtilisateurID`	and `salle`.`ID`=`seancegenerique`.`SalleID`and `seancegenerique`.`MatiereID`=`matiere`.`ID` and `seancegenerique`.`ModuleID`=`module`.`ID`and seancegenerique.ClasseID=classe.ID and seancegenerique.ClasseID=?;";
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement(query);
+		statement.setInt(1, id);
+		ResultSet rs = statement.executeQuery();
+		ArrayList<SeanceGenerique> sgn = new ArrayList();
+		
+		while (rs.next()) {
+			  
+			Salle salle=new Salle();
+			salle.setCode(rs.getString("salle"));
+			
+			Matiere matiere =new Matiere();
+			matiere.setCode(rs.getString("matiere"));
+			Module module =new Module();
+			module.setCode(rs.getString("module"));
+			
+			Professeur prof=new Professeur();
+			prof.setNom_Fr(rs.getString("professeur"));
+			
+			
+			SeanceGenerique seg=new SeanceGenerique();
+			seg.setId(rs.getInt("ID"));
+			seg.setHeureFin(rs.getString("Fin"));
+			seg.setHeureDebut(rs.getString("Debut"));
+			seg.setJour(rs.getString("jour"));
+			seg.setProfesseur(prof);
+			seg.setMatiere(matiere);
+			seg.setSalle(salle);
+			sgn.add(seg);
+			}
+		rs.close();
+		statement.close();
+		return sgn;
+						
+			
+}
 	
 	
 }

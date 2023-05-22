@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="UTF-8"%>
-    
+<%@ page session="true" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-  	<title>Profile</title>
+  	<title>Tableau De Service </title>
   	
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,6 +16,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstap.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css" >
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		
 	<style type="text/css">
 	body{
@@ -158,8 +160,12 @@
 			small.required {
 			    color:#f00;
 			}
+			
 .modal-backdrop {
    /* display: none; */
+}
+#emploi .text{
+z-index:-1;
 }
 	/**************** Data Table *******************/
 	
@@ -169,7 +175,7 @@
 	<div class="wrapper d-flex align-items-stretch">
 		<nav id="sidebar" class="active">
 			<h1><a href="index.html" class="logo"><span class="fa fa-cubes"></span></a></h1>
-	      	<%@include file="MenuInspecteur.jsp" %>
+	      	<%@include file="MenuProfesseur.jsp" %>
 		</nav>
 	<!-- Page Content  -->
       <div id="content" class="container">
@@ -208,7 +214,7 @@
 					      <h5 class="dropdown-header text-primary text-center">${sessionScope.userFirstName_Fr} &nbsp; ${sessionScope.userLastName_Fr}</h5>
 					      <h5 class="dropdown-header text-muted text-center">${sessionScope.userRole}</h5>
 					      <div class="dropdown-divider"></div>
-					      <a class="dropdown-item" href="${pageContext.request.contextPath}/E.Inspecteur/Profile?userId=${sessionScope.userID}">
+					      <a class="dropdown-item" href="${pageContext.request.contextPath}/E.DirecteurEtudes/Profile?userId=${sessionScope.userID}">
 					      		<span class="fa fa-id-card mr-2"></span>
 					      		Profile
 					      </a>
@@ -226,42 +232,30 @@
           </div>
         </nav>
 <!-- Start content -->
+	
 	<div class="container"> 
 		<div class="row">
 		<div class="col-md-9"> <!-- Col 1 -->
-			<div class="alert bg-light text-secondary" role="alert">
-	   			<i class="fa fa-chalkboard mr-2"></i>
-	   			Classe:
-	   				<span id="ClasseInfo"></span>
-	   				<span id="MatiereInfo"></span>
-	   				
-	   			 
-		    </div>
-		    <div class="alert bg-light text-secondary" role="alert">
-	   			Ajouter une seance:	   			 
-		        <a href="#" data-toggle="modal" data-target="#classeGenerique_Add_Modal" class="btn btn-outline-info float-right" title="Ajouter une Classe génirique"><i class="fa fa-plus"></i></a>
-		    </div>
-			<table id="data_table_cahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>Seance</th>
-						<th>Texte</th>
-					    <th>activiter</th>
-					    <th>Etat</th>
-			            <th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		<!-- Début : Modal Add New Etudiant -->
-				<div id="classeGenerique_Add_Modal" class="modal" tabindex="-1" role="dialog">
+	
+		<div class="panel with-nav-tabs panel-primary">
+		     <div class="panel-heading">
+					<nav class="nav nav-tabs flex-column flex-sm-row"  id="Tab-Content" role="tablist">
+					    <a id="tab_EmploieDuTemps" href="#content-tab-EmploieDuTemps" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="content-tab-EmploieDuTemps" aria-selected="false">
+					        <i class="fa fa-calendar-alt mr-2"></i> Tableau de service
+					    </a>
+					    <a id="tab_Absences" href="#content-tab-Absencess" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="content-tab-Absences" aria-selected="false">
+								<!-- 	 <i class="fa fa-user-check mr-2"></i> ...-->					   
+ 							</a>
+					</nav>
+			</div>
+			<!-- debut	: cahierText_Add_Modal-->
+			<div id="cahierText_Add_Modal" class="modal" tabindex="-1" role="dialog">
 					<div class="modal-dialog modal-lg">
 					<form id="seance_Add_Form" method="POST" action="../CahierTexteADD" enctype="multipart/form-data">
 				      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
 				          	<div class="modal-header bg-info">
 				        		<h4 class="modal-title text-white">
-				        			Ajouter une Inspection
+				        			Cahier de texte
 				        		</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			    					<span aria-hidden="true">&times;</span>
@@ -272,19 +266,34 @@
 					   						<!-- Début : Contact  -->
 					   							<div class="row">
 					   								<!-- colone Francais -->
+					   								<!-- Hidden input for seancegeneriqueid -->
+    														<input type="hidden" name="seanceGenerique" />
 								                	<div class="col-md-6">
-								                   <div class="form-group row">
-					                         	 
-								                      
+								             
 								                        <div class="form-group row">
-								                            <label for="Contenu" class="control-label col-md-4">Inspection</label> 
+								                            <label for="Seance" class="control-label col-md-4">Seance </label> 
+								                            <div class="col-md-8">
+								                                <input type="date" name="Seance" class="form-control" required/>
+								                            </div>
+								                        </div>
+					                      
+								                        <div class="form-group row">
+								                            <label for="Contenu" class="control-label col-md-4">Contenu</label> 
 								                            <div class="col-md-8">
 								                            
 								                                <textarea type="text" name="Contenu" class="form-control" placeholder="texte..." /></textarea>
 								                                
 								                            </div>
 								                        </div>
-								                       
+								                        <div class="form-group row">
+								                            <label for="Activite" class="control-label col-md-4">Activite pedagogique</label> 
+								                            <div class="col-md-8">
+																		<select id="Activite" class="form-control" name="Activite" >
+																		<option value="">Select an option</option>
+				 														</select>	
+				 											 </div>
+								                        </div>
+								                 
 								                         <div class="form-group row">
 								                            <label for="adresseFr" class="control-label col-md-4">Observation</label> 
 								                            <div class="col-md-8">
@@ -292,12 +301,16 @@
 								                            </div>
 								                        </div>
 								                           <div class="form-group row">
-								                            <label for="adresseFr" class="control-label col-md-4">chi 7aja</label> 
+								                            <label for="adresseFr" class="control-label col-md-4">Etat de seance</label> 
 								                            <div class="col-md-8">
-								                            	<input type="text" name="Etat" class="form-control" placeholder="Etat.."></textarea>
+								                            	<select name="Etat" class="form-control">
+								                            		<option value="passe">passe</option>
+								                            		<option value="abcence">abcense</option>
+								                            		<option value="annuler">annuler</option>
+								                            		<option value="jour ferie">jour ferie</option>
+								                            	</select>
 								                            </div>
 								                        </div>
-								                        
 							                   		</div>
 							                        <!-- colone Arabe -->
 							                        <div class="col-md-6">
@@ -316,23 +329,110 @@
 								                            	<select name="Module" class="form-control" readonly>
 								                            		
 								                            	</select>
-								                            	</div>
+								                       	</div>
+								                 	       </div>
+								                              <div class="form-group row">
+								                            <label for="Chapitre" class="control-label col-md-4">Chapitre</label> 
+								                            <div class="col-md-8">
+																	<select id="Chapitre" class="form-control" name="Chapitre" >
+																			<option value="">Select an option</option>
+				 													</select>	
+				 											 </div>
 								                        </div>
+								                         <div class="form-group row">
+															<label for="Concepte" class="control-label col-md-4">Concept</label> 
+															<div class="col-md-8">
+																<div class="select-wrapper">
+																	<select id="Concepte" class="form-control my-select" name="Concepte" >
+																		<option value="3">select an option</option>
+																	</select>	
+																</div>
+															</div>
+														</div>
 							                        </div>
 					   							</div>
-					   						<!-- Fin : Contact -->
+					   					
 					   						</div>
 					   						
 							   		 </div>
 										<div class="modal-footer ">
 								        		<input type="submit" class="btn btn-primary" value="Enregistrer">
 										        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-								      </div>			 
+							 </div>			 
 					 	</div>
 				 	</form>
 				</div>			 
-			</div>			 
-		</div> <!-- /Col 1 -->
+			</div>		
+			<!-- Fin: cahierText_Add_Modal-->
+		    <div class="panel-body">
+<!-- Tab content -->
+		<!-- Content tab 2 	: EmploieDuTemps-->
+				<div id="content-tab-EmploieDuTemps" class="tab-pane"  role="tabpanel" aria-labelledby="content-tab-EmploieDuTemps">
+						<div class="alert bg-light text-secondary" role="alert">
+							   			
+						  <table id="faty" class="table table-striped table-bordered rounded mt-5"cellspacing="0" width="100%">
+								<thead class="text-center">
+									<tr class="bg-warning">
+										<th></th>
+										<th>8-10</th>
+							            <th>10-12</th>
+							            <th>14-16</th>
+							            <th>16-18</th>
+									</tr>
+								</thead>
+				<tbody>
+						<tr>
+								<th class="bg-warning text-center">LUN</th>
+					            <td id="Lundi_8H_10H"></td>
+					            <td id="Lundi_10H_12H"></td>
+					            <td id="Lundi_14H_16H"></td>
+					            <td id="Lundi_16H_18H"></td>
+					</tr>
+					<tr>
+								<th class="bg-warning text-center">MAR</th>
+					            <td id="Mardi_8H_10H"></td>
+					            <td id="Mardi_10H_12H"></td>
+					            <td id="Mardi_14H_16H"></td>
+					            <td id="Mardi_16H_18H"></td>
+					</tr>
+					<tr>
+								<th class="bg-warning text-center">MER</th>
+					             <td id="Mercredi_8H_10H"></td>
+					            <td id="Mercredi_10H_12H"></td>
+					            <td id="Mercredi_14H_16H"></td>
+					            <td id="Mercredi_16H_18H"></td>
+					</tr>
+					<tr>
+								<th class="bg-warning text-center">JEU</th>
+					            <td id="Jeudi_8H_10H"></td>
+					            <td id="Jeudi_10H_12H"></td>
+					            <td id="Jeudi_14H_16H"></td>
+					            <td id="Jeudi_16H_18H"></td>
+					</tr>
+					<tr>
+								<th class="bg-warning text-center">VEN</th>
+					            <td id="Vendredi_8H_10H"></td>
+					            <td id="Vendredi_10H_12H"></td>
+					            <td id="Vendredi_14H_16H"></td>
+					            <td id="Vendredi_16H_18H"></td>
+					</tr>
+					<tr>
+						<th class="bg-warning text-center">SAM</th>
+			            <td id="Samedi_8H_10H"></td>
+			            <td id="Samedi_10H_12H"></td>
+			            <td id="Samedi_14H_16H"></td>
+			            <td id="Samedi_16H_18H"></td>
+					</tr>
+				</tbody>
+			</table>
+			 </div>
+			</div>
+				</div>
+				
+			 </div>
+		  
+		</div>
+	 <!-- /Col 1 -->
 		<div class="col-md-3"> <!-- Col 2 -->
 			<div class="panel with-nav-tabs panel-primary">
 		     <div class="panel-heading">
@@ -446,6 +546,29 @@
   	</div>
 </div>
 <!-- Fin : Moad Confirmation-->
+<!-- Début : Moad Confirmation Retirer étudiant de la classe-->
+<div id="modalConfirmRemove" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-confirm " role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+				<div class="icon-box bg-warning">
+					<i class="material-icons fa fa-exclamation-triangle"></i>
+				</div>				
+				<h4 class="modal-title text-center">Confirmation ?</h4>	
+		  </div>
+		  <div class="modal-body">
+				<p class="text-center">
+					Etes vous sûre de vouloir retirer l'étudiant sélectionné de la classe ?
+				</p>
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" data-dismiss="modal" class="btn btn-warning  mr-auto" id="remove">Confirmer</button>
+		    <button type="button" data-dismiss="modal" class="btn btn-secondary  ">Annuler</button>
+		  </div>
+		 </div>
+  	</div>
+</div>
+<!-- Fin : Moad Confirmation Retirer étudiant de la classe-->
 <!-- Début : Moad Loading Ajax -->
 <div id="loading-image" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm" >
@@ -456,7 +579,7 @@
 </div>
 <!-- Fin : Moad Loading Ajax -->
 
-	<script src="${pageContext.request.contextPath}/js/jquery.min.js" ></script>
+		<script src="${pageContext.request.contextPath}/js/jquery.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js" ></script>
 	
 	<script src="${pageContext.request.contextPath}/js/popper.js" type="text/javascript"></script>
@@ -478,8 +601,9 @@
     
     
   	<script type="text/javascript">
-  	
-  	$(document).ready(function() {
+
+	$(document).ready(function() {
+	  	 
   		/**************** Début : Ajax Load Animation *************************/
   		$(document).ajaxStart(function(){
   			$('#loading-image').show();
@@ -488,180 +612,45 @@
   			$('#loading-image').hide();
 		 });
 		/*******************Fin : Ajax Load Animation *************************/
-  		/************** DataTable du Tab : ClasseGeneriques **************/
-  		// Initialisation du DataTable ClasseGeneriques
-  		$('#data_table_cahierTexte').DataTable(
-  			{	
-  				"paging": true,
-  				"autoWidth": true,
-  				"columnDefs": [
-  					{ "orderable": false, "targets": 2 }
-  				],
-  				"language": {
-  		            "lengthMenu": "Display _MENU_ records per page",
-  		            "zeroRecords": "Pas d'enregistrement à afficher",
-  		            "info": "Affichage : _PAGE_ / _PAGES_",
-  		            "infoEmpty": "No records available",
-  		            "infoFiltered": "(filtered from _MAX_ total records)"
-  		        },
-  				"columnDefs": [
-		             {
-		                 "targets": [ 0 ],
-		                 "visible": true,
-		                 "searchable": false,
-		                 "orderable": true
-		             },
-		             {
-		                 "targets": [ 2 ],
-		                 "visible": true
-		                 
-		             }
-  				 ],
-  				dom: 'Bfrtip',
-  		        buttons: [
-  		            'copy', 
-  		            'csv', 
-  		            'excel', 
-  		            'pdf', 
-  		            'print'
-  		        ]
-  			}
-  		);
-  		/******* fonction pour charger la liste des ClasseGeneriques dans la TableData ClasseGeneriques ******/
-		function populateTexteDataTable(){
-			var tableData = $('#data_table_cahierTexte').DataTable();
-			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
-			$.ajax({
-				url : "../CahierTexteList?id="+<%= request.getParameter("id")%>,
-				type: "GET",
-				dataType: 'json',
-				success: function(response,textStatus ,jqXHR){
-					for(i=0;i<response.length;i++){
-						var rang=i+1;
-						var btns='<div class="btn-group dropleft"> \
-							  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
-							  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
-							    <span class="sr-only">Toggle Dropdown</span> \
-							  </button> \
-							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
-							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
-						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
-							  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
-							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ProgrammeClasseGenerique?id='+response[i].id+'" CahierTexteId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
-							  			</div> \
-							</div> ';
-							
-						tableData.row.add( [
-							
-				             		 response[i].seance.date,
-						             response[i].texte,
-						             response[i].seance.observation,
-						             response[i].seance.etat,
-						             btns
-						         ] ).draw( false );
-					}
-			    },
-			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
-			});
-		};
 		
-		//Chargement des Classes Génériques dans le DataTable ClassesGeneriques
-			populateTexteDataTable();			
-			/*********** Affichage des détails d'une ClasseGenerique******************
-			/* 1 - Récuperer l' Id de la filière séléctionner sur la DataTable Filiers
-			/* 2 - Charger par ajax la filière concernée
-			/* 3 - Afficher les détails de la filière concernée
-			**************************************************************************/
-			
-			$('#data_table_cahierTexte').on('click','.classeGenerique-details', function(evt){
-			$this = $(this);
-			var id= $this.attr('classeGeneriqueId');
-			$.ajax({
-				url : "../ClasseGenerique/Details?id="+id,
-				type: "GET",
-				dataType: 'json',
-				//contentType: "application/json; charset=UTF-8",
-				success: function(response,textStatus ,jqXHR){
-					var codeItem ='<li class="list-group-item"><span><strong>Code 		</strong></span><span class="float-right">'+response.code+'</span></li>';
-					var cycleItem ='<li class="list-group-item"><span><strong>Cycle 	</strong></span><span class="float-right">'+response.cycle.code+'</span></li>';
-					var filiereItem ='<li class="list-group-item"><span><strong>Filière	</strong></span><span class="float-right">'+response.filiere.code+'</span></li>';
-					var niveauItem ='<li class="list-group-item"><span><strong>Niveau	</strong></span><span class="float-right">'+response.niveau.code+'</span></li>';
-					var descriptionItem ='<li class="list-group-item"><span><strong>Description	</strong></span><span class="float-right">'+response.description+'</span></li>';
-					
-					$("#classeGenerique_Details_Modal .list-group").html("");
-					$("#classeGenerique_Details_Modal .list-group").append(codeItem);
-					$("#classeGenerique_Details_Modal .list-group").append(cycleItem);
-					$("#classeGenerique_Details_Modal .list-group").append(filiereItem);
-					$("#classeGenerique_Details_Modal .list-group").append(niveauItem);
-					$("#classeGenerique_Details_Modal .list-group").append(descriptionItem);
-					
-					$('#classeGenerique_Details_Modal').modal('show');
-			    },
-			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
-			});
-			return false;
-		});
+  		/************** DataTable du Tab : Classes **************/
+	  		// Initialisation du DataTable Classes
+	  		$('#data_table_classes').DataTable(
+	  			{	
+	  				"paging": true,
+	  				"autoWidth": true,
+	  				
+	  				"columnDefs": [
+			             {
+			                 "targets": [ 0 ,6],
+			                 "visible": true,
+			                 "searchable": false,
+			                 "orderable": false
+			             } ],
+	  				dom: 'Bfrtip',
+	  		        buttons: [
+	  		            'copy', 
+	  		            'csv', 
+	  		            'excel', 
+	  		            'pdf', 
+	  		            'print'
+	  		        ]
+	  			}
+	  		);
 		
-  	});
-	
-////////////////////////////////////////////////
-function populateCahierTexteDataTable(){
-	var tableData = $('#data_table_cahierTexte').DataTable();
-	//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
-	$.ajax({
-		url : "../CahierTexteList?id="+<%= request.getParameter("id")%>,
-		type: "GET",
-		dataType: 'json',
-		success: function(response,textStatus ,jqXHR){
-			for(i=0;i<response.length;i++){
-				var rang=i+1;
-				var btns='<div class="btn-group dropleft"> \
-					  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
-					  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
-					    <span class="sr-only">Toggle Dropdown</span> \
-					  </button> \
-					  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
-					    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
-				        <div class="dropdown-divider"></div> \
-					  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
-					  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
-					  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ProgrammeClasseGenerique?id='+response[i].id+'" CahierTexteId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
-					  			</div> \
-					</div> ';
-					
-				tableData.row.add( [
-					
-		             		 response[i].seance.date,
-				             response[i].texte,
-				             response[i].seance.observation,
-				             response[i].seance.etat,
-				             btns
-				         ] ).draw( false );
-			}
-	    },
-	    error: function(response,textStatus ,jqXHR){
-	    	$("#modalError .modal-body p").html("");
-			$("#modalError .modal-body p").html(jqXHR.responseText);
-	   		$('#modalError .modal-body p').modal('show'); 
-	        }
-	});
-};
 
-  		//Envoie du formulaire d'ajout de cahier texte
+
+	  	//Effacer dabord le formulaire d'ajout
+			$('#cahierText_Add_Modal').on('shown.bs.modal', function(evt){
+  				$('#seance_Add_Form').trigger('reset');
+  			});
+			
+		//Envoie du formulaire d'ajout de cahier texte
   			$("#seance_Add_Form").submit(function(event){ 
 				var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
 				var request_method = $(this).attr("method"); 	//Lire la méthode du formulaire  GET/POST 
 				var form_data = $(this).serialize(); 			//Encoder les données du formulaire pour envoie
-				$('#classeGenerique_Add_Modal').modal('hide');			//Fermer la fenetre modal apres envoie du formulaire
+				$('#cahierText_Add_Modal').modal('hide');		//Fermer la fenetre modal apres envoie du formulaire
 				$.ajax({
 					url : post_url,
 					type: request_method,
@@ -684,140 +673,11 @@ function populateCahierTexteDataTable(){
 						$("#modalError .modal-body p").html(jqXHR.responseText);
 				   		$('#modalError').modal('show'); 
 				   },
-				   complete: function (response,textStatus ,jqXHR) {
-					 	//Effacer le DataTable Classes
-						$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-			  			//Raffrichir le DataTable Classes
-							populateCahierTexteDataTable();
-			  			}
 				});
 				return false;
 			});	
-			
-  			/*********** Suppression d'un cahier texte ****************
-  			/* 1 - Récuperer l' Id du cahierTexte séléctionner sur la DataTable Classes
-  			/* 2 - Supprimer via ajax le cahierTexte concerné
-  			*****************************************************/
-  			
-  			$('#data_table_cahierTexte').on('click','.CahierTexte-delete', function(evt){
-				$this = $(this);
-				var id= $this.attr('CahierTexteId');
-				$('#modalConfirm').modal('show');
-				$('#modalConfirm').on('click', '#delete', function(e) {
-						$.ajax({
-							url : "../CahierTexteDelete?id="+id,
-							type: "GET",
-							dataType: 'json',
-						success: function(response,textStatus ,jqXHR){
-								
-								$("#modalSuccess .modal-body p").html("");
-								$("#modalSuccess .modal-body p").html(response);
-						   		$('#modalSuccess').modal('show');
-						    	//setTimeout(function() { $('#modalSuccess').modal('hide'); }, 5000);
-						    },
-						    error: function(response,textStatus ,jqXHR){
-						    
-						    	$("#modalError .modal-body p").html("");
-								$("#modalError .modal-body p").html(jqXHR.responseText);
-						   		$('#modalError').modal('show'); 
-						    },
-						    complete: function (response,textStatus ,jqXHR) {
-							 	//Effacer le DataTable Classes
-								$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-					  			//Raffrichir le DataTable Classes
-								populateCahierTexteDataTable();
-						    },
-						});
-				  });
-				return false;
-			});
-  			
-  		//detaits cahier texte
-  			$('#data_table_cahierTexte').on('click','.CahierTexte-details', function(evt){
-			$this = $(this);
-			var id= $this.attr('CahierTexteId');
-			$.ajax({
-				url : "../CahierTexteDetails?id="+id,
-				type: "GET",
-				dataType: 'json',
-				contentType: "application/json; charset=UTF-8",
-				success: function(response,textStatus ,jqXHR){
-					var seance ='<li class="list-group-item"><span><strong>seance  </strong></span><span class="float-right">'+response.seance.date+'</span></li>';
-					var nom_FrItem ='<li class="list-group-item"><span><strong>Contenu  </strong></span><span class="float-right">'+response.texte+'</span></li>';
-					var nom_ArItem ='<li class="list-group-item"><span><strong>observation  </strong></span><span class="float-right">'+response.seance.observation+'</span></li>';
-					$("#CahierTexte_Details_Modal .list-group").html("");
-					$("#CahierTexte_Details_Modal .list-group").append(seance);
-					$("#CahierTexte_Details_Modal .list-group").append(nom_FrItem);
-					$("#CahierTexte_Details_Modal .list-group").append(nom_ArItem);
-					$('#CahierTexte_Details_Modal').modal('show');
-			    },
-			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
-			});
-			
-			return false;
-		});
-  		
-  		
-  			/*********** Charger les infos de la classe  courante ********/
-  			$.ajax({
-  					url : '../Classe/Details?id='+<%= request.getParameter("id")%>,
-  					type: "GET",
-  					dataType: 'json',
-  					success: function(response,textStatus ,jqXHR){
-  						
-  					$('#ClasseInfo').html(response.code);
-  						
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
-  				        }
-  				});
-  			/*********** Charger la matiere ********/
-  			 $.ajax({
-  					url : '../ModuleMatiereBySeancegenListe?id='+<%= request.getParameter("id")%>,
-  					type: "GET",
-  					dataType: 'json',
-  					success: function(response,textStatus ,jqXHR){
-  						
-  					//$('#MatiereInfo').html(response.matiere.code);
-  						
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
-  				        }
-  				});
-  			
-  			
-  			//Chargement des seanceGeneriques
-  			$.ajax({
-  			url : "../seanceGeneriqueList?id="+<%= request.getParameter("id")%>,
-  			type: "GET",
-  			dataType: 'json',
-  			contentType: "application/json; charset=UTF-8",
-  			success: function(response,textStatus ,jqXHR){
-  				$("#seance_Add_Form select[name=seanceGenerique]").html("");
-  				$("#seance_Add_Form select[name=seanceGenerique] ").append("<option values=-100 >All</option> ");  
-
-  				for(i=0;i<response.length;i++){
-  					var item  ='<option value="'+response[i].id+'">'+ response[i].jour +' de '+ response[i].heureDebut +' a '+ response[i].heureFin +'</option>';
-  					$("#seance_Add_Form select[name=seanceGenerique] ").append(item);       
-  				}	
-  		    },
-  		    error: function(response,textStatus ,jqXHR){
-  		    	$("#modalError .modal-body p").html("");
-  				$("#modalError .modal-body p").html(jqXHR.responseText);
-  		   		$('#modalError .modal-body p').modal('show'); 
-  		        }
-  		});
-  			//Chargement des AcrivitePedagogique
+		
+  			 /////////////////////Chargement des AcrivitePedagogique
   			$.ajax({
   			url : "../AcrivitePedagogiqueList",
   			type: "GET",
@@ -835,50 +695,152 @@ function populateCahierTexteDataTable(){
   				$("#modalError .modal-body p").html(jqXHR.responseText);
   		   		$('#modalError .modal-body p').modal('show'); 
   		        }
-  		});
-  			
-  			
-  		//////////////////////////////////////////////////////////////////////////////////////////////////////
+  		});  
+  		
+  		// Add click event handler for the book icons
+  			$(document).on('click', '.fa.fa-book.mr-2.book-icon', function() {
+  			  // Retrieve the seancegeneriqueid from the clicked book icon
+ 		 	var seanceGeneriqueId = $(this).closest('a').data('seancegeneriqueid');
+ 		   // Set the value of the hidden input in the modal
+ 		   $('#cahierText_Add_Modal input[name="seanceGenerique"]').val(seanceGeneriqueId);
 
-  			//Chargement des seancegenerique dans la select seancegenerique
-  			$("#seance_Add_Form select[name=seanceGenerique]").change(function(){
-  			//On recupere l Id de la seancegen
-  			var idseancegen=$(this).val();
-  			//On Charge les Matieres et les modules de la seancegenerique séléctionnée
-  			
-  			//if (idseancegen==-100){
-  			//	$("#seance_Add_Form select[name=Matiere]").html("");
-  			//	$("#seance_Add_Form select[name=Module]").html("");  
-  			//}
-  			
-  				$.ajax({
-  					url : "../ModuleMatiereBySeancegenListe?id="+idseancegen,
-  					type: "GET",
-  					dataType: 'json',
-  					contentType: "application/json; charset=UTF-8",
-  					success: function(response,textStatus ,jqXHR){
-  						$("#seance_Add_Form select[name=Matiere]").html("");
-  						$("#seance_Add_Form select[name=Module]").html("");      
+  			 // On Charge les Matieres et les modules de la seancegenerique séléctionnée
+		    $.ajax({
+		        url : "../ModuleMatiereBySeancegenListe?id="+seanceGeneriqueId,
+		        type: "GET",
+		        dataType: 'json',
+		        contentType: "application/json; charset=UTF-8",
+		        success: function(response,textStatus ,jqXHR){
+		            $("#seance_Add_Form select[name=Matiere]").html("");
+		            $("#seance_Add_Form select[name=Module]").html("");      
+		
+		            for(i=0;i<response.length;i++){
+		                var item  ='<option value="'+response[i].matiere.id+'">'+response[i].matiere.code +'</option>';
+		                var item2  ='<option value="'+response[i].module.id+'">'+response[i].module.nom_Fr +'</option>';
+		                $("#seance_Add_Form select[name=Matiere]").append(item);       
+		                $("#seance_Add_Form select[name=Module]").append(item2);       
+		            }
+		            // On Charge les chapitres dans Select chapitre
+		            var selectedMatiere = $("#seance_Add_Form select[name=Matiere]").val();
+		            var selectedModule =  $("#seance_Add_Form select[name=Module]").val();
+		            $.ajax({
+		                url : "../ChapitreByMatiereModuleList?selectedMatiere=" + selectedMatiere + "&selectedModule=" + selectedModule,
+		                type: "GET",
+		                dataType: 'json',
+		                contentType: "application/json; charset=UTF-8",
+		                success: function(response,textStatus ,jqXHR){
+		                    $("#seance_Add_Form select[name=Chapitre]").html("");
+		                    $("#seance_Add_Form select[name=Concepte]").html("");
 
-  						for(i=0;i<response.length;i++){
-  							var item  ='<option value="'+response[i].id+'">'+response[i].matiere.code +'</option>';
-  							var item2  ='<option value="'+response[i].id+'">'+response[i].module.nom_Fr +'</option>';
-  							$("#seance_Add_Form select[name=Matiere]").append(item);       
-  							$("#seance_Add_Form select[name=Module]").append(item2);       
-
-  						}
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
+		                    for(i=0;i<response.length;i++){
+		                        var item  ='<option value="'+response[i].id+'">'+response[i].nom+'</option>';
+		                        $("#seance_Add_Form select[name=Chapitre]").append(item);       
+		                    }   
+		                },
+		                error: function(response,textStatus ,jqXHR){
+		                    $("#modalError .modal-body p").html("");
+		                    $("#modalError .modal-body p").html(jqXHR.responseText);
+		                    $('#modalError .modal-body p').modal('show'); 
+		                }
+		            });
+		        },
+		        error: function(response,textStatus ,jqXHR){
+		            $("#modalError .modal-body p").html("");
+		            $("#modalError .modal-body p").html(jqXHR.responseText);
+		            $('#modalError .modal-body p').modal('show'); 
+		        },
+		        complete: function (response,textStatus ,jqXHR) {
+		            $("#seance_Add_Form select[name=Matiere]").prop('disabled', false);
+		        }
+		    });
+  		});	 
+  			 
+//////////////Chargement des conceptes dans la select conceptes
+  			$("#seance_Add_Form select[name=Chapitre]").change(function(){
+  				    // On recupere l concept Id du chapitre
+  				    var chapitreId=$(this).val();
+  				    // On Charge les  dans select conceptes
+  				    $.ajax({
+  				        url : "../ConcepteByChapitreList?chapitreId="+chapitreId,
+  				        type: "GET",
+  				        dataType: 'json',
+  				        contentType: "application/json; charset=UTF-8",
+  				        success: function(response,textStatus ,jqXHR){
+  				            $("#seance_Add_Form select[name=Concepte]").html("");      
+  				            for(i=0;i<response.length;i++){
+  				            	var item = '<option value="' + response[i].id + '" style="white-space: pre-wrap; word-break: break-all">' + response[i].nom + '</option>';
+  				                $("#seance_Add_Form select[name=Concepte]").append(item);       
+  				            }
+  				            // Add styles to the select element
+  				            $("#seance_Add_Form select[name=Concepte]").addClass("my-select");
   				        },
-  					complete: function (response,textStatus ,jqXHR) {
-  						$("#seance_Add_Form select[name=Matiere]").prop('disabled', false);
-  				    }
-  				});
+  				        error: function(response,textStatus ,jqXHR){
+  				            $("#modalError .modal-body p").html("");
+  				            $("#modalError .modal-body p").html(jqXHR.responseText);
+  				            $('#modalError .modal-body p').modal('show'); 
+  				        },
+  				        complete: function (response,textStatus ,jqXHR) {
+  				            $("#seance_Add_Form select[name=Concepte]").prop('disabled', false);
+  				        }
+  				    });
   			});
-    </script>
-   
+  					 			 
+  			 
+		
+		//////////////////////////////////////////////////////////
+
+		
+		
+		$.ajax({
+		  		  url: "../TableauService/List",
+		  		  type: "GET",
+		  		  dataType: "json",
+		  		  contentType: "application/json; charset=UTF-8",
+		  		  success: function(response, textStatus, jqXHR) {
+		  		    for (var i = 0; i < response.length; i++) {
+		  		      var m =
+		  		        "#" +
+		  		        response[i].jour +
+		  		        "_" +
+		  		        response[i].heureDebut +
+		  		        "_" +
+		  		        response[i].heureFin;
+
+		  		      var bookIcon = "<i class='fa fa-book mr-2 book-icon' style='color: black'></i>";
+		  		   	  var bookLink =
+		  		        "<a href='#' data-toggle='modal' data-target='#cahierText_Add_Modal' data-seancegeneriqueid='" +
+		  		        response[i].id +
+		  		        "'>" +
+		  		        bookIcon +
+		  		        "</a>";
+		  		      var AbsenceIcon = "<a href='#' class='classe-update' href='#' seanceid=" + response[i].id + "><i class='fa fa-user-check' style='color: black'></i></a>";
+		  		      $(m).html(
+		  		        response[i].matiere.code +
+		  		          "<br>" +
+		  		          response[i].classe.code +
+		  		          "  <br>   " +
+		  		          response[i].salle.code +
+		  		          "<br> " +
+		  		          bookLink + " "+AbsenceIcon
+		  		      );
+		  		    }
+		  		    // Add click event handler for the book icons
+		  		    $(".fa fa-book mr-2 book-icon").click(function() {
+		  		      // Show the modal here
+		  		      $('#cahierText_Add_Modal').modal('show');
+		  		    });
+		  		  },
+		  		  error: function(response, textStatus, jqXHR) {
+		  		    $("#modalError .modal-body p").html("");
+		  		    $("#modalError .modal-body p").html(jqXHR.responseText);
+		  		    $("#modalError .modal-body p").modal("show");
+		  		  }
+		  		});
+
+				
+	 });	
+ </script>
+  	
+  
 </body>
 </html>

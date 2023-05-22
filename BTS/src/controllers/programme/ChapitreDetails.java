@@ -1,7 +1,8 @@
-package controllers.cahierTexte;
-
+package controllers.programme;
+import dao.programme.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,50 +13,45 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import Domaine.cahierTexte.CahierTexte;
-import Domaine.cahierTexte.Inspection;
-import dao.cahierTexte.InspectionDAO;
+import Domaine.classe.AnneeScolaire;
+import Domaine.classe.Niveau;
+import Domaine.programme.Chapitre;
 
 /**
- * Servlet implementation class InspectionDetails
+ * Servlet implementation class ChapitreDetails
  */
-@WebServlet("/InspectionDetails")
-public class InspectionDetails extends HttpServlet {
+@WebServlet("/ChapitreDetails")
+public class ChapitreDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private InspectionDAO inspectionDAO;
-       
-    public InspectionDetails() {
+	private ChapitreDAO ChapitreDAO;
+    public ChapitreDetails() {
         super();
-        inspectionDAO=new InspectionDAO();
+        ChapitreDAO = new ChapitreDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json=null;
 		int id =Integer.parseInt(request.getParameter("id"));
-		Inspection inspection= new Inspection();
+		Chapitre Chapitre= new Chapitre();
 		try {
 			
-			inspection = inspectionDAO.getById(id);
+			Chapitre = ChapitreDAO.getById(id);
 			Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
-			json = gson.toJson(inspection);
+			json = gson.toJson(Chapitre);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print(json);
 			out.flush();
 			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			json = new Gson().toJson(e.getMessage());
 			e.printStackTrace();
 		}
+		
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }
+
+
+
+

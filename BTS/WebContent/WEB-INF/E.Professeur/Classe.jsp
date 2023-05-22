@@ -436,11 +436,11 @@
 							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
 						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
+							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Infos</a> \
 							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Professeur/CahierTexte?id='+response[i].id+'" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Cahier Texte</a> \
-							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Professeur/EmploisDuTemps?id='+response[i].id+'" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Emploi</a> \
-							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Professeur/ProgrammeClasseGenerique?id='+response[i].id+'" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
-							  </div> \
+							  	<div class="dropdown-divider"></div> \
+							  	<a class="dropdown-item classe-full-details text-primary" href="${pageContext.request.contextPath}/E.Professeur/Details?id='+response[i].id+'" classeId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Détails</a> \
+							  			</div> \
 							</div> ';
 						tableData.row.add( [
 						             rang,

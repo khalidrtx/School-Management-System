@@ -78,8 +78,8 @@ public class CahierTexteUpdate extends HttpServlet {
 
 	        	Seance=SeanceDAO.getById(seanceId);
 	        	Seance.setDate(sqlDate);
-	        	Seance.setEtat(Etat);
-	        	Seance.setObservation(Observation);
+//	        	Seance.setEtat(Etat);
+//	        	Seance.setObservation(Observation);
 	        	SeanceDAO.update(Seance);//to do
 
 	        	concepte.setId(Conceptid);
@@ -90,6 +90,8 @@ public class CahierTexteUpdate extends HttpServlet {
 	        	CahierTexte.setId(CahierTexteId);
 	        	CahierTexte.setSeance(Seance);
 	        	CahierTexte.setTexte(Contenu);
+	        	CahierTexte.setEtat(Etat);
+	        	CahierTexte.setObservation(Observation);
 	        	CahierTexte.addActivite(AcrivitePedagogique);
 	        	CahierTexte.addConcept(concepte);
 

@@ -37,6 +37,32 @@ public class ConceptDAO {
 		st.setInt(2, Concept.getId());
 		st.executeUpdate();
 	}
+	//to do
+	public Concept getById(int id) throws SQLException {
+		String sql="";
+		
+		PreparedStatement statement =  (PreparedStatement) con.prepareStatement(sql);
+		statement.setInt(1, id);
+			ResultSet rs= statement.executeQuery();
+			Concept Concept = null;
+			while(rs.next()) {
+				
+				Chapitre chapitre=new Chapitre();
+				chapitre.setId(rs.getInt("chapitreID"));
+				chapitre.setNom(rs.getString("chapitreNom"));
+				chapitre.setDescription(rs.getString("chapitreDescription"));
+
+				Matiere Matiere= new Matiere();
+				Matiere.setCode(rs.getString("matierecode"));
+				Module  Module =new Module();
+				Module.setCode(rs.getString("moduleCode"));
+				chapitre.setMatiere(Matiere);
+				chapitre.setModule(Module);
+				
+				}
+			return Concept;
+		
+	}	
 	
 	public ArrayList<Concept> getAllConceptByChapitre(int chapitrId) {
 		String sql="SELECT ID,ChapitreID,Nom,Description FROM `concept` WHERE ChapitreID=?";		

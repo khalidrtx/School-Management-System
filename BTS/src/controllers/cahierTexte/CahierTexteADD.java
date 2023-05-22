@@ -40,8 +40,7 @@ public class CahierTexteADD extends HttpServlet {
 		 request.setCharacterEncoding("UTF-8");
 		 int  Seancegenid = Integer.parseInt(request.getParameter("seanceGenerique"));
 		 int	Activiteid = Integer.parseInt(request.getParameter("Activite"));
-		// String[] concepts = request.getParameterValues("concepts"); // récupérer toutes les valeurs sélectionnées
-
+	  // String[] concepts = request.getParameterValues("concepts"); // récupérer toutes les valeurs sélectionnées
 		 int	Conceptid = Integer.parseInt(request.getParameter("Concepte"));
 		 int	Chapitreid = Integer.parseInt(request.getParameter("Chapitre"));
 		 String Contenu = request.getParameter("Contenu").trim();
@@ -51,41 +50,39 @@ public class CahierTexteADD extends HttpServlet {
 		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		 String message=null;
 		 boolean success =false;
-		 
+		 	CahierTexte CahierTexte= new CahierTexte();
+		 	Seance Seance= new Seance();
+		 	SeanceDAO SeanceDAO =new SeanceDAO();
+		 	SeanceGenerique SeanceGenerique= new SeanceGenerique();
+		 	CahierTexteDAO CahierTexteDAO = new CahierTexteDAO();
+		 	AcrivitePedagogique AcrivitePedagogique= new AcrivitePedagogique();
+		 	AcrivitePedagogiqueDAO AcrivitePedagogiqueDAO= new AcrivitePedagogiqueDAO();
+		 	ConceptDAO ConceptDAO = new ConceptDAO();
+		 	Concept concepte= new Concept();
+		 	Chapitre Chapitre=new Chapitre();
 	        try {
 	        	
 	        	java.util.Date 	dateseance =  format.parse(seance);
 	        	java.sql.Date sqlDate = new java.sql.Date(dateseance.getTime());
-	        
-	        	CahierTexte CahierTexte= new CahierTexte();
-	        	Seance Seance= new Seance();
-	        	SeanceGenerique SeanceGenerique= new SeanceGenerique();
-	        	AcrivitePedagogique AcrivitePedagogique= new AcrivitePedagogique();
-
 	        	
-	        	SeanceDAO SeanceDAO =new SeanceDAO();
-	        	CahierTexteDAO CahierTexteDAO = new CahierTexteDAO();
-	        	AcrivitePedagogiqueDAO AcrivitePedagogiqueDAO= new AcrivitePedagogiqueDAO();
-	        	ConceptDAO ConceptDAO = new ConceptDAO();
 	        	SeanceGenerique.setId(Seancegenid);
 	        	AcrivitePedagogique=AcrivitePedagogiqueDAO.getById(Activiteid);
-
 	        	
 	        	Seance.setDate(sqlDate);
 	        	Seance.setSeanceGenerique(SeanceGenerique);
-	        	Seance.setEtat(Etat);
-	        	Seance.setObservation(Observation);
+	        	
 	        	SeanceDAO.insert(Seance);
-	        	Concept concepte= new Concept();
+	        	
 	        	concepte.setId(Conceptid);
-	        	Chapitre Chapitre=new Chapitre();
+	        	
 	        	Chapitre.setId(Chapitreid);
 	        	concepte.setChapitre(Chapitre);
-	        	
 	        	CahierTexte.setSeance(Seance);
 	        	CahierTexte.setTexte(Contenu);
 	        	CahierTexte.addActivite(AcrivitePedagogique);
 	        	CahierTexte.addConcept(concepte);
+	        	CahierTexte.setEtat(Etat);
+	        	CahierTexte.setObservation(Observation);
 
 	        	CahierTexteDAO.insert(CahierTexte);
 		        AcrivitePedagogiqueDAO.insert(AcrivitePedagogique, CahierTexte);

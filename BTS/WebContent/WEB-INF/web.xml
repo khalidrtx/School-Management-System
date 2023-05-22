@@ -180,6 +180,14 @@
   	<url-pattern>/E.Professeur/EmploisDuTemps</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>E_Professeur_TableauService</servlet-name>
+    <jsp-file>/WEB-INF/E.Professeur/TableauService.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>E_Professeur_TableauService</servlet-name>
+    <url-pattern>/E.Professeur/TableauService</url-pattern>
+  </servlet-mapping>
+    <servlet>
   	<servlet-name>E_Inspecteur_Profile</servlet-name>
   	<jsp-file>/WEB-INF/E.Inspecteur/Profile.jsp</jsp-file>
   </servlet>
@@ -218,5 +226,13 @@
   <servlet-mapping>
   	<servlet-name>E_Inspecteur_CahierTexte</servlet-name>
   	<url-pattern>/E.Inspecteur/CahierTexte</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>E_Inspecteur_ProfesseurClasse</servlet-name>
+  	<jsp-file>/WEB-INF/E.Inspecteur/ProfesseurClasse.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>E_Inspecteur_ProfesseurClasse</servlet-name>
+  	<url-pattern>/E.Inspecteur/ProfesseurClasse</url-pattern>
   </servlet-mapping>
 </web-app>

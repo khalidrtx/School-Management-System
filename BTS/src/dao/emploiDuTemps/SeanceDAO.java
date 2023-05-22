@@ -33,11 +33,11 @@ private Connection con;
 	}
 	
 	public void insert(Seance Seance) throws SQLException{
-		PreparedStatement statement = (PreparedStatement) con.prepareStatement("insert into Seance (SeanceGeneriqueID,Date,Etat,Observation) values (?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement("insert into Seance (SeanceGeneriqueID,Date) values (?, ?)",Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, Seance.getSeanceGenerique().getId());
 		statement.setDate(2, (Date) Seance.getDate());
-		statement.setString(3, Seance.getEtat());
-		statement.setString(4, Seance.getObservation());
+//		statement.setString(3, Seance.getEtat());
+//		statement.setString(4, Seance.getObservation());
 		statement.execute();
 		ResultSet rsid= statement.getGeneratedKeys();
 		rsid.next();

@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import Domaine.cahierTexte.Inspection;
 import dao.cahierTexte.InspectionDAO;
+import util.ServerResponse;
 
 /**
  * Servlet implementation class InspectionUpdate
@@ -40,24 +41,24 @@ public class InspectionUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String message=null;
-		boolean result=false;
-		
+		int id=Integer.parseInt(request.getParameter("id"));
+		String observation=request.getParameter("observation");
+		String etat = request.getParameter("etat");
+		Inspection ins = new Inspection();
+		ins.setId(id);
+		ins.setObservation(observation);
+		ins.setEtat(etat);
 		try {
-			Inspection ins = new Inspection();
-			int id=Integer.parseInt(request.getParameter("id"));
-			String observation=request.getParameter("observation");
-			String etat = request.getParameter("etat");
-			ins.setId(id);
-			ins.setObservation(observation);
-			ins.setEtat(etat);
+			
 			inspectionDAO.update(ins);
 			message="L'Inspection � �t� modifi�e avec succ�s";
-			result = true;
+			
 		} catch (Exception e) {
-			result = false;
+			
 			message="Impossible de modifier l'inspection";
 			e.printStackTrace();
 		}
+		
 		String json = new Gson().toJson(message).toString();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

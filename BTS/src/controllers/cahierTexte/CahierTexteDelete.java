@@ -15,8 +15,10 @@ import com.google.gson.Gson;
 import Domaine.cahierTexte.AcrivitePedagogique;
 import Domaine.cahierTexte.CahierTexte;
 import Domaine.classe.AnneeScolaire;
+import Domaine.emploiDuTemps.Seance;
 import Domaine.emploiDuTemps.SeanceGenerique;
 import dao.cahierTexte.CahierTexteDAO;
+import dao.emploiDuTemps.SeanceDAO;
 
 /**
  * Servlet implementation class CahierTexteDelete
@@ -37,13 +39,17 @@ public class CahierTexteDelete extends HttpServlet {
 		String message=null;
 		boolean result=false;
 		int id=Integer.parseInt(request.getParameter("id"));
+		Seance Seance=new  Seance();
+		SeanceDAO SeanceDAO= new SeanceDAO();
 		try {
-				CahierTexte CahierTexte = new CahierTexte();
-				CahierTexte.setId(id);
-				cahierTexteDAO.delete(CahierTexte);
-				message="L'ann�e scolaire � �t� supprim�e avec succ�s";
+//				CahierTexte CahierTexte = new CahierTexte();
+				Seance.setId(id);
+				SeanceDAO.delete(Seance);
+//				CahierTexte.setId(id);
+//				cahierTexteDAO.delete(CahierTexte);
+				message="La seance a ete supprimer avec succees";
 		} catch (SQLException e) {
-			message="Impossible de supprimer l'ann�e scolaire";
+			message="Impossible de supprimer la seance";
 			e.printStackTrace();
 		}
 		

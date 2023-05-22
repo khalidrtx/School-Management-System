@@ -30,16 +30,15 @@ public class AcrivitePedagogiqueDAO {
 		String sql="insert into cahiertexte_acrivitepedagogique values(?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 //		st.setInt(1, AcrivitePedagogique);
-
 		st.setInt(1, CahierTexte.getId());
 		st.setInt(2, AcrivitePedagogique.getId());
 		st.executeUpdate();
 	}
 	
 	
-	public ArrayList<AcrivitePedagogique> getAll(){
+	public ArrayList<AcrivitePedagogique> getAll() throws SQLException{
 		ArrayList<AcrivitePedagogique> tab = new ArrayList<AcrivitePedagogique>();
-		try {
+	
 			String sql="select id , code,Nom_Fr,Nom_Ar from acrivitepedagogique";
 			PreparedStatement st = con.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
@@ -53,9 +52,7 @@ public class AcrivitePedagogiqueDAO {
 				tab.add(a);
 			}
 			return tab;
-		} catch (Exception e) {
-			return null;
-		}
+		
 	}
 	public AcrivitePedagogique getById(int id) throws SQLException{
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT ID ,Code,Nom_Fr,Nom_Ar FROM acrivitepedagogique where ID=? ");

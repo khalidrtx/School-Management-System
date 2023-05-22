@@ -38,12 +38,13 @@ public class InspectionList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id =Integer.parseInt(request.getParameter("id"));
+		int idProf =Integer.parseInt(request.getParameter("id"));
+		int idClass =Integer.parseInt(request.getParameter("idClass"));
 		HttpSession session=request.getSession();
 		int userID = (Integer) session.getAttribute("userID");
 		ArrayList<Inspection> ins= new ArrayList<Inspection>();
 		try {
-			ins = inspectionDAO.getAllByiId2(userID,id);
+			ins = inspectionDAO.getAllById(userID,idProf,idClass);
 			String json = new Gson().toJson(ins).toString();
 			//System.out.println(json);
 			response.setCharacterEncoding("UTF-8");
@@ -55,9 +56,6 @@ public class InspectionList extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+
 
 }

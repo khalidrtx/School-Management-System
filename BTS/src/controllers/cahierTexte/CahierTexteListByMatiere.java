@@ -9,32 +9,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-
 import Domaine.cahierTexte.CahierTexte;
 import dao.cahierTexte.CahierTexteDAO;
-
-/**
- * Servlet implementation class CahierTexteList
- */
-@WebServlet("/CahierTexteList")
-public class CahierTexteList extends HttpServlet {
-	private CahierTexteDAO cahierTexteDAO;
+@WebServlet("/CahierTexteListByMatiere")
+public class CahierTexteListByMatiere extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public CahierTexteList() {
+	private CahierTexteDAO cahierTexteDAO;
+
+    public CahierTexteListByMatiere() {
         super();
         cahierTexteDAO= new CahierTexteDAO();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idclass = Integer.parseInt(request.getParameter("id"));
 		int userID= Integer.parseInt(request.getParameter("profId"));
+		int MatiereId= Integer.parseInt(request.getParameter("MatiereId"));
+
 		ArrayList<CahierTexte> cahierTextes = new ArrayList<CahierTexte>();
 		try {
-			cahierTextes = cahierTexteDAO.getCahiertexteByProfClass(userID, idclass);
+			cahierTextes = cahierTexteDAO.getCahiertexteByProfClassMatiere(userID, idclass,MatiereId);
 			String json = new Gson().toJson(cahierTextes);
 			response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
@@ -45,4 +41,7 @@ public class CahierTexteList extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
+
+
 }

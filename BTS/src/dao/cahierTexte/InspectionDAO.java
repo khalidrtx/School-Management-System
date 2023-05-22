@@ -98,7 +98,7 @@ public class InspectionDAO {
 			return prof;
 		
 	}
-	public ArrayList<Inspection> getAllByiId2(int idIns , int idProf) throws SQLException{
+	public ArrayList<Inspection> getAllById(int idIns , int idProf, int idClass) throws SQLException{
 		String sql="SELECT\r\n"
 				+ "    `inspection`.`ID`,\r\n"
 				+ "    `inspection`.`InspecteurUtilisateurID`,\r\n"
@@ -136,10 +136,11 @@ public class InspectionDAO {
 				+ "INNER JOIN `seancegenerique` ON `seance`.`SeanceGeneriqueID` = `seancegenerique`.`ID`\r\n"
 				+ "INNER JOIN `professeur` ON `seancegenerique`.`ProfesseurUtilisateurID` = `professeur`.`UtilisateurID`\r\n"
 				+ "WHERE\r\n"
-				+ "    inspecteur.UtilisateurID = ? AND professeur.UtilisateurID = ?;";
+				+ "    inspecteur.UtilisateurID = ? AND professeur.UtilisateurID = ? and `seancegenerique`.`ClasseID`=?;";
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement(sql);
 		statement.setInt(1, idIns);
 		statement.setInt(2, idProf);
+		statement.setInt(3, idClass);
 		ArrayList<Inspection> ins=new ArrayList<Inspection>();
 		ResultSet rs=statement.executeQuery();
 		while(rs.next()) {
