@@ -187,7 +187,7 @@
     <servlet-name>E_Professeur_TableauService</servlet-name>
     <url-pattern>/E.Professeur/TableauService</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
   	<servlet-name>E_Inspecteur_Profile</servlet-name>
   	<jsp-file>/WEB-INF/E.Inspecteur/Profile.jsp</jsp-file>
   </servlet>
@@ -196,12 +196,12 @@
   	<url-pattern>/E.Inspecteur/Profile</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>E_Inspecteur_CahierTexteProfesseur</servlet-name>
-  	<jsp-file>/WEB-INF/E.Inspecteur/CahierTexteProfesseur.jsp</jsp-file>
+  	<servlet-name>E_Inspecteur_ProfesseurList</servlet-name>
+  	<jsp-file>/WEB-INF/E.Inspecteur/ProfesseurList.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>E_Inspecteur_CahierTexteProfesseur</servlet-name>
-  	<url-pattern>/E.Inspecteur/CahierTexteProfesseur</url-pattern>
+  	<servlet-name>E_Inspecteur_ProfesseurList</servlet-name>
+  	<url-pattern>/E.Inspecteur/ProfesseurList</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>E_Inspecteur_CahierTexteList</servlet-name>

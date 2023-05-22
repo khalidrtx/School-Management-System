@@ -406,7 +406,7 @@
 			var tableData = $('#data_table_classeGeneriques').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
 			$.ajax({
-				url : "../ProfClasseGeneriqueListbyID?id="+<%= request.getParameter("id")%>,
+				url : "../ProfClasseGeneriqueList?id="+<%= request.getParameter("id")%>,
 				type: "GET",
 				dataType: 'json',
 				success: function(response,textStatus ,jqXHR){

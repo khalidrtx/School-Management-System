@@ -36,15 +36,6 @@ public class ProfClasseGeneriqueList extends HttpServlet {
 		int userID=Integer.parseInt(request.getParameter("id"));
 
 		try {
-//		    HttpSession session=request.getSession();  
-//		    int userID=0;	
-//		    if (session.getAttribute("userID")!=null) {
-//			    userID =  (Integer) session.getAttribute("userID");
-//		    }
-//		    if(request.getParameter("id")!=null) {
-//		    	userID =Integer.parseInt(request.getParameter("id"));
-//		    }
-		    
 		    classes = classeDAO.getAllclassbyprof(userID);
 			Gson gson = new GsonBuilder().create();
 			String json = gson.toJson(classes).toString();

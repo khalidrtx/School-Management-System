@@ -232,7 +232,7 @@
 		<!-- Col 1 -->
 				<div class="alert bg-light text-secondary" role="alert">
 	   			<i class="fa fa-chalkboard mr-2"></i>
-	   			Cahier Texte:
+	   			Les Professeurs:
 	   				<span id="ClasseGeneriqueInfo"></span>
 	   			 
 		    </div>
@@ -248,7 +248,30 @@
 				</tbody>
 			</table>
 				
-					   									 
+					  <!-- Début : Modal Details listing des prof -->
+											<div id="anneeScolaire_Details_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
+												<div class="modal-dialog">
+											      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+											          	<div class="modal-header bg-info">
+											        		<h4 class="modal-title text-white">
+											        			Détails de Professeur
+											        		</h4>
+											        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										    					<span aria-hidden="true">&times;</span>
+										  					</button>
+											        	</div>
+											          	<div class="modal-body">
+											          		<ul class="list-group">
+																<!-- Affichage dynamique des détails du anneeScolaire-->
+															</ul>
+														</div>
+														<div class="modal-footer ">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fermer</button>
+														</div>
+											        </div>
+												</div>
+										    </div>
+										 <!-- Fin : Modal Details isting des prof --> 									 
 		</div> <!-- /Col 1 -->
 		<div class="col-md-3"> <!-- Col 2 -->
 			<div class="panel with-nav-tabs panel-primary">
@@ -383,7 +406,7 @@
 			var tableData = $('#data_table_classeGeneriques').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
 			$.ajax({
-				url : "../ProfesseurList",
+				url : "../ProfesseurListByMIns",
 				type: "GET",
 				dataType: 'json',
 				success: function(response,textStatus ,jqXHR){
@@ -397,7 +420,7 @@
 							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
 						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
+							  	<a class="dropdown-item Prof-details text-primary" href="#" ProfId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
 							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Inspecteur/ProfesseurClasse?id='+response[i].id+'" cahierTexteID="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>classes</a> \
 							  </div> \
 							</div> ';
@@ -460,15 +483,40 @@
 		});
 		
   	});
-	/*********** Charger les infos de la classe générique courante ********/
-	$.ajax({
-			url : '../ClasseGenerique/Details?id='+<%= request.getParameter("id")%>,
+	
+	
+	
+	
+	$('#data_table_classeGeneriques').on('click','.Prof-details', function(evt){
+		$this = $(this);
+		var id= $this.attr('ProfId');
+		$.ajax({
+			url : "../ProfesseurDetails?id="+id,
 			type: "GET",
 			dataType: 'json',
+			contentType: "application/json; charset=UTF-8",
 			success: function(response,textStatus ,jqXHR){
+				var nom ='<li class="list-group-item"><span><strong>nom  </strong></span><span class="float-right">'+response.nom_Fr+'</span></li>';
+				var prenom ='<li class="list-group-item"><span><strong>prenom  </strong></span><span class="float-right">'+response.prenom_Fr+'</span></li>';
+				var cin ='<li class="list-group-item"><span><strong>cin  </strong></span><span class="float-right">'+response.cin+'</span></li>';
+				var datenais ='<li class="list-group-item"><span><strong>date de naissance  </strong></span><span class="float-right">'+response.dateNais+'</span></li>';
+				var email ='<li class="list-group-item"><span><strong>email  </strong></span><span class="float-right">'+response.email+'</span></li>';
+				var telemobile ='<li class="list-group-item"><span><strong>Numero du telephone  </strong></span><span class="float-right">'+response.teleMobile+'</span></li>';
+				var adresse ='<li class="list-group-item"><span><strong>Adresse  </strong></span><span class="float-right">'+response.adresse_Fr+'</span></li>';
+				var sexe ='<li class="list-group-item"><span><strong>sexe  </strong></span><span class="float-right">'+response.sexe+'</span></li>';
+				//var nom_ArItem ='<li class="list-group-item"><span><strong>Date fin  </strong></span><span class="float-right">'+response.dateFin+'</span></li>';
+				$("#anneeScolaire_Details_Modal .list-group").html("");
+				$("#anneeScolaire_Details_Modal .list-group").append(nom);
+				$("#anneeScolaire_Details_Modal .list-group").append(prenom);
+				$("#anneeScolaire_Details_Modal .list-group").append(cin);
+				$("#anneeScolaire_Details_Modal .list-group").append(adresse);
+				$("#anneeScolaire_Details_Modal .list-group").append(datenais);
+				$("#anneeScolaire_Details_Modal .list-group").append(sexe);
+				$("#anneeScolaire_Details_Modal .list-group").append(email);
+				$("#anneeScolaire_Details_Modal .list-group").append(telemobile);
 				
-			$('#ClasseGeneriqueInfo').html(response.code);
-				
+				//$("#anneeScolaire_Details_Modal .list-group").append(nom_ArItem);
+				$('#anneeScolaire_Details_Modal').modal('show');
 		    },
 		    error: function(response,textStatus ,jqXHR){
 		    	$("#modalError .modal-body p").html("");
@@ -476,6 +524,9 @@
 		   		$('#modalError .modal-body p').modal('show'); 
 		        }
 		});
+		
+		return false;
+	});
     </script>
    
 </body>

@@ -24,7 +24,7 @@ public class InspectionDAO {
 	}
 	public ArrayList<Professeur> getAllProfByInsp(int id) throws SQLException{
 		
-			String sql = "SELECT\r\n"
+			String sql = "SELECT DISTINCT\r\n"
 					+ "    `professeur`.`UtilisateurID`,\r\n"
 					+ "    `professeur`.`CycleID`,\r\n"
 					+ "    `professeur`.`SpecialiteID`,\r\n"
@@ -46,22 +46,23 @@ public class InspectionDAO {
 					+ "    `utilisateur`.`SituationF`,\r\n"
 					+ "    `utilisateur`.`TeleMobile`,\r\n"
 					+ "    `utilisateur`.`TeleDomicile`,\r\n"
-					+ "    specialite.Code  as 'specialiteCode',\r\n"
-					+ "    specialite.Nom_Fr as 'specialiteNom_Fr',\r\n"
-					+ "    specialite.Nom_Ar as 'specialiteNom_Ar',\r\n"
-					+ "    cycle.Code as 'cycleCode',\r\n"
-					+ "    cycle.Nom_Fr as 'cycleNom_Fr',\r\n"
-					+ "    cycle.Nom_Ar as 'cycleNom_Ar'\r\n"
+					+ "    specialite.Code AS 'specialiteCode',\r\n"
+					+ "    specialite.Nom_Fr AS 'specialiteNom_Fr',\r\n"
+					+ "    specialite.Nom_Ar AS 'specialiteNom_Ar',\r\n"
+					+ "    cycle.Code AS 'cycleCode',\r\n"
+					+ "    cycle.Nom_Fr AS 'cycleNom_Fr',\r\n"
+					+ "    cycle.Nom_Ar AS 'cycleNom_Ar'\r\n"
 					+ "FROM\r\n"
 					+ "    `professeur`\r\n"
-					+ "INNER join cycle on professeur.CycleID= cycle.ID\r\n"
-					+ "INNER JOIN specialite on professeur.SpecialiteID= specialite.ID\r\n"
+					+ "INNER JOIN cycle ON professeur.CycleID = cycle.ID\r\n"
+					+ "INNER JOIN specialite ON professeur.SpecialiteID = specialite.ID\r\n"
 					+ "INNER JOIN `utilisateur` ON `professeur`.`UtilisateurID` = `utilisateur`.`ID`\r\n"
-					+ "INNER JOIN seancegenerique on`professeur`.`UtilisateurID`=seancegenerique.ProfesseurUtilisateurID \r\n"
-					+ "INNER JOIN matiere on seancegenerique.MatiereID = matiere.ID\r\n"
-					+ "INNER JOIN matiere_inspecteur on matiere.ID= matiere_inspecteur.MatiereID\r\n"
-					+ "INNER JOIN inspecteur on inspecteur.UtilisateurID=matiere_inspecteur.InspecteurUtilisateurID\r\n"
-					+ "where inspecteur.UtilisateurID=?;";
+					+ "INNER JOIN seancegenerique ON `professeur`.`UtilisateurID` = seancegenerique.ProfesseurUtilisateurID\r\n"
+					+ "INNER JOIN matiere ON seancegenerique.MatiereID = matiere.ID\r\n"
+					+ "INNER JOIN matiere_inspecteur ON matiere.ID = matiere_inspecteur.MatiereID\r\n"
+					+ "INNER JOIN inspecteur ON inspecteur.UtilisateurID = matiere_inspecteur.InspecteurUtilisateurID\r\n"
+					+ "WHERE\r\n"
+					+ "    inspecteur.UtilisateurID = ?";
 			PreparedStatement statement = (PreparedStatement) con.prepareStatement(sql);
 			statement.setInt(1, id);
 			ArrayList<Professeur> prof=new ArrayList<Professeur>();
@@ -91,7 +92,6 @@ public class InspectionDAO {
 						rs.getString("cycleCode"),
 						rs.getString("cycleNom_Fr"),
 						rs.getString("cycleNom_Ar")) );
-				//System.out.println(p);
 				prof.add(p);
 				
 			}

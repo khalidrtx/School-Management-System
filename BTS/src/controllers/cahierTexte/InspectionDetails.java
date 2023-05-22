@@ -27,8 +27,12 @@ public class InspectionDetails extends HttpServlet {
     public InspectionDetails() {
         super();
         inspectionDAO=new InspectionDAO();
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json=null;
 		int id =Integer.parseInt(request.getParameter("id"));
