@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-  	<title>Profile</title>
+  	<title>Cahier Texte</title>
   	
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstap.min.css" type="text/css" >
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css" >
+	<script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
 		
 	<style type="text/css">
 	body{
@@ -226,112 +227,228 @@
           </div>
         </nav>
 <!-- Start content -->
+	
 	<div class="container"> 
 		<div class="row">
 		<div class="col-md-9"> <!-- Col 1 -->
-			<div class="alert bg-light text-secondary" role="alert">
-	   			<i class="fa fa-chalkboard mr-2"></i>
-	   			Classe:
-	   				<span id="ClasseInfo"></span>
-	   				<span id="MatiereInfo"></span>
-	   				
-	   			 
-		    </div>
-		    <div class="alert bg-light text-secondary" role="alert">
-	   			Ajouter une seance:	   			 
-		        <a href="#" data-toggle="modal" data-target="#classeGenerique_Add_Modal" class="btn btn-outline-info float-right" title="Ajouter une Classe génirique"><i class="fa fa-plus"></i></a>
-		    </div>
-			<table id="data_table_cahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>Seance</th>
-						<th>Texte</th>
+		<div class="panel with-nav-tabs panel-primary">
+		     <div class="panel-heading">
+					<nav class="nav nav-tabs flex-column flex-sm-row"  id="Tab-Content" role="tablist">
+					    <a id="tab_CahierTexte" href="#content-tab-CahierTexte" class="nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="content-tab-CahierTexte" aria-selected="false">
+					        <lord-icon
+								    src="https://cdn.lordicon.com/qvbrkejx.json"
+								    trigger="morph"
+								    style="width:20px;height:20px ; padding : 5px; margin-right:4px">
+								</lord-icon>  cahier texte
+					        <!-- <i class="fa fa-calendar-alt mr-2"></i> Cahier Texte -->
+					    </a>
+					    <a id="tab_Gestion_inspection" href="#content-tab-inspection" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="content-css" aria-controls="content-tab-inspection" aria-selected="false">
+					       <lord-icon
+							    src="https://cdn.lordicon.com/msoeawqm.json"
+							    trigger="hover"
+							    style="width:30px;height:20px ; padding : 5px; margin-right:4px">
+							</lord-icon> Inspection
+					       <!-- <i class="fa fa-calendar-alt mr-2"></i> Inspection --> 
+					    </a>
+					    
+					</nav>
+			</div>
+		    <div class="panel-body">
+		    	<!-- Tab content -->
+				<div class="tab-content" id="Tab-Content">
+						<!-- Content tab 1 	: Cahier Texte-->
+					  	<div id="content-tab-CahierTexte" class="tab-pane active" role="tabpanel" aria-labelledby="content-tab-CahierTexte">
+					   		
+					   		<div class="alert bg-light text-secondary" role="alert">
+					   			<i class="fa fa-chalkboard mr-2"></i>
+					   			Cahier Des Textes :
+					   			<span id="AnneeScolaireinfo"></span>
+					   			
+						    </div>
+						<div class="col-md-8">
+								
+						</div> 
+			
+					<table id="data_table_CahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Seance</th>
 					    <th>activiter</th>
+						<th>Texte  	 </th>
 					    <th>Etat</th>
 			            <th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		<!-- Début : Modal Add New Etudiant -->
-				<div id="classeGenerique_Add_Modal" class="modal" tabindex="-1" role="dialog">
-					<div class="modal-dialog modal-lg">
-					<form id="seance_Add_Form" method="POST" action="../CahierTexteADD" enctype="multipart/form-data">
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					
+					<!-- Début : Modal Details cahier texte -->
+				<div id="CahierTexte_Details_Modal" class="modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog">
 				      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
 				          	<div class="modal-header bg-info">
 				        		<h4 class="modal-title text-white">
-				        			Ajouter une Inspection
+				        			Détails de Cahier Texte
 				        		</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			    					<span aria-hidden="true">&times;</span>
 			  					</button>
 				        	</div>
-				          	<div class="modal-body">	
-					<div id="content-tab-Contact" class="tab-pane" role="tabpanel" aria-labelledby="">
-					   						<!-- Début : Contact  -->
-					   							<div class="row">
-					   								<!-- colone Francais -->
-								                	<div class="col-md-6">
-								                   <div class="form-group row">
-					                         	 
-								                      
-								                        <div class="form-group row">
-								                            <label for="Contenu" class="control-label col-md-4">Inspection</label> 
-								                            <div class="col-md-8">
-								                            
-								                                <textarea type="text" name="Contenu" class="form-control" placeholder="texte..." /></textarea>
-								                                
-								                            </div>
-								                        </div>
-								                       
-								                         <div class="form-group row">
-								                            <label for="adresseFr" class="control-label col-md-4">Observation</label> 
-								                            <div class="col-md-8">
-								                            	<textarea name="Observation" class="form-control" placeholder="Observation..."></textarea>
-								                            </div>
-								                        </div>
-								                           <div class="form-group row">
-								                            <label for="adresseFr" class="control-label col-md-4">chi 7aja</label> 
-								                            <div class="col-md-8">
-								                            	<input type="text" name="Etat" class="form-control" placeholder="Etat.."></textarea>
-								                            </div>
-								                        </div>
-								                        
-							                   		</div>
-							                        <!-- colone Arabe -->
-							                        <div class="col-md-6">
-							                        	  <div class="form-group row">
-								                            <label class="control-label col-md-4">Matiere:</label> 
-								                            <div class="col-md-8">
-								                            	<select name="Matiere" class="form-control" readonly>
-								                            	
-								                            	</select>
-								                            	</div>
-								                        </div>
-								                        <div class="form-group row">
-								                            <label class="control-label col-md-4">Module:</label> 
-								                            
-								                            <div class="col-md-8">
-								                            	<select name="Module" class="form-control" readonly>
-								                            		
-								                            	</select>
-								                            	</div>
-								                        </div>
-							                        </div>
-					   							</div>
-					   						<!-- Fin : Contact -->
-					   						</div>
-					   						
-							   		 </div>
-										<div class="modal-footer ">
-								        		<input type="submit" class="btn btn-primary" value="Enregistrer">
-										        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-								      </div>			 
-					 	</div>
-				 	</form>
-				</div>			 
-			</div>			 
+				          	<div class="modal-body">
+				          		<ul class="list-group">
+									<!-- ici on Affiche dynamiquement  les détails de classeGenerique-->
+								</ul>
+							</div>
+							<div class="modal-footer ">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fermer</button>
+							</div>
+				        </div>
+					</div>
+			    </div>
+			 <!-- Fin : Modal Details cahier texte -->
+					   		
+										    <!-- Début : Modal Add inspection -->
+								<div id="inspection_add_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
+												<div class="modal-dialog">
+												<form id="inspection_add_Form" method="POST" action="../inspectionADD" >
+											      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+											          	<div class="modal-header bg-info">
+											        		<h4 class="modal-title text-white">
+											        			Ajouter une Inspection
+											        		</h4>
+											        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										    					<span aria-hidden="true">&times;</span>
+										  					</button>
+											        	</div>
+											          	<div class="modal-body">
+											          		
+															<div class="form-group row">
+														        <label for="observation" class="col-sm-3 control-label">observation</label>
+														        <input  type="hidden" class="form-control" name="id" id="id"/>
+														        <div class="col-sm-9">
+														          <textarea id="observation" class="form-control" name="observation" placeholder="saisir une observation"  required/>Observation</textarea>
+														        </div>
+														      </div>
+													  		<div class="form-group row">
+															      <label for="etat" class="col-sm-3 control-label" >Etat</label>
+															      <div class="col-sm-9">
+															        <textarea id="etat" class="form-control" name="etat" placeholder="saisir l'etat"></textarea>
+															      </div>
+															    </div>
+											      	</div>
+											        <div class="modal-footer ">
+										        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+												        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+										      		</div>
+											        </div>
+											   	</form>
+												</div>
+										    </div>
+							
+						</div>
+						<!-- Fin : Modal Add inspection -->
+						<!-- /Content tab 1 : Cahier Texte-->
+						<!-- Content tab 2 	: Inspection-->
+						<div id="content-tab-inspection" class="tab-pane"  role="tabpanel" aria-labelledby="tab-css">
+						    			<div class="alert bg-light text-secondary" role="alert">
+								   			<i class="fa fa-calendar-alt mr-2"></i>
+								   			Les Inspections :
+										</div>
+										<table id="data_table_inspection" class="table table-striped table-bordered" cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>N°</th>
+													<th>Date d'inspection</th>
+													<th>Observation</th>
+													<th>etat</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										
+										 <!-- Début : Modal Details Inspection -->
+										 <div id="Inspect_Details_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
+									<div class="modal-dialog">
+								      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+								          	<div class="modal-header bg-info">
+								        		<h4 class="modal-title text-white">
+								        			Détails de l'inspection
+								        		</h4>
+								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							    					<span aria-hidden="true">&times;</span>
+							  					</button>
+								        	</div>
+								          	<div class="modal-body">
+								          		<ul class="list-group">
+													<!-- Affichage dynamique des détails du periode-->
+												</ul>
+											</div>
+											<div class="modal-footer ">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fermer</button>
+											</div>
+								        </div>
+									</div>
+							    </div>
+													 
+								<!-- Fin : Modal Details Inspection --> 
+								
+							 <!-- Début : Modal Add inspection -->
+								<div id="inspection_update_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
+												<div class="modal-dialog">
+												<form id="inspection_update_Form" method="POST" action="../InspectionUpdate" >
+											      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+											          	<div class="modal-header bg-info">
+											        		<h4 class="modal-title text-white">
+											        			Modifier une Inspection
+											        		</h4>
+											        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										    					<span aria-hidden="true">&times;</span>
+										  					</button>
+											        	</div>
+											          	<div class="modal-body">
+											          		
+						     										
+						            									<div class="col-sm-9">
+																			<input id="id" type="hidden" readonly class="form-control" name="id" placeholder="IdCahierTExte" required/>
+														              </div>
+														      
+															<div class="form-group row">
+														        <label for="observation" class="col-sm-3 control-label">observation</label>
+														        <input  type="hidden" class="form-control" name="id" id="id"/>
+														        <div class="col-sm-9">
+														          <textarea id="observation" class="form-control" name="observation" placeholder="saisir une observation"  required/>Observation</textarea>
+														        </div>
+														      </div>
+													  		<div class="form-group row">
+															      <label for="etat" class="col-sm-3 control-label" placeholder="saiir l'etat">Etat</label>
+															      <div class="col-sm-9">
+															        <textarea id="etat" class="form-control" name="etat">
+															        </textarea>
+															      </div>
+															    </div>
+											      	</div>
+											        <div class="modal-footer ">
+										        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+												        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+										      		</div>
+											        </div>
+											   	</form>
+												</div>
+										    </div>
+							
+						
+						<!-- Fin : Modal Add inspection -->
+							
+						</div>
+						<!-- /Content tab 2	: Gestion Annees Scolaires-->
+						
+				</div>
+				<!-- /Tab content -->
+			 </div>
+		  </div>
 		</div> <!-- /Col 1 -->
 		<div class="col-md-3"> <!-- Col 2 -->
 			<div class="panel with-nav-tabs panel-primary">
@@ -341,7 +458,7 @@
 					        <span class="fa fa-bullhorn"></span> Annonces
 					    </a>
 					    <a  id="tab_Actualites" href="#content-tab-Actualites" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="content-tab-Actualites" aria-selected="false">
-					        <span class="fa fa-newspaper"></span> Actualites
+					        <span class="fa fa-newspaper"></span>Actualites
 					    </a>
 					</nav>
 			</div>
@@ -423,7 +540,7 @@
 	  </div>
 	</div>
 <!-- Fin : Moad Error -->
-<!-- Début : Moad Confirmation -->
+<!-- Début : Moad Confirmation supprimer-->
 <div id="modalConfirm" class="modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered modal-confirm " role="document">
 		<div class="modal-content">
@@ -445,7 +562,30 @@
 		 </div>
   	</div>
 </div>
-<!-- Fin : Moad Confirmation-->
+<!-- Fin : Moad Confirmation supprimer-->
+<!-- Début : Moad Confirmation changer année scolaire courante-->
+<div id="modalConfirmChange" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-confirm " role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+				<div class="icon-box bg-warning">
+					<i class="material-icons fa fa-exclamation-triangle"></i>
+				</div>				
+				<h4 class="modal-title text-center">Confirmation ?</h4>	
+		  </div>
+		  <div class="modal-body">
+				<p class="text-center">
+					Etes vous sûre de vouloir changer l'année scolaire courante ?
+				</p>
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" data-dismiss="modal" class="btn btn-warning  mr-auto" id="changer">Confirmer</button>
+		    <button type="button" data-dismiss="modal" class="btn btn-secondary  ">Annuler</button>
+		  </div>
+		 </div>
+  	</div>
+</div>
+<!-- Fin : Moad Confirmation changer année scolaire courante-->
 <!-- Début : Moad Loading Ajax -->
 <div id="loading-image" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm" >
@@ -488,165 +628,119 @@
   			$('#loading-image').hide();
 		 });
 		/*******************Fin : Ajax Load Animation *************************/
-  		/************** DataTable du Tab : ClasseGeneriques **************/
-  		// Initialisation du DataTable ClasseGeneriques
-  		$('#data_table_cahierTexte').DataTable(
-  			{	
-  				"paging": true,
-  				"autoWidth": true,
-  				"columnDefs": [
-  					{ "orderable": false, "targets": 2 }
-  				],
-  				"language": {
-  		            "lengthMenu": "Display _MENU_ records per page",
-  		            "zeroRecords": "Pas d'enregistrement à afficher",
-  		            "info": "Affichage : _PAGE_ / _PAGES_",
-  		            "infoEmpty": "No records available",
-  		            "infoFiltered": "(filtered from _MAX_ total records)"
-  		        },
-  				"columnDefs": [
-		             {
-		                 "targets": [ 0 ],
-		                 "visible": true,
-		                 "searchable": false,
-		                 "orderable": true
-		             },
-		             {
-		                 "targets": [ 2 ],
-		                 "visible": true
-		                 
-		             }
-  				 ],
-  				dom: 'Bfrtip',
-  		        buttons: [
-  		            'copy', 
-  		            'csv', 
-  		            'excel', 
-  		            'pdf', 
-  		            'print'
-  		        ]
-  			}
-  		);
-  		/******* fonction pour charger la liste des ClasseGeneriques dans la TableData ClasseGeneriques ******/
-		function populateTexteDataTable(){
-			var tableData = $('#data_table_cahierTexte').DataTable();
-			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
-			$.ajax({
-				url : "../CahierTexteList?id="+<%= request.getParameter("id")%>,
-				type: "GET",
-				dataType: 'json',
-				success: function(response,textStatus ,jqXHR){
-					for(i=0;i<response.length;i++){
-						var rang=i+1;
-						var btns='<div class="btn-group dropleft"> \
-							  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
-							  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
-							    <span class="sr-only">Toggle Dropdown</span> \
-							  </button> \
-							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
-							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
-						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
-							  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
-							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ProgrammeClasseGenerique?id='+response[i].id+'" CahierTexteId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
-							  			</div> \
-							</div> ';
-							
-						tableData.row.add( [
-							
-				             		 response[i].seance.date,
-						             response[i].texte,
-						             response[i].seance.observation,
-						             response[i].seance.etat,
-						             btns
-						         ] ).draw( false );
-					}
-			    },
-			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
-			});
-		};
-		
-		//Chargement des Classes Génériques dans le DataTable ClassesGeneriques
-			populateTexteDataTable();			
-			/*********** Affichage des détails d'une ClasseGenerique******************
-			/* 1 - Récuperer l' Id de la filière séléctionner sur la DataTable Filiers
-			/* 2 - Charger par ajax la filière concernée
-			/* 3 - Afficher les détails de la filière concernée
-			**************************************************************************/
-			
-			$('#data_table_cahierTexte').on('click','.classeGenerique-details', function(evt){
-			$this = $(this);
-			var id= $this.attr('classeGeneriqueId');
-			$.ajax({
-				url : "../ClasseGenerique/Details?id="+id,
-				type: "GET",
-				dataType: 'json',
-				//contentType: "application/json; charset=UTF-8",
-				success: function(response,textStatus ,jqXHR){
-					var codeItem ='<li class="list-group-item"><span><strong>Code 		</strong></span><span class="float-right">'+response.code+'</span></li>';
-					var cycleItem ='<li class="list-group-item"><span><strong>Cycle 	</strong></span><span class="float-right">'+response.cycle.code+'</span></li>';
-					var filiereItem ='<li class="list-group-item"><span><strong>Filière	</strong></span><span class="float-right">'+response.filiere.code+'</span></li>';
-					var niveauItem ='<li class="list-group-item"><span><strong>Niveau	</strong></span><span class="float-right">'+response.niveau.code+'</span></li>';
-					var descriptionItem ='<li class="list-group-item"><span><strong>Description	</strong></span><span class="float-right">'+response.description+'</span></li>';
-					
-					$("#classeGenerique_Details_Modal .list-group").html("");
-					$("#classeGenerique_Details_Modal .list-group").append(codeItem);
-					$("#classeGenerique_Details_Modal .list-group").append(cycleItem);
-					$("#classeGenerique_Details_Modal .list-group").append(filiereItem);
-					$("#classeGenerique_Details_Modal .list-group").append(niveauItem);
-					$("#classeGenerique_Details_Modal .list-group").append(descriptionItem);
-					
-					$('#classeGenerique_Details_Modal').modal('show');
-			    },
-			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
-			});
-			return false;
-		});
-		
+  	
+		$('#data_table_CahierTexte').DataTable(
+	  			{	
+	  				"paging": true,
+	  				"autoWidth": true,
+	  				"columnDefs": [
+	  			  	{ "orderable": false, "targets": 2 }
+	  			  				],
+	  				dom: 'Bfrtip',
+	  		        buttons: [
+	  		            'copy', 
+	  		            'csv', 
+	  		            'excel', 
+	  		            'pdf', 
+	  		            'print'
+	  		        ]
+	  			}
+	  		);
+  		/************** DataTable du Tab : inspection **************/
+  		// Initialisation du DataTable inspection
+		$('#data_table_inspection').DataTable(
+	  			{	
+	  				"paging": true,
+	  				"autoWidth": true,
+	  				"columnDefs": [
+	  			  	{ "orderable": false, "targets": 2 }
+	  			  				],
+	  				dom: 'Bfrtip',
+	  		        buttons: [
+	  		            'copy', 
+	  		            'csv', 
+	  		            'excel', 
+	  		            'pdf', 
+	  		            'print'
+	  		        ]
+	  			}
+	  		);
+  		
+  		
   	});
 	
-////////////////////////////////////////////////
-function populateCahierTexteDataTable(){
-	var tableData = $('#data_table_cahierTexte').DataTable();
-	//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
+  	/******* fonction pour charger la liste les cahiers des textes dans la TableData cahierTexte ******/	
+  		function populateCahierTexteDataTable(){
+			var tableData = $('#data_table_CahierTexte').DataTable();
+			tableData.clear().destroy();
+			$.ajax({
+					url : "../CahierTexteList?id="+<%= request.getParameter("idClass")%>+"&profId="+<%= request.getParameter("idProf")%>,
+					type: "GET",
+					dataType: 'json',
+					contentType: "application/json; charset=UTF-8",
+					success: function(response,textStatus ,jqXHR){
+						for(i=0;i<response.length;i++){
+							var rang=i+1;
+							var btns='<div class="btn-group dropleft"> \
+								  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
+								  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
+								    <span class="sr-only">Toggle Dropdown</span> \
+								  </button> \
+								  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
+								    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
+							        <div class="dropdown-divider"></div> \
+								  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Detail</a> \
+								  	<a class="dropdown-item CahierTexte-inspection text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Ajouter une inspection</a> \
+								  			</div> \
+								</div> ';
+							tableData.row.add([
+								  response[i].seance.date,
+								  response[i].activites[0].nom_Fr,
+								  "<div style='width: 200px;'><strong>Matière : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
+								  "</div style='width: 200px;'><div><strong>Module : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
+								  "</div style='width: 200px;'><div><strong>Chapitre: </strong>" + response[i].concepts[0].chapitre.nom +
+								  "</div style='width: 200px;'><div><strong>Concepts : </strong>" + response[i].concepts[0].nom +
+								  "</div style='width: 200px;'><br><div><strong>Texte : </strong>" + response[i].texte + "</div>",
+								  response[i].etat, 
+								  btns
+								]).draw(false);
+						}
+				    },
+				    error: function(response,textStatus ,jqXHR){
+				    	console.log("error");
+				    	$("#modalError .modal-body p").html("");
+						$("#modalError .modal-body p").html(jqXHR.responseText);
+				   		$('#modalError .modal-body p').modal('show'); 
+				        }
+				});
+		};
+		populateCahierTexteDataTable();
+
+  		
+  	//detaits cahier texte
+		$('#data_table_CahierTexte').on('click','.CahierTexte-details', function(evt){
+	$this = $(this);
+	var id= $this.attr('CahierTexteId');
 	$.ajax({
-		url : "../CahierTexteList?id="+<%= request.getParameter("id")%>,
+		url : "../CahierTexteDetails?id="+id,
 		type: "GET",
 		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
 		success: function(response,textStatus ,jqXHR){
-			for(i=0;i<response.length;i++){
-				var rang=i+1;
-				var btns='<div class="btn-group dropleft"> \
-					  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
-					  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
-					    <span class="sr-only">Toggle Dropdown</span> \
-					  </button> \
-					  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
-					    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
-				        <div class="dropdown-divider"></div> \
-					  	<a class="dropdown-item CahierTexte-delete text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
-					  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
-					  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ProgrammeClasseGenerique?id='+response[i].id+'" CahierTexteId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
-					  			</div> \
-					</div> ';
-					
-				tableData.row.add( [
-					
-		             		 response[i].seance.date,
-				             response[i].texte,
-				             response[i].seance.observation,
-				             response[i].seance.etat,
-				             btns
-				         ] ).draw( false );
-			}
+			var seance ='<li class="list-group-item"><span><strong>seance  </strong></span><span class="float-right">'+response.seance.date+'</span></li>';
+			var contenu ='<li class="list-group-item"><span><strong>Contenu  </strong></span><span class="float-right">'+response.texte+'</span></li>';
+			var activite ='<li class="list-group-item"><span><strong>Activite pedagogique  </strong></span><span class="float-right">'+response.activites[0].nom_Fr+'</span></li>';
+			var etat ='<li class="list-group-item"><span><strong>etat  </strong></span><span class="float-right">'+response.seance.etat+'</span></li>';
+			var Matiere ='<li class="list-group-item"><span><strong>Matiere  </strong></span><span class="float-right">'+response.seance.seanceGenerique.matiere.nom_Ar+'</span></li>';
+			var Module ='<li class="list-group-item"><span><strong>Module  </strong></span><span class="float-right">'+response.seance.seanceGenerique.module.nom_Fr+'</span></li>';
+			$("#CahierTexte_Details_Modal .list-group").html("");
+			$("#CahierTexte_Details_Modal .list-group").append(seance);
+			$("#CahierTexte_Details_Modal .list-group").append(contenu);
+			$("#CahierTexte_Details_Modal .list-group").append(activite);
+			$("#CahierTexte_Details_Modal .list-group").append(etat);
+			$("#CahierTexte_Details_Modal .list-group").append(Module);
+			$("#CahierTexte_Details_Modal .list-group").append(Matiere);
+			$('#CahierTexte_Details_Modal').modal('show');
 	    },
 	    error: function(response,textStatus ,jqXHR){
 	    	$("#modalError .modal-body p").html("");
@@ -654,66 +748,171 @@ function populateCahierTexteDataTable(){
 	   		$('#modalError .modal-body p').modal('show'); 
 	        }
 	});
-};
-
-  		//Envoie du formulaire d'ajout de cahier texte
-  			$("#seance_Add_Form").submit(function(event){ 
-				var post_url = $(this).attr("action"); 			//Lire l'action (URL) du formulaire
-				var request_method = $(this).attr("method"); 	//Lire la méthode du formulaire  GET/POST 
-				var form_data = $(this).serialize(); 			//Encoder les données du formulaire pour envoie
-				$('#classeGenerique_Add_Modal').modal('hide');			//Fermer la fenetre modal apres envoie du formulaire
+	
+	return false;
+});			
+  
+  	
+	function populateInspectionDataTable(){
+		var tableData = $('#data_table_inspection').DataTable();
+		tableData.clear().destroy();
+		//tableData.DataTable().rows().remove().draw();
+		$.ajax({
+			url : "../InspectionList?id="+<%= request.getParameter("idProf")%>+"&idClass="+<%= request.getParameter("idClass")%>,
+			type: "GET",
+			dataType: 'json',
+			success: function(response,textStatus ,jqXHR){
+				for(i=0;i<response.length;i++){
+					var rang=i+1;
+					var btns='<div class="btn-group dropleft"> \
+						  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
+						  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
+						    <span class="sr-only">Toggle Dropdown</span> \
+						  </button> \
+						  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
+						    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
+					        <div class="dropdown-divider"></div> \
+						  	<a class="dropdown-item inspection-details text-primary" href="#" inspectionID="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Detail</a> \
+						  	<a class="dropdown-item inspection-update text-primary" href="#" inspectionID="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Modifier</a> \
+						  	<a class="dropdown-item inspection-supprimer text-primary" href="#" inspectionID="'+response[i].id+'"><span class="fa fa-trash mr-4"></span>Supprimer</a> \
+						  			</div> \
+						</div> ';
+					tableData.row.add( [
+					rang,
+					response[i].date,
+					response[i].observation,
+					response[i].etat,             
+					btns
+					         ] ).draw( false );
+				}
+		    },
+		    error: function(response,textStatus ,jqXHR){
+		    	console.log("echec");
+		    	$("#modalError .modal-body p").html("");
+				$("#modalError .modal-body p").html(jqXHR.responseText);
+		   		$('#modalError .modal-body p').modal('show'); 
+		        }
+		});
+	};
+	
+	//Chargement des inspections dans le DataTable inspection
+		populateInspectionDataTable();
+		
+		//details inspection
+			$('#data_table_inspection').on('click','.inspection-details', function(evt){
+				$this = $(this);
+				var id= $this.attr('inspectionID');
 				$.ajax({
-					url : post_url,
+					url : "../InspectionDetails?id="+id,
+					type: "GET",
+					dataType: 'json',
+					success: function(response,textStatus ,jqXHR){
+						
+						var date ='<li class="list-group-item"><span><strong>Date 		</strong></span><span class="float-right">'+response.date+'</span></li>';
+						var observation ='<li class="list-group-item"><span><strong>Observation 	</strong></span><span class="float-right">'+response.observation+'</span></li>';
+						var etat ='<li class="list-group-item"><span><strong>Etat	</strong></span><span class="float-right">'+response.etat+'</span></li>';
+						
+						
+						$("#Inspect_Details_Modal .list-group").html("");
+						$("#Inspect_Details_Modal .list-group").append(date);
+						$("#Inspect_Details_Modal .list-group").append(observation);
+						$("#Inspect_Details_Modal .list-group").append(etat);
+						$('#Inspect_Details_Modal').modal('show');
+				    },
+				    error: function(response,textStatus ,jqXHR){
+				    	
+				    	$("#modalError .modal-body p").html("");
+						$("#modalError .modal-body p").html(jqXHR.responseText);
+				   		$('#modalError .modal-body p').modal('show'); 
+				        }
+				});
+				
+				return false;
+			});
+			
+			
+			
+			
+			//Ajout de l'inspection
+			$('#data_table_CahierTexte').on('click','.CahierTexte-inspection', function(evt){
+				//Effacer d 'abord le formulaire
+				$this = $(this);
+						var id= $this.attr('CahierTexteId');
+						$("#inspection_add_Form input[id=id]").html('');
+						$("#inspection_add_Form textarea[id=observation]").html('');
+						$("#inspection_add_Form textarea[id=etat]").html('');
+						$.ajax({
+							url : "../CahierTexteDetails?id="+id,
+							type: "GET",
+							dataType: 'json',
+							contentType: "application/json; charset=UTF-8",
+							success: function(response,textStatus ,jqXHR){
+								$("#inspection_add_Form input[name=id]").val(response.id);
+								$('#inspection_add_Modal').modal('show');
+						    },
+						    error: function(response,textStatus ,jqXHR){
+						    	$("#modalError .modal-body p").html("");
+								$("#modalError .modal-body p").html(jqXHR.responseText);
+						   		$('#modalError .modal-body p').modal('show'); 
+						        }
+						});
+						
+						return false;
+			});
+			
+			
+ 				
+			$("#inspection_add_Form").submit(function(event){ 
+				
+				var request_method = $(this).attr("method"); 	
+				var form_data = $(this).serialize(); 			
+				$('#inspection_add_Modal').modal('hide');		
+				$.ajax({
+					url : "../inspectionADD",
 					type: request_method,
 					data : form_data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 					success: function(response,textStatus ,jqXHR){
-						if(response.success){
-							$("#modalSuccess .modal-body p").html("");
-							$("#modalSuccess .modal-body p").html(response.message);
-					   		$('#modalSuccess').modal('show');		
-						}else{
-							$("#modalError .modal-body p").html("");
-							$("#modalError .modal-body p").html(response.message);
-					   		$('#modalError').modal('show'); 
-						}
+						
+						$("#modalSuccess .modal-body p").html("");
+						$("#modalSuccess .modal-body p").html(response);
+				   		$('#modalSuccess').modal('show');
 				    },
 				    error: function(response,textStatus ,jqXHR){
 	                    $("#modalError .modal-body p").html("");
-						$("#modalError .modal-body p").html(jqXHR.responseText);
+						$("#modalError .modal-body p").html(response);
 				   		$('#modalError').modal('show'); 
-				   },
+				    },
 				   complete: function (response,textStatus ,jqXHR) {
-					 	//Effacer le DataTable Classes
-						$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-			  			//Raffrichir le DataTable Classes
-							populateCahierTexteDataTable();
-			  			}
+					 	//Effacer le DataTable inspection
+						$('#data_table_inspection').DataTable().rows().remove().draw();
+			  			//Raffrichir le DataTable inspection
+						populateInspectionDataTable();
+			  			    
+				    }
 				});
 				return false;
-			});	
+			});
 			
-  			/*********** Suppression d'un cahier texte ****************
-  			/* 1 - Récuperer l' Id du cahierTexte séléctionner sur la DataTable Classes
-  			/* 2 - Supprimer via ajax le cahierTexte concerné
-  			*****************************************************/
-  			
-  			$('#data_table_cahierTexte').on('click','.CahierTexte-delete', function(evt){
+			
+			
+			
+			//suppression d'une inspection
+			$('#data_table_inspection').on('click','.inspection-supprimer', function(evt){
 				$this = $(this);
-				var id= $this.attr('CahierTexteId');
+				var id= $(this).attr('inspectionID');
 				$('#modalConfirm').modal('show');
 				$('#modalConfirm').on('click', '#delete', function(e) {
 						$.ajax({
-							url : "../CahierTexteDelete?id="+id,
+							url : "../inspectionDelete?id="+id,
 							type: "GET",
 							dataType: 'json',
-						success: function(response,textStatus ,jqXHR){
+							success: function(response,textStatus ,jqXHR){
 								
 								$("#modalSuccess .modal-body p").html("");
 								$("#modalSuccess .modal-body p").html(response);
 						   		$('#modalSuccess').modal('show');
-						    	//setTimeout(function() { $('#modalSuccess').modal('hide'); }, 5000);
 						    },
 						    error: function(response,textStatus ,jqXHR){
 						    
@@ -722,162 +921,79 @@ function populateCahierTexteDataTable(){
 						   		$('#modalError').modal('show'); 
 						    },
 						    complete: function (response,textStatus ,jqXHR) {
-							 	//Effacer le DataTable Classes
-								$('#data_table_cahierTexte').DataTable().rows().remove().draw();
-					  			//Raffrichir le DataTable Classes
-								populateCahierTexteDataTable();
-						    },
+								$('#data_table_inspection').DataTable().rows().remove().draw();				  			
+								populateInspectionDataTable();
+								
+						    }
 						});
 				  });
+ 			});
+			
+			
+			$('#data_table_inspection').on('click','.inspection-update', function(evt){
+				$this = $(this);
+				var id= $this.attr('inspectionID');
+				$("#inspection_update_Form input[id=id]").html('');
+				$("#inspection_update_Form textarea[id=observation]").html('');
+				$("#inspection_update_Form textarea[id=etat]").html('');
+				$.ajax({
+					url : "../InspectionDetails?id="+id,
+					type: "GET",
+					dataType: 'json',
+					contentType: "application/json; charset=UTF-8",
+					success: function(response,textStatus ,jqXHR){
+										
+						$("#inspection_update_Form input[name=id]").val(response.id);
+						$("#inspection_update_Form textarea[name=observation]").val(response.observation);
+						$("#inspection_update_Form textarea[name=etat]").val(response.etat);
+						$('#inspection_update_Modal').modal('show');
+				    },
+				    error: function(response,textStatus ,jqXHR){
+				    	$("#modalError .modal-body p").html("");
+						$("#modalError .modal-body p").html(jqXHR.responseText);
+				   		$('#modalError .modal-body p').modal('show'); 
+				        }
+				});
+				
 				return false;
 			});
-  			
-  		//detaits cahier texte
-  			$('#data_table_cahierTexte').on('click','.CahierTexte-details', function(evt){
-			$this = $(this);
-			var id= $this.attr('CahierTexteId');
+			
+			
+			
+			$("#inspection_update_Form").submit(function(event){ 
+			var request_method = $(this).attr("method"); 	 
+			var form_data = $(this).serialize(); 			
+			$('#inspection_update_Modal').modal('hide');		
 			$.ajax({
-				url : "../CahierTexteDetails?id="+id,
-				type: "GET",
+				url : "../InspectionUpdate",
+				type: request_method,
+				data : form_data,
 				dataType: 'json',
-				contentType: "application/json; charset=UTF-8",
+				contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 				success: function(response,textStatus ,jqXHR){
-					var seance ='<li class="list-group-item"><span><strong>seance  </strong></span><span class="float-right">'+response.seance.date+'</span></li>';
-					var nom_FrItem ='<li class="list-group-item"><span><strong>Contenu  </strong></span><span class="float-right">'+response.texte+'</span></li>';
-					var nom_ArItem ='<li class="list-group-item"><span><strong>observation  </strong></span><span class="float-right">'+response.seance.observation+'</span></li>';
-					$("#CahierTexte_Details_Modal .list-group").html("");
-					$("#CahierTexte_Details_Modal .list-group").append(seance);
-					$("#CahierTexte_Details_Modal .list-group").append(nom_FrItem);
-					$("#CahierTexte_Details_Modal .list-group").append(nom_ArItem);
-					$('#CahierTexte_Details_Modal').modal('show');
+					$("#modalSuccess .modal-body p").html("");
+					$("#modalSuccess .modal-body p").html(response);
+			   		$('#modalSuccess').modal('show');
+					
 			    },
 			    error: function(response,textStatus ,jqXHR){
-			    	$("#modalError .modal-body p").html("");
-					$("#modalError .modal-body p").html(jqXHR.responseText);
-			   		$('#modalError .modal-body p').modal('show'); 
-			        }
+                    $("#modalError .modal-body p").html("");
+					$("#modalError .modal-body p").html(response);
+			   		$('#modalError').modal('show'); 
+			        },
+			    complete: function (response,textStatus ,jqXHR) {
+					$('#data_table_inspection').DataTable().rows().remove().draw();
+					populateInspectionDataTable();  
+			    }   
 			});
-			
 			return false;
-		});
-  		
-  		
-  			/*********** Charger les infos de la classe  courante ********/
-  			$.ajax({
-  					url : '../Classe/Details?id='+<%= request.getParameter("id")%>,
-  					type: "GET",
-  					dataType: 'json',
-  					success: function(response,textStatus ,jqXHR){
-  						
-  					$('#ClasseInfo').html(response.code);
-  						
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
-  				        }
-  				});
-  			/*********** Charger la matiere ********/
-  			 $.ajax({
-  					url : '../ModuleMatiereBySeancegenListe?id='+<%= request.getParameter("id")%>,
-  					type: "GET",
-  					dataType: 'json',
-  					success: function(response,textStatus ,jqXHR){
-  						
-  					//$('#MatiereInfo').html(response.matiere.code);
-  						
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
-  				        }
-  				});
-  			
-  			
-  			//Chargement des seanceGeneriques
-  			$.ajax({
-  			url : "../seanceGeneriqueList?id="+<%= request.getParameter("id")%>,
-  			type: "GET",
-  			dataType: 'json',
-  			contentType: "application/json; charset=UTF-8",
-  			success: function(response,textStatus ,jqXHR){
-  				$("#seance_Add_Form select[name=seanceGenerique]").html("");
-  				$("#seance_Add_Form select[name=seanceGenerique] ").append("<option values=-100 >All</option> ");  
+		});	
+			
+			
+			
+				
 
-  				for(i=0;i<response.length;i++){
-  					var item  ='<option value="'+response[i].id+'">'+ response[i].jour +' de '+ response[i].heureDebut +' a '+ response[i].heureFin +'</option>';
-  					$("#seance_Add_Form select[name=seanceGenerique] ").append(item);       
-  				}	
-  		    },
-  		    error: function(response,textStatus ,jqXHR){
-  		    	$("#modalError .modal-body p").html("");
-  				$("#modalError .modal-body p").html(jqXHR.responseText);
-  		   		$('#modalError .modal-body p').modal('show'); 
-  		        }
-  		});
-  			//Chargement des AcrivitePedagogique
-  			$.ajax({
-  			url : "../AcrivitePedagogiqueList",
-  			type: "GET",
-  			dataType: 'json',
-  			contentType: "application/json; charset=UTF-8",
-  			success: function(response,textStatus ,jqXHR){
-  				$("#seance_Add_Form select[name=Activite]").html("");
-  				for(i=0;i<response.length;i++){
-  					var item  ='<option value="'+response[i].id+'">'+response[i].nom_Fr +'</option>';
-  					$("#seance_Add_Form select[name=Activite] ").append(item);       
-  				}	
-  		    },
-  		    error: function(response,textStatus ,jqXHR){
-  		    	$("#modalError .modal-body p").html("");
-  				$("#modalError .modal-body p").html(jqXHR.responseText);
-  		   		$('#modalError .modal-body p').modal('show'); 
-  		        }
-  		});
-  			
-  			
-  		//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  			//Chargement des seancegenerique dans la select seancegenerique
-  			$("#seance_Add_Form select[name=seanceGenerique]").change(function(){
-  			//On recupere l Id de la seancegen
-  			var idseancegen=$(this).val();
-  			//On Charge les Matieres et les modules de la seancegenerique séléctionnée
-  			
-  			//if (idseancegen==-100){
-  			//	$("#seance_Add_Form select[name=Matiere]").html("");
-  			//	$("#seance_Add_Form select[name=Module]").html("");  
-  			//}
-  			
-  				$.ajax({
-  					url : "../ModuleMatiereBySeancegenListe?id="+idseancegen,
-  					type: "GET",
-  					dataType: 'json',
-  					contentType: "application/json; charset=UTF-8",
-  					success: function(response,textStatus ,jqXHR){
-  						$("#seance_Add_Form select[name=Matiere]").html("");
-  						$("#seance_Add_Form select[name=Module]").html("");      
-
-  						for(i=0;i<response.length;i++){
-  							var item  ='<option value="'+response[i].id+'">'+response[i].matiere.code +'</option>';
-  							var item2  ='<option value="'+response[i].id+'">'+response[i].module.nom_Fr +'</option>';
-  							$("#seance_Add_Form select[name=Matiere]").append(item);       
-  							$("#seance_Add_Form select[name=Module]").append(item2);       
-
-  						}
-  				    },
-  				    error: function(response,textStatus ,jqXHR){
-  				    	$("#modalError .modal-body p").html("");
-  						$("#modalError .modal-body p").html(jqXHR.responseText);
-  				   		$('#modalError .modal-body p').modal('show'); 
-  				        },
-  					complete: function (response,textStatus ,jqXHR) {
-  						$("#seance_Add_Form select[name=Matiere]").prop('disabled', false);
-  				    }
-  				});
-  			});
+				
     </script>
    
 </body>

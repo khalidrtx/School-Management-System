@@ -211,15 +211,8 @@
   	<servlet-name>E_Inspecteur_CahierTexteList</servlet-name>
   	<url-pattern>/E.Inspecteur/CahierTexteList</url-pattern>
   </servlet-mapping>
-  <servlet>
-  	<servlet-name>E_Inspecteur_ProfesseurClassesList</servlet-name>
-  	<jsp-file>/WEB-INF/E.Inspecteur/ProfesseurClassesList.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>E_Inspecteur_ProfesseurClassesList</servlet-name>
-  	<url-pattern>/E.Inspecteur/ProfesseurClassesList</url-pattern>
-  </servlet-mapping>
-  <servlet>
+
+    <servlet>
   	<servlet-name>E_Inspecteur_CahierTexte</servlet-name>
   	<jsp-file>/WEB-INF/E.Inspecteur/CahierTexte.jsp</jsp-file>
   </servlet>

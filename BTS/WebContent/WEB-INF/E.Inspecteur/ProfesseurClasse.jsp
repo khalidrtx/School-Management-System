@@ -421,7 +421,7 @@
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
 						        <div class="dropdown-divider"></div> \
 							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
-							  	<a class="dropdown-item CahierTexte text-primary" href="${pageContext.request.contextPath}/E.Inspecteur/ProfesseurClassesList?idClass='+response[i].id+'&idProf='+<%= request.getParameter("id")%>+'" ClasseId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Cahier Texte</a> \
+							  	<a class="dropdown-item CahierTexte text-primary" href="${pageContext.request.contextPath}/E.Inspecteur/CahierTexte?idClass='+response[i].id+'&idProf='+<%= request.getParameter("id")%>+'" ClasseId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Cahier Texte</a> \
 							  </div> \
 							</div> ';
 								tableData.row.add( [

@@ -32,15 +32,13 @@ public class ProfesseurListByMIns extends HttpServlet {
         inspectionDAO= new InspectionDAO();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Professeur> tab= new ArrayList<Professeur>();	
 		HttpSession session=request.getSession();
 		int userID = (Integer) session.getAttribute("userID");
+		
 		try {
-			
+			System.out.println(userID);
 			tab=inspectionDAO.getAllProfByInsp(userID);
 			Gson gson = new GsonBuilder().create();
 			String	json = gson.toJson(tab).toString();
@@ -49,7 +47,7 @@ public class ProfesseurListByMIns extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print(json);
 			out.flush();
-			System.out.println(json);
+		
 			
 		} catch (Exception e) {
 			e.printStackTrace();	
