@@ -793,7 +793,16 @@
 				  var nom        = "${sessionScope.userLastName_Fr}";
 				  var prenom     = "${sessionScope.userFirstName_Fr}";
 				  var nomClasse  = $('#ClasseInfo').text();
-			 	  var Matiers = $('#MatiereInfo').text();
+				  var selectedValue = $('#MatiereProf').val();
+				  var Matiers;
+				  if (selectedValue === 'default') {
+				    Matiers = $('#MatiereProf option[value!="default"]').map(function() {
+				      return $(this).text();
+				    }).get();
+				  } else {
+				    Matiers = $('#MatiereProf option:selected').text();
+				  }
+
 				  var schoolYear = $('#AnneeScolaireInfo').text();
 				  // Initialiser la bibliothèque jsPDF
 				  var doc = new jsPDF();
@@ -806,7 +815,7 @@
 				  doc.setTextColor("black"); // réinitialiser la couleur du texte en noir
 				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
 				  doc.text("Classes :" +nomClasse,15, 50);
-				  doc.text(Matiers, 15, 60);
+				  doc.text("Matieres :" + Matiers, 15, 60);
 				  doc.text(schoolYear, 15, 70);
 
 				  // Ajouter une nouvelle page

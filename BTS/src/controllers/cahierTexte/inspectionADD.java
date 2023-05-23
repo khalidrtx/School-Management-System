@@ -19,33 +19,16 @@ import Domaine.classe.AnneeScolaire;
 import Domaine.personnel.Inspecteur;
 import dao.cahierTexte.InspectionDAO;
 
-/**
- * Servlet implementation class inspectionADD
- */
 @WebServlet("/inspectionADD")
 public class inspectionADD extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private InspectionDAO inspectionDAO;
-	
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public inspectionADD() {
         super();
         inspectionDAO= new InspectionDAO();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.setCharacterEncoding("UTF-8");
 			String observation=request.getParameter("observation");
@@ -58,12 +41,14 @@ public class inspectionADD extends HttpServlet {
 			Inspection ins = new Inspection();
 			ins.setObservation(observation);
 			ins.setEtat(etat);
+			CahierTexte c = new CahierTexte();
+			Inspecteur inspecteur = new Inspecteur();
+
+
 		try {
 			
-			Inspecteur inspecteur = new Inspecteur();
 			inspecteur.setId(userID);
 			ins.setInspecteur(inspecteur);
-			CahierTexte c = new CahierTexte();
 			c.setId(id);
 			ins.setCahierTexte(c);
 			inspectionDAO.insert(ins);

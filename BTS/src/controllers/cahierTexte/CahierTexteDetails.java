@@ -24,10 +24,7 @@ import dao.cahierTexte.CahierTexteDAO;
 public class CahierTexteDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CahierTexteDAO cahiertexteDAO;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public CahierTexteDetails() {
         super();
         cahiertexteDAO=new CahierTexteDAO();

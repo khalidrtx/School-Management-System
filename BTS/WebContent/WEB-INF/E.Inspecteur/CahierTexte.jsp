@@ -272,7 +272,7 @@
 					<table id="data_table_CahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr>
-								<th>Seance</th>
+						<th>Seance</th>
 					    <th>activiter</th>
 						<th>Texte  	 </th>
 					    <th>Etat</th>

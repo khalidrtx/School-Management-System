@@ -42,11 +42,8 @@ public class CahierTexteDelete extends HttpServlet {
 		Seance Seance=new  Seance();
 		SeanceDAO SeanceDAO= new SeanceDAO();
 		try {
-//				CahierTexte CahierTexte = new CahierTexte();
 				Seance.setId(id);
 				SeanceDAO.delete(Seance);
-//				CahierTexte.setId(id);
-//				cahierTexteDAO.delete(CahierTexte);
 				message="La seance a ete supprimer avec succees";
 		} catch (SQLException e) {
 			message="Impossible de supprimer la seance";
