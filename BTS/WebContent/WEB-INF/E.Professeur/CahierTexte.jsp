@@ -851,7 +851,7 @@
 				  doc.save('document.pdf');
 			
 				  // Convert the image to a data URL
-/* 				  var canvas = document.createElement("canvas");
+			  var canvas = document.createElement("canvas");
 				  var ctx = canvas.getContext("2d");
 				  var img = new Image();
 
@@ -868,10 +868,7 @@
 				    // Generate the PDF
 				    doc.save("document.pdf");
 			};
-			img.src= "C:\Users\khali\OneDrive\Documents\GitHub\School-Management-System\BTS\WebContent\images\MINISTERE-1024x192.jpg";
-
-			 */
-			
+			img.src= "C:\Users\khali\OneDrive\Documents\GitHub\School-Management-System\BTS\WebContent\images\MINISTERE-1024x192.jpg";			
 }
 			
 		//fonction pour l'affichage du datatable cahierText par matiere

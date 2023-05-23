@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cahier" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c485b4e8-37fd-4145-b16c-5bfa2b16f318">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<parameter name="professeurId" class="java.lang.Integer"/>
+	<parameter name="classeId" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    cahiertexte.ID AS cahiertexteID,
+    cahiertexte.Texte AS cahiertexteTexte,
+    cahiertexte.Observation AS cahiertexteObservation,
+    cahiertexte.Etat AS cahiertexteEtat,
+    acrivitepedagogique.ID AS activiteID,
+    acrivitepedagogique.Code AS activiteCode,
+    acrivitepedagogique.Nom_Fr AS activiteNomFr,
+    acrivitepedagogique.Nom_Ar AS activiteNomAr,
+    seance.ID AS seanceID,
+    seance.SeanceGeneriqueID AS seanceSeanceGeneriqueID,
+    seance.Date AS seanceDate,
+    seance.Etat AS seanceEtat,
+    seance.Observation AS seanceObservation,
+    SeanceGenerique.ClasseID AS SeanceGeneriqueClasseID,
+    classe.ClasseGeneriqueID AS classeClasseGeneriqueID,
+    classegenerique.NiveauID AS classegeneriqueNiveauID,
+    niveau.Code AS niveauCode,
+    niveau.Nom_Fr AS niveauNom_Fr,
+    niveau.Nom_Ar AS niveauNom_Ar,
+    classegenerique.FiliereID AS classegeneriqueFiliereID,
+    filiere.Code AS filiereCode,
+    filiere.Nom_Fr AS filiereNom_Fr,
+    filiere.Nom_Ar AS filiereNom_Ar,
+    classegenerique.CycleID AS classegeneriqueCycleID,
+    cycle.Code AS cycleCode,
+    cycle.Nom_Fr cycleNom_Fr,
+    cycle.Nom_Ar AS cycleNom_Ar,
+    classegenerique.Description AS classegeneriqueDescription,
+    classe.AnneeScolaireID AS classeAnneeScolaireID,
+    anneescolaire.Code AS anneescolaireCode,
+    anneescolaire.DateDebut AS anneescolaireDateDebut,
+    anneescolaire.DateFin AS anneescolaireDateFin,
+    classe.Label AS classeLabel,
+    SeanceGenerique.MatiereID AS SeanceGeneriqueMatiereID,
+    matiere.Code AS matiereCode,
+    matiere.Nom_Fr AS matiereNom_Fr,
+    matiere.Nom_Ar AS matiereNom_Ar,
+    SeanceGenerique.ModuleID AS SeanceGeneriqueModuleID,
+    module.Code AS moduleCode,
+    module.Nom_Fr AS moduleNom_Fr,
+    module.Nom_Ar AS moduleNom_Ar,
+    SeanceGenerique.ProfesseurUtilisateurID AS SeanceGeneriqueProfesseurUtilisateurID,
+    utilisateur.Photo AS utilisateurPhoto,
+    utilisateur.Nom_Fr AS utilisateurNom_Fr,
+    utilisateur.Nom_Ar AS utilisateurNom_Ar,
+    utilisateur.Prenom_Fr AS utilisateurPrenom_Fr,
+    utilisateur.Prenom_Ar AS utilisateurPrenom_Ar,
+    utilisateur.Sexe AS utilisateurSexe,
+    utilisateur.Titre AS utilisateurTitre,
+    utilisateur.Cin AS utilisateurCin,
+    utilisateur.Nationalite AS utilisateurNationalite,
+    utilisateur.DateNais AS utilisateurDateNais,
+    utilisateur.LieuNais_Fr AS utilisateurLieuNais_Fr,
+    utilisateur.LieuNais_Ar AS utilisateurLieuNais_Ar,
+    utilisateur.Adresse_Fr AS utilisateurAdresse_Fr,
+    utilisateur.Adresse_Ar AS utilisateurAdresse_Ar,
+    utilisateur.Email AS utilisateurEmail,
+    utilisateur.SituationF AS utilisateurSituationF,
+    utilisateur.SituationF AS utilisateurSituationF,
+    utilisateur.TeleMobile AS utilisateurTeleMobile,
+    utilisateur.TeleDomicile AS utilisateurTeleDomicile,
+    professeur.CycleID AS professeurCycleID,
+    cycle.Code AS professeurCycleCode,
+    cycle.Nom_Fr AS professeurCycleNom,
+    cahiertexte_concept.ConceptID AS cahiertexte_conceptConceptID,
+    concept.Nom AS conceptNom,
+    chapitre.ID AS chapitreID,
+    chapitre.Nom AS chapitreNom
+FROM
+    cahiertexte,
+    seance,
+    seancegenerique,
+    classe,
+    classegenerique,
+    niveau,
+    filiere,
+    cycle,
+    anneescolaire,
+    matiere,
+    module,
+    professeur,
+    utilisateur,
+    salle,
+    typesalle,
+    bloc,
+    periode,
+    acrivitepedagogique,
+    cahiertexte_acrivitepedagogique,
+    cahiertexte_concept,
+    concept,
+    chapitre
+WHERE
+    cahiertexte.SeanceID = seance.ID AND seance.SeanceGeneriqueID = seancegenerique.ID AND cahiertexte_concept.CahierTexteID = cahiertexte.ID AND concept.ID = cahiertexte_concept.ConceptID AND seancegenerique.ClasseID = classe.ID AND cahiertexte_acrivitepedagogique.CahierTexteID = cahiertexte.ID AND acrivitepedagogique.ID = cahiertexte_acrivitepedagogique.AcrivitePedagogiqueID AND classe.ClasseGeneriqueID = classegenerique.ID AND classegenerique.NiveauID = niveau.ID AND classegenerique.FiliereID = filiere.ID AND classegenerique.CycleID = cycle.ID AND classe.AnneeScolaireID = anneescolaire.ID AND seancegenerique.MatiereID = matiere.ID AND seancegenerique.ModuleID = module.ID AND seancegenerique.ProfesseurUtilisateurID = professeur.UtilisateurID AND professeur.UtilisateurID = utilisateur.ID AND professeur.CycleID = cycle.ID AND salle.ID = seancegenerique.SalleID AND salle.TypeSalleID = typesalle.ID AND salle.BlocID = bloc.ID AND seancegenerique.PeriodeID = periode.ID AND chapitre.MatiereID = matiere.ID AND chapitre.ModuleID = module.ID AND concept.ChapitreID = chapitre.ID AND professeur.UtilisateurID = $P{professeurId} AND seancegenerique.ClasseID = $P{classeId}]]>
+	</queryString>
+	<field name="cahiertexteID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="cahiertexteID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cahiertexte"/>
+	</field>
+	<field name="cahiertexteTexte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Texte"/>
+		<property name="com.jaspersoft.studio.field.label" value="cahiertexteTexte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cahiertexte"/>
+	</field>
+	<field name="cahiertexteObservation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Observation"/>
+		<property name="com.jaspersoft.studio.field.label" value="cahiertexteObservation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cahiertexte"/>
+	</field>
+	<field name="cahiertexteEtat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Etat"/>
+		<property name="com.jaspersoft.studio.field.label" value="cahiertexteEtat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cahiertexte"/>
+	</field>
+	<field name="activiteID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="activiteID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="acrivitepedagogique"/>
+	</field>
+	<field name="activiteCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="activiteCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="acrivitepedagogique"/>
+	</field>
+	<field name="activiteNomFr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="activiteNomFr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="acrivitepedagogique"/>
+	</field>
+	<field name="activiteNomAr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="activiteNomAr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="acrivitepedagogique"/>
+	</field>
+	<field name="seanceID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="seanceID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seance"/>
+	</field>
+	<field name="seanceSeanceGeneriqueID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="SeanceGeneriqueID"/>
+		<property name="com.jaspersoft.studio.field.label" value="seanceSeanceGeneriqueID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seance"/>
+	</field>
+	<field name="seanceDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="Date"/>
+		<property name="com.jaspersoft.studio.field.label" value="seanceDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seance"/>
+	</field>
+	<field name="seanceEtat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Etat"/>
+		<property name="com.jaspersoft.studio.field.label" value="seanceEtat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seance"/>
+	</field>
+	<field name="seanceObservation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Observation"/>
+		<property name="com.jaspersoft.studio.field.label" value="seanceObservation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seance"/>
+	</field>
+	<field name="SeanceGeneriqueClasseID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ClasseID"/>
+		<property name="com.jaspersoft.studio.field.label" value="SeanceGeneriqueClasseID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seancegenerique"/>
+	</field>
+	<field name="classeClasseGeneriqueID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ClasseGeneriqueID"/>
+		<property name="com.jaspersoft.studio.field.label" value="classeClasseGeneriqueID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classe"/>
+	</field>
+	<field name="classegeneriqueNiveauID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NiveauID"/>
+		<property name="com.jaspersoft.studio.field.label" value="classegeneriqueNiveauID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classegenerique"/>
+	</field>
+	<field name="niveauCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveauCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="niveau"/>
+	</field>
+	<field name="niveauNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveauNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="niveau"/>
+	</field>
+	<field name="niveauNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveauNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="niveau"/>
+	</field>
+	<field name="classegeneriqueFiliereID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="FiliereID"/>
+		<property name="com.jaspersoft.studio.field.label" value="classegeneriqueFiliereID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classegenerique"/>
+	</field>
+	<field name="filiereCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="filiereCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filiere"/>
+	</field>
+	<field name="filiereNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="filiereNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filiere"/>
+	</field>
+	<field name="filiereNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="filiereNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filiere"/>
+	</field>
+	<field name="classegeneriqueCycleID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CycleID"/>
+		<property name="com.jaspersoft.studio.field.label" value="classegeneriqueCycleID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classegenerique"/>
+	</field>
+	<field name="cycleCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="cycleCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cycle"/>
+	</field>
+	<field name="cycleNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="cycleNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cycle"/>
+	</field>
+	<field name="cycleNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="cycleNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cycle"/>
+	</field>
+	<field name="classegeneriqueDescription" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Description"/>
+		<property name="com.jaspersoft.studio.field.label" value="classegeneriqueDescription"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classegenerique"/>
+	</field>
+	<field name="classeAnneeScolaireID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="AnneeScolaireID"/>
+		<property name="com.jaspersoft.studio.field.label" value="classeAnneeScolaireID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classe"/>
+	</field>
+	<field name="anneescolaireCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="anneescolaireCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="anneescolaire"/>
+	</field>
+	<field name="anneescolaireDateDebut" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DateDebut"/>
+		<property name="com.jaspersoft.studio.field.label" value="anneescolaireDateDebut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="anneescolaire"/>
+	</field>
+	<field name="anneescolaireDateFin" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DateFin"/>
+		<property name="com.jaspersoft.studio.field.label" value="anneescolaireDateFin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="anneescolaire"/>
+	</field>
+	<field name="classeLabel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Label"/>
+		<property name="com.jaspersoft.studio.field.label" value="classeLabel"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classe"/>
+	</field>
+	<field name="SeanceGeneriqueMatiereID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="MatiereID"/>
+		<property name="com.jaspersoft.studio.field.label" value="SeanceGeneriqueMatiereID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seancegenerique"/>
+	</field>
+	<field name="matiereCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="matiereCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matiere"/>
+	</field>
+	<field name="matiereNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="matiereNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matiere"/>
+	</field>
+	<field name="matiereNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="matiereNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matiere"/>
+	</field>
+	<field name="SeanceGeneriqueModuleID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ModuleID"/>
+		<property name="com.jaspersoft.studio.field.label" value="SeanceGeneriqueModuleID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seancegenerique"/>
+	</field>
+	<field name="moduleCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="moduleCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="module"/>
+	</field>
+	<field name="moduleNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="moduleNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="module"/>
+	</field>
+	<field name="moduleNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="moduleNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="module"/>
+	</field>
+	<field name="SeanceGeneriqueProfesseurUtilisateurID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ProfesseurUtilisateurID"/>
+		<property name="com.jaspersoft.studio.field.label" value="SeanceGeneriqueProfesseurUtilisateurID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seancegenerique"/>
+	</field>
+	<field name="utilisateurPhoto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurPhoto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurNom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurNom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurNom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurNom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurPrenom_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Prenom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurPrenom_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurPrenom_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Prenom_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurPrenom_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurSexe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Sexe"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurSexe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurTitre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Titre"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurTitre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurCin" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Cin"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurCin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurNationalite" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nationalite"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurNationalite"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurDateNais" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DateNais"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurDateNais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurLieuNais_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LieuNais_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurLieuNais_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurLieuNais_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LieuNais_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurLieuNais_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurAdresse_Fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Adresse_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurAdresse_Fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurAdresse_Ar" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Adresse_Ar"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurAdresse_Ar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurEmail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Email"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurEmail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurSituationF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SituationF"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurSituationF"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="COLUMN_59" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SituationF"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurSituationF"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurTeleMobile" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TeleMobile"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurTeleMobile"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="utilisateurTeleDomicile" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TeleDomicile"/>
+		<property name="com.jaspersoft.studio.field.label" value="utilisateurTeleDomicile"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="utilisateur"/>
+	</field>
+	<field name="professeurCycleID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CycleID"/>
+		<property name="com.jaspersoft.studio.field.label" value="professeurCycleID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="professeur"/>
+	</field>
+	<field name="professeurCycleCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="professeurCycleCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cycle"/>
+	</field>
+	<field name="professeurCycleNom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom_Fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="professeurCycleNom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cycle"/>
+	</field>
+	<field name="cahiertexte_conceptConceptID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ConceptID"/>
+		<property name="com.jaspersoft.studio.field.label" value="cahiertexte_conceptConceptID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cahiertexte_concept"/>
+	</field>
+	<field name="conceptNom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="conceptNom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="concept"/>
+	</field>
+	<field name="chapitreID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="chapitreID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="chapitre"/>
+	</field>
+	<field name="chapitreNom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="chapitreNom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="chapitre"/>
+	</field>
+	<group name="cahiertexteID">
+		<groupExpression><![CDATA[$F{cahiertexteID}]]></groupExpression>
+	</group>
+	<group name="cahiertexteTexte">
+		<groupExpression><![CDATA[$F{cahiertexteTexte}]]></groupExpression>
+	</group>
+	<group name="cahiertexteObservation">
+		<groupExpression><![CDATA[$F{cahiertexteObservation}]]></groupExpression>
+	</group>
+	<group name="cahiertexteEtat">
+		<groupExpression><![CDATA[$F{cahiertexteEtat}]]></groupExpression>
+	</group>
+	<group name="activiteID">
+		<groupExpression><![CDATA[$F{activiteID}]]></groupExpression>
+	</group>
+	<group name="activiteCode">
+		<groupExpression><![CDATA[$F{activiteCode}]]></groupExpression>
+	</group>
+	<group name="activiteNomFr">
+		<groupExpression><![CDATA[$F{activiteNomFr}]]></groupExpression>
+	</group>
+	<group name="activiteNomAr">
+		<groupExpression><![CDATA[$F{activiteNomAr}]]></groupExpression>
+	</group>
+	<group name="seanceID">
+		<groupExpression><![CDATA[$F{seanceID}]]></groupExpression>
+	</group>
+	<group name="seanceSeanceGeneriqueID">
+		<groupExpression><![CDATA[$F{seanceSeanceGeneriqueID}]]></groupExpression>
+	</group>
+	<group name="seanceDate">
+		<groupExpression><![CDATA[$F{seanceDate}]]></groupExpression>
+	</group>
+	<group name="seanceEtat">
+		<groupExpression><![CDATA[$F{seanceEtat}]]></groupExpression>
+	</group>
+	<group name="seanceObservation">
+		<groupExpression><![CDATA[$F{seanceObservation}]]></groupExpression>
+	</group>
+	<group name="SeanceGeneriqueClasseID">
+		<groupExpression><![CDATA[$F{SeanceGeneriqueClasseID}]]></groupExpression>
+	</group>
+	<group name="classeClasseGeneriqueID">
+		<groupExpression><![CDATA[$F{classeClasseGeneriqueID}]]></groupExpression>
+	</group>
+	<group name="classegeneriqueNiveauID">
+		<groupExpression><![CDATA[$F{classegeneriqueNiveauID}]]></groupExpression>
+	</group>
+	<group name="niveauCode">
+		<groupExpression><![CDATA[$F{niveauCode}]]></groupExpression>
+	</group>
+	<group name="niveauNom_Fr">
+		<groupExpression><![CDATA[$F{niveauNom_Fr}]]></groupExpression>
+	</group>
+	<group name="niveauNom_Ar">
+		<groupExpression><![CDATA[$F{niveauNom_Ar}]]></groupExpression>
+	</group>
+	<group name="classegeneriqueFiliereID">
+		<groupExpression><![CDATA[$F{classegeneriqueFiliereID}]]></groupExpression>
+	</group>
+	<group name="filiereCode">
+		<groupExpression><![CDATA[$F{filiereCode}]]></groupExpression>
+	</group>
+	<group name="filiereNom_Fr">
+		<groupExpression><![CDATA[$F{filiereNom_Fr}]]></groupExpression>
+	</group>
+	<group name="filiereNom_Ar">
+		<groupExpression><![CDATA[$F{filiereNom_Ar}]]></groupExpression>
+	</group>
+	<group name="classegeneriqueCycleID">
+		<groupExpression><![CDATA[$F{classegeneriqueCycleID}]]></groupExpression>
+	</group>
+	<group name="cycleCode">
+		<groupExpression><![CDATA[$F{cycleCode}]]></groupExpression>
+	</group>
+	<group name="cycleNom_Fr">
+		<groupExpression><![CDATA[$F{cycleNom_Fr}]]></groupExpression>
+	</group>
+	<group name="cycleNom_Ar">
+		<groupExpression><![CDATA[$F{cycleNom_Ar}]]></groupExpression>
+	</group>
+	<group name="classegeneriqueDescription">
+		<groupExpression><![CDATA[$F{classegeneriqueDescription}]]></groupExpression>
+	</group>
+	<group name="classeAnneeScolaireID">
+		<groupExpression><![CDATA[$F{classeAnneeScolaireID}]]></groupExpression>
+	</group>
+	<group name="anneescolaireCode">
+		<groupExpression><![CDATA[$F{anneescolaireCode}]]></groupExpression>
+	</group>
+	<group name="anneescolaireDateDebut">
+		<groupExpression><![CDATA[$F{anneescolaireDateDebut}]]></groupExpression>
+	</group>
+	<group name="anneescolaireDateFin">
+		<groupExpression><![CDATA[$F{anneescolaireDateFin}]]></groupExpression>
+	</group>
+	<group name="classeLabel">
+		<groupExpression><![CDATA[$F{classeLabel}]]></groupExpression>
+	</group>
+	<group name="SeanceGeneriqueMatiereID">
+		<groupExpression><![CDATA[$F{SeanceGeneriqueMatiereID}]]></groupExpression>
+	</group>
+	<group name="matiereCode">
+		<groupExpression><![CDATA[$F{matiereCode}]]></groupExpression>
+	</group>
+	<group name="matiereNom_Fr">
+		<groupExpression><![CDATA[$F{matiereNom_Fr}]]></groupExpression>
+	</group>
+	<group name="matiereNom_Ar">
+		<groupExpression><![CDATA[$F{matiereNom_Ar}]]></groupExpression>
+	</group>
+	<group name="SeanceGeneriqueModuleID">
+		<groupExpression><![CDATA[$F{SeanceGeneriqueModuleID}]]></groupExpression>
+	</group>
+	<group name="moduleCode">
+		<groupExpression><![CDATA[$F{moduleCode}]]></groupExpression>
+	</group>
+	<group name="moduleNom_Fr">
+		<groupExpression><![CDATA[$F{moduleNom_Fr}]]></groupExpression>
+	</group>
+	<group name="moduleNom_Ar">
+		<groupExpression><![CDATA[$F{moduleNom_Ar}]]></groupExpression>
+	</group>
+	<group name="SeanceGeneriqueProfesseurUtilisateurID">
+		<groupExpression><![CDATA[$F{SeanceGeneriqueProfesseurUtilisateurID}]]></groupExpression>
+	</group>
+	<group name="utilisateurPhoto">
+		<groupExpression><![CDATA[$F{utilisateurPhoto}]]></groupExpression>
+	</group>
+	<group name="utilisateurNom_Fr">
+		<groupExpression><![CDATA[$F{utilisateurNom_Fr}]]></groupExpression>
+	</group>
+	<group name="utilisateurNom_Ar">
+		<groupExpression><![CDATA[$F{utilisateurNom_Ar}]]></groupExpression>
+	</group>
+	<group name="utilisateurPrenom_Fr">
+		<groupExpression><![CDATA[$F{utilisateurPrenom_Fr}]]></groupExpression>
+	</group>
+	<group name="utilisateurPrenom_Ar">
+		<groupExpression><![CDATA[$F{utilisateurPrenom_Ar}]]></groupExpression>
+	</group>
+	<group name="utilisateurSexe">
+		<groupExpression><![CDATA[$F{utilisateurSexe}]]></groupExpression>
+	</group>
+	<group name="utilisateurTitre">
+		<groupExpression><![CDATA[$F{utilisateurTitre}]]></groupExpression>
+	</group>
+	<group name="utilisateurCin">
+		<groupExpression><![CDATA[$F{utilisateurCin}]]></groupExpression>
+	</group>
+	<group name="utilisateurNationalite">
+		<groupExpression><![CDATA[$F{utilisateurNationalite}]]></groupExpression>
+	</group>
+	<group name="utilisateurDateNais">
+		<groupExpression><![CDATA[$F{utilisateurDateNais}]]></groupExpression>
+	</group>
+	<group name="utilisateurLieuNais_Fr">
+		<groupExpression><![CDATA[$F{utilisateurLieuNais_Fr}]]></groupExpression>
+	</group>
+	<group name="utilisateurLieuNais_Ar">
+		<groupExpression><![CDATA[$F{utilisateurLieuNais_Ar}]]></groupExpression>
+	</group>
+	<group name="utilisateurAdresse_Fr">
+		<groupExpression><![CDATA[$F{utilisateurAdresse_Fr}]]></groupExpression>
+	</group>
+	<group name="utilisateurAdresse_Ar">
+		<groupExpression><![CDATA[$F{utilisateurAdresse_Ar}]]></groupExpression>
+	</group>
+	<group name="utilisateurEmail">
+		<groupExpression><![CDATA[$F{utilisateurEmail}]]></groupExpression>
+	</group>
+	<group name="utilisateurSituationF">
+		<groupExpression><![CDATA[$F{utilisateurSituationF}]]></groupExpression>
+	</group>
+	<group name="COLUMN_59">
+		<groupExpression><![CDATA[$F{COLUMN_59}]]></groupExpression>
+	</group>
+	<group name="utilisateurTeleMobile">
+		<groupExpression><![CDATA[$F{utilisateurTeleMobile}]]></groupExpression>
+	</group>
+	<group name="utilisateurTeleDomicile">
+		<groupExpression><![CDATA[$F{utilisateurTeleDomicile}]]></groupExpression>
+	</group>
+	<group name="professeurCycleID">
+		<groupExpression><![CDATA[$F{professeurCycleID}]]></groupExpression>
+	</group>
+	<group name="professeurCycleCode">
+		<groupExpression><![CDATA[$F{professeurCycleCode}]]></groupExpression>
+	</group>
+	<group name="professeurCycleNom">
+		<groupExpression><![CDATA[$F{professeurCycleNom}]]></groupExpression>
+	</group>
+	<group name="cahiertexte_conceptConceptID">
+		<groupExpression><![CDATA[$F{cahiertexte_conceptConceptID}]]></groupExpression>
+	</group>
+	<group name="conceptNom">
+		<groupExpression><![CDATA[$F{conceptNom}]]></groupExpression>
+	</group>
+	<group name="chapitreID">
+		<groupExpression><![CDATA[$F{chapitreID}]]></groupExpression>
+	</group>
+	<group name="chapitreNom">
+		<groupExpression><![CDATA[$F{chapitreNom}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="70" y="20" width="383" height="50" uuid="27da449c-bafe-460a-a196-f20fafee998f"/>
+				<imageExpression><![CDATA["C:/Users/khali/Downloads/MINISTERE-1024x192.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="210" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="30" width="100" height="30" uuid="71021cce-aad5-4485-8f1e-6326ccc71b7b"/>
+				<text><![CDATA[Nom Professeur]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="30" width="100" height="30" uuid="e5f4c190-29bf-48d9-8583-6d6b0d57fd89"/>
+				<textFieldExpression><![CDATA[$F{utilisateurPrenom_Fr}+' '+$F{utilisateurNom_Fr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="230" splitType="Stretch">
+			<staticText>
+				<reportElement x="46" y="41" width="100" height="30" uuid="ebdfe60b-4d62-4e1a-add3-5052ed1bc183"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="41" width="100" height="30" uuid="1792e8e4-63bd-45ee-ad44-381f49bb430e"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="41" width="220" height="30" uuid="2f627305-8a92-4c49-909f-4bb0a30443bc"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="40" width="100" height="30" uuid="e02bfa25-ed56-40b2-8247-9db08552e1b3"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="71" width="100" height="153" uuid="10ad1651-c521-4dee-8ff4-cc5c47c88689"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{seanceDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="71" width="100" height="153" uuid="7b63d1cb-0473-4ed6-8434-0a3d4a8fae50"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{activiteNomFr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="71" width="220" height="30" uuid="5ec4fa07-5f5b-4f30-9d4d-cffd8fe0b887"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{matiereNom_Fr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="101" width="220" height="30" uuid="de7cb86f-ebc9-41ac-8615-97fb3340b2d2"/>
+				<box>
+					<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{moduleNom_Fr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="130" width="220" height="30" uuid="61cc2c4c-9c9f-4908-8eb5-e5b40b12bcb8"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.25" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.25" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{chapitreNom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="160" width="220" height="30" uuid="130405a3-67f2-40a9-bfb1-4b0da521e7c1"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.25" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.25" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{conceptNom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="193" width="220" height="31" uuid="45c30cee-e6c6-44a1-8411-fea6952f2a65"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{cahiertexteTexte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="69" width="100" height="155" uuid="085e7cc3-2d02-4f35-9efe-850b0808e238"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{cahiertexteEtat}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
