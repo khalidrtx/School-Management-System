@@ -27,7 +27,6 @@ public class CahierTexteListByMatiere extends HttpServlet {
 		int idclass = Integer.parseInt(request.getParameter("id"));
 		int userID= Integer.parseInt(request.getParameter("profId"));
 		int MatiereId= Integer.parseInt(request.getParameter("MatiereId"));
-
 		ArrayList<CahierTexte> cahierTextes = new ArrayList<CahierTexte>();
 		try {
 			cahierTextes = cahierTexteDAO.getCahiertexteByProfClassMatiere(userID, idclass,MatiereId);
@@ -40,6 +39,7 @@ public class CahierTexteListByMatiere extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 

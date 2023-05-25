@@ -710,7 +710,7 @@ z-index:-1;
 		        type: "GET",
 		        dataType: 'json',
 		        contentType: "application/json; charset=UTF-8",
-		        success: function(response,textStatus ,jqXHR){
+		        success: function(response,textStatus,jqXHR){
 		            $("#seance_Add_Form select[name=Matiere]").html("");
 		            $("#seance_Add_Form select[name=Module]").html("");      
 		

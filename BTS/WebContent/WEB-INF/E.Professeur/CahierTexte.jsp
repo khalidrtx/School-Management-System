@@ -788,7 +788,8 @@
 		// Chargement des Cahiers de Textes dans le DataTable "cahierTexte"
 				populateCahierTexteDataTable();	
 		//Genertation du cahier de texte sous format PDF
-			function generatePDF(data) {
+		function generatePDF(data) {
+			console.log(data);
 				  // Récupérer les informations à ajouter dans le PDF
 				  var nom        = "${sessionScope.userLastName_Fr}";
 				  var prenom     = "${sessionScope.userFirstName_Fr}";
@@ -823,7 +824,7 @@
 				  // Ajouter un titre pour la nouvelle page
 				  doc.setFontSize(22);
 				  doc.setTextColor(255, 0, 0);
-				  doc.text("Cahiers de Textes", 15, 20);
+				//  doc.text("Cahiers de Textes", 15, 20);
 
 				  // Ajouter le tableau des données
 				  var headers = ["Seance", "Activité", "Texte", "État"];
@@ -872,7 +873,6 @@
 }
 			
 		//fonction pour l'affichage du datatable cahierText par matiere
-		
 		$("#MatiereProf").change(function() {
 			  // Retrieve the selected value of MatiereProf
 			 var MatiereId = $(this).val();

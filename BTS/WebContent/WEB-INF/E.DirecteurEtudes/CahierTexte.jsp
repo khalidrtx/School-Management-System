@@ -235,9 +235,7 @@
 	   				<span id="ClasseInfo"></span>
 	   				<span id="MatiereInfo"></span>
 	   				
-	   			 
 		    </div>
-		   
 			<table id="data_table_cahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
@@ -251,8 +249,11 @@
 				<tbody>
 				</tbody>
 			</table>
-					 
+				<div class="text-right">
+        <button id="btn-download-pdf-ChaierTexte" class="btn btn-primary">Télécharger</button>
+      </div>
 		</div>
+		
 		 <!-- /Col 1 -->
 		<div class="col-md-3"> <!-- Col 2 -->
 			<div class="panel with-nav-tabs panel-primary">
@@ -396,10 +397,12 @@
 	<script src="${pageContext.request.contextPath}/js/vfs_fonts.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     
     
   	<script type="text/javascript">
-  	
+	var data;
   	$(document).ready(function() {
   		/**************** Début : Ajax Load Animation *************************/
   		$(document).ajaxStart(function(){
@@ -408,6 +411,11 @@
   		$(document).ajaxStop(function(){
   			$('#loading-image').hide();
 		 });
+  	  // Ajouter l'événement click sur le bouton "Télécharger"
+    	  $('#btn-download-pdf-ChaierTexte').on('click', function() {
+    	    // Appeler la fonction pour générer le PDF
+    	    generatePDF(data);
+    	  });
   	});
 
 		/*******************Fin : Ajax Load Animation *************************/
@@ -460,12 +468,11 @@
 				dataType: 'json',
 				success: function(response,textStatus ,jqXHR){
 					for(i=0;i<response.length;i++){
-						
-						var rang=i+1;
+						data=response;
 						var btns='<div class="btn-group dropleft"> \
 							  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
 							  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
-							    <span class="sr-only">Toggle Dropdown</span> \
+							  <span class="sr-only">Toggle Dropdown</span> \
 							  </button> \
 							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
@@ -473,16 +480,16 @@
 							  	<a class="dropdown-item CahierTexte-details text-primary" href="#" CahierTexteId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
 							  			</div> \
 							</div> ';
-							
 						tableData.row.add( [
-							 response[i].seance.date,
+							  response[i].seance.date,
 							  response[i].activites[0].nom_Fr,
 							  "<div style='width: 200px;'><strong>Matière : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
 							  "</div style='width: 200px;'><div><strong>Module : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
+							  "</div style='width: 200px;'><div><strong>Chapitre: </strong>" + response[i].concepts[0].chapitre.nom +
 							  "</div style='width: 200px;'><div><strong>Concepts : </strong>" + response[i].concepts[0].nom +
 							  "</div style='width: 200px;'><br><div><strong>Texte : </strong>" + response[i].texte + "</div>",
-							  response[i].seance.observation, 
-						             btns
+							  response[i].etat, 
+							  btns
 						         ] ).draw( false );
 					}
 			    },
@@ -497,8 +504,90 @@
 		//Chargement des Classes Génériques dans le DataTable ClassesGeneriques
 			populateCahierTexteDirecteurDataTable();			
 	
-	
-////////////////////////////////////////////////
+		
+		//Genertation du cahier de texte sous format PDF
+			function generatePDF(data) {
+				  // Récupérer les informations à ajouter dans le PDF
+				  var nom        = "${sessionScope.userLastName_Fr}";
+				  var prenom     = "${sessionScope.userFirstName_Fr}";
+				  var nomClasse  = $('#ClasseInfo').text();
+				  var selectedValue = $('#MatiereProf').val();
+				  var Matiers;
+				  if (selectedValue === 'default') {
+				    Matiers = $('#MatiereProf option[value!="default"]').map(function() {
+				      return $(this).text();
+				    }).get();
+				  } else {
+				    Matiers = $('#MatiereProf option:selected').text();
+				  }
+
+				  var schoolYear = $('#AnneeScolaireInfo').text();
+				  // Initialiser la bibliothèque jsPDF
+				  var doc = new jsPDF();
+				  // Ajouter les informations dans la première page du PDF
+				  doc.setFontSize(22);
+				  doc.setTextColor(255, 0, 0); // changer la couleur du texte en rouge
+				  doc.text("Informations générales", 60, 20);
+
+				  doc.setFontSize(16);
+				  doc.setTextColor("black"); // réinitialiser la couleur du texte en noir
+				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
+				  doc.text("Classes :" +nomClasse,15, 50);
+				  doc.text("Matieres :" + Matiers, 15, 60);
+				  doc.text(schoolYear, 15, 70);
+
+				  // Ajouter une nouvelle page
+				  doc.addPage();
+				  // Ajouter un titre pour la nouvelle page
+				  doc.setFontSize(22);
+				  doc.setTextColor(255, 0, 0);
+				  doc.text("Cahiers de Textes", 15, 20);
+
+				  // Ajouter le tableau des données
+				  var headers = ["Seance", "Activité", "Texte", "État"];
+				  var donne = [];
+				  for (var i = 0; i < data.length; i++) {
+					  var rowData = [        
+						  data[i].seance.date,
+					    data[i].activites[0].nom_Fr,
+					   "Matiere : " + data[i].seance.seanceGenerique.matiere.code + "\n" +
+					   "Module  : " + data[i].seance.seanceGenerique.module.nom_Fr + "\n" +
+					   "Chapitre: " + data[i].concepts[0].chapitre.nom + "\n" +
+					   "Concepts: " +  data[i].concepts[0].nom + "\n" +
+					   "Texte   : " + data[i].texte,
+					    data[i].etat
+					  ];
+					  donne.push(rowData);
+					}
+				  doc.autoTable({
+				    head: [headers],
+				    body: donne,
+				    startY: 30
+				  });
+				  var totalPages = doc.internal.pages.length;
+			// Télécharger le PDF 
+				  doc.save('document.pdf');
+			
+				  // Convert the image to a data URL
+			  var canvas = document.createElement("canvas");
+				  var ctx = canvas.getContext("2d");
+				  var img = new Image();
+
+				  img.onload = function () {
+				    canvas.width = img.width;
+				    canvas.height = img.height;
+				    ctx.drawImage(img, 0, 0, img.width, img.height);
+				
+				    var imageData = canvas.toDataURL("image/jpeg"); // Convert the image to a data URL
+				
+				    // Add the image to the PDF
+				    doc.addImage(imageData, "JPEG", x, y, width, height); // Adjust the coordinates and dimensions as needed
+				
+				    // Generate the PDF
+				    doc.save("document.pdf");
+			};
+			img.src= "C:\Users\khali\OneDrive\Documents\GitHub\School-Management-System\BTS\WebContent\images\MINISTERE-1024x192.jpg";			
+}
 
 		
   			

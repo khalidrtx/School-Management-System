@@ -264,11 +264,7 @@
 					   			Cahier Des Textes :
 					   			<span id="AnneeScolaireinfo"></span>
 					   			
-						    </div>
-						<div class="col-md-8">
-								
-						</div> 
-			
+						    </div>			
 					<table id="data_table_CahierTexte" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr>
@@ -282,7 +278,9 @@
 						<tbody>
 						</tbody>
 					</table>
-					
+						<div class="text-right">
+        <button id="btn-download-pdf-ChaierTexte" class="btn btn-primary">Télécharger</button>
+      </div>
 					<!-- Début : Modal Details cahier texte -->
 				<div id="CahierTexte_Details_Modal" class="modal" tabindex="-1" role="dialog">
 					<div class="modal-dialog">
@@ -306,6 +304,7 @@
 				        </div>
 					</div>
 			    </div>
+			    
 			 <!-- Fin : Modal Details cahier texte -->
 					   		
 										    <!-- Début : Modal Add inspection -->
@@ -370,7 +369,7 @@
 										</table>
 										
 										 <!-- Début : Modal Details Inspection -->
-										 <div id="Inspect_Details_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
+									<div id="Inspect_Details_Modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true" data-backdrop="false">
 									<div class="modal-dialog">
 								      	<div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
 								          	<div class="modal-header bg-info">
@@ -431,17 +430,14 @@
 															    </div>
 											      	</div>
 											        <div class="modal-footer ">
-										        		<input type="submit" class="btn btn-primary" value="Enregistrer" />
+										        		<input type="submit" class="btn btn-primary" value="Enregistrer"/>
 												        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
 										      		</div>
 											        </div>
 											   	</form>
 												</div>
 										    </div>
-							
-						
-						<!-- Fin : Modal Add inspection -->
-							
+									<!-- Fin : Modal Add inspection -->
 						</div>
 						<!-- /Content tab 2	: Gestion Annees Scolaires-->
 						
@@ -494,6 +490,7 @@
 	
 	<!-- /Page Content  -->
 </div>
+
 </div>
 </div>
 <!-- Modal Success -->
@@ -615,10 +612,12 @@
 	<script src="${pageContext.request.contextPath}/js/vfs_fonts.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/buttons.print.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     
     
   	<script type="text/javascript">
-  	
+  	var data;
   	$(document).ready(function() {
   		/**************** Début : Ajax Load Animation *************************/
   		$(document).ajaxStart(function(){
@@ -627,6 +626,12 @@
   		$(document).ajaxStop(function(){
   			$('#loading-image').hide();
 		 });
+  	  // Ajouter l'événement click sur le bouton "Télécharger"
+    	  $('#btn-download-pdf-ChaierTexte').on('click', function() {
+    	    // Appeler la fonction pour générer le PDF
+    	    generatePDF(data);
+    	  });
+  	  
 		/*******************Fin : Ajax Load Animation *************************/
   	
 		$('#data_table_CahierTexte').DataTable(
@@ -665,9 +670,7 @@
 	  		        ]
 	  			}
 	  		);
-  		
-  		
-  	});
+   	});
 	
   	/******* fonction pour charger la liste les cahiers des textes dans la TableData cahierTexte ******/	
   		function populateCahierTexteDataTable(){
@@ -680,7 +683,7 @@
 					contentType: "application/json; charset=UTF-8",
 					success: function(response,textStatus ,jqXHR){
 						for(i=0;i<response.length;i++){
-							var rang=i+1;
+							data=response;
 							var btns='<div class="btn-group dropleft"> \
 								  <button type="button" class="btn btn-outline-info btn-sm" title="Actions"><span class="fa fa-ellipsis-h"></span></button> \
 								  <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> \
@@ -715,7 +718,84 @@
 				});
 		};
 		populateCahierTexteDataTable();
+		//Genertation du cahier de texte sous format PDF
+		function generatePDF(data) {
+			console.log(data);
+				  // Récupérer les informations à ajouter dans le PDF
+				  var classe    =data[0].seance.seanceGenerique.classe.code;
+				  var nom        = "${sessionScope.userLastName_Fr}";
+				  var prenom     = "${sessionScope.userFirstName_Fr}";
+				  var nomClasse  = $('#ClasseInfo').text();
+				  var selectedValue = $('#MatiereProf').val();
+				  var Matiers=data[0].seance.seanceGenerique.matiere.code;
 
+				  var schoolYear = $('#AnneeScolaireInfo').text();
+				  // Initialiser la bibliothèque jsPDF
+				  var doc = new jsPDF();
+				  // Ajouter les informations dans la première page du PDF
+				  doc.setFontSize(22);
+				  doc.setTextColor(255, 0, 0); // changer la couleur du texte en rouge
+				  doc.text("Informations générales", 60, 20);
+
+				  doc.setFontSize(16);
+				  doc.setTextColor("black"); // réinitialiser la couleur du texte en noir
+				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
+				  doc.text("Classes :" +classe,15, 50);
+				  doc.text("Matieres :" + Matiers, 15, 60);
+				  doc.text(schoolYear, 15, 70);
+
+				  // Ajouter une nouvelle page
+				  doc.addPage();
+				  // Ajouter un titre pour la nouvelle page
+				  doc.setFontSize(22);
+				  doc.setTextColor(255, 0, 0);
+				//  doc.text("Cahiers de Textes", 15, 20);
+
+				  // Ajouter le tableau des données
+				  var headers = ["Seance", "Activité", "Texte", "État"];
+				  var donne = [];
+				  for (var i = 0; i < data.length; i++) {
+					  var rowData = [        
+						  data[i].seance.date,
+					    data[i].activites[0].nom_Fr,
+					   "Matiere : " + data[i].seance.seanceGenerique.matiere.code + "\n" +
+					   "Module  : " + data[i].seance.seanceGenerique.module.nom_Fr + "\n" +
+					   "Chapitre: " + data[i].concepts[0].chapitre.nom + "\n" +
+					   "Concepts: " +  data[i].concepts[0].nom + "\n" +
+					   "Texte   : " + data[i].texte,
+					    data[i].etat
+					  ];
+					  donne.push(rowData);
+					}
+				  doc.autoTable({
+				    head: [headers],
+				    body: donne,
+				    startY: 30
+				  });
+				  var totalPages = doc.internal.pages.length;
+			// Télécharger le PDF 
+				  doc.save('document.pdf');
+			
+				  // Convert the image to a data URL
+			  var canvas = document.createElement("canvas");
+				  var ctx = canvas.getContext("2d");
+				  var img = new Image();
+
+				  img.onload = function () {
+				    canvas.width = img.width;
+				    canvas.height = img.height;
+				    ctx.drawImage(img, 0, 0, img.width, img.height);
+				
+				    var imageData = canvas.toDataURL("image/jpeg"); // Convert the image to a data URL
+				
+				    // Add the image to the PDF
+				    doc.addImage(imageData, "JPEG", x, y, width, height); // Adjust the coordinates and dimensions as needed
+				
+				    // Generate the PDF
+				    doc.save("document.pdf");
+			};
+			img.src= "C:\Users\khali\OneDrive\Documents\GitHub\School-Management-System\BTS\WebContent\images\MINISTERE-1024x192.jpg";			
+}
   		
   	//detaits cahier texte
 		$('#data_table_CahierTexte').on('click','.CahierTexte-details', function(evt){
@@ -841,19 +921,19 @@
 						$("#inspection_add_Form input[id=id]").html('');
 						$("#inspection_add_Form textarea[id=observation]").html('');
 						$("#inspection_add_Form textarea[id=etat]").html('');
-						$.ajax({
+				$.ajax({
 							url : "../CahierTexteDetails?id="+id,
 							type: "GET",
 							dataType: 'json',
 							contentType: "application/json; charset=UTF-8",
-							success: function(response,textStatus ,jqXHR){
+								success: function(response,textStatus ,jqXHR){
 								$("#inspection_add_Form input[name=id]").val(response.id);
 								$('#inspection_add_Modal').modal('show');
 						    },
-						    error: function(response,textStatus ,jqXHR){
-						    	$("#modalError .modal-body p").html("");
-								$("#modalError .modal-body p").html(jqXHR.responseText);
-						   		$('#modalError .modal-body p').modal('show'); 
+						 	   error: function(response,textStatus ,jqXHR){
+							    	$("#modalError .modal-body p").html("");
+									$("#modalError .modal-body p").html(jqXHR.responseText);
+							   		$('#modalError .modal-body p').modal('show'); 
 						        }
 						});
 						
@@ -991,9 +1071,7 @@
 			
 			
 			
-				
-
-				
+								
     </script>
    
 </body>

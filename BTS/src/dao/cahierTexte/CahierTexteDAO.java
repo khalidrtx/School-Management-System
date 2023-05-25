@@ -208,7 +208,6 @@ public class CahierTexteDAO  {
 // class
 				Classe Classe=new Classe();
 				Classe.setId(rs.getInt("SeanceGeneriqueClasseID"));
-//				Classe.setCode(rs.getInt("")); the code is auto generate by the other classes codes....
 				Classe.setLabel(rs.getString("classeLabel"));
 
 				ClasseGenerique ClasseGenerique= new ClasseGenerique();
@@ -324,6 +323,9 @@ public class CahierTexteDAO  {
 				Classe.setClasseGenerique(ClasseGenerique);
 				ClasseGenerique.setFiliere(Filiere);
 				ClasseGenerique.setNiveau(Niveau);
+				ClasseGenerique.setCycle(Cycle);
+				Classe.setCode();
+
 //Ajouter Le cahierTexte dans la list
 				ct.add(CahierTexte);
 			}

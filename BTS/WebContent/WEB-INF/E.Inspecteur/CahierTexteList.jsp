@@ -402,8 +402,7 @@
 							  </div> \
 							</div> ';
 						tableData.row.add( [
-							response[i].id,
-						          //   response[i].UtilisateurID,
+									response[i].id,
 						            response[i].prenom_Fr +' '+ response[i].nom_Fr,
 						             btns
 						         ] ).draw( false );
