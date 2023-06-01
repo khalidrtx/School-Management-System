@@ -723,13 +723,11 @@
 			console.log(data);
 				  // Récupérer les informations à ajouter dans le PDF
 				  var classe    =data[0].seance.seanceGenerique.classe.code;
-				  var nom        = "${sessionScope.userLastName_Fr}";
-				  var prenom     = "${sessionScope.userFirstName_Fr}";
-				  var nomClasse  = $('#ClasseInfo').text();
-				  var selectedValue = $('#MatiereProf').val();
+			 	  var nom        = data[0].seance.seanceGenerique.professeur.nom_Fr;
+				  var prenom     = data[0].seance.seanceGenerique.professeur.prenom_Fr; 
 				  var Matiers=data[0].seance.seanceGenerique.matiere.code;
 
-				  var schoolYear = $('#AnneeScolaireInfo').text();
+				  var schoolYear =data[0].seance.seanceGenerique.classe.anneeScolaire.code;
 				  // Initialiser la bibliothèque jsPDF
 				  var doc = new jsPDF();
 				  // Ajouter les informations dans la première page du PDF
@@ -742,7 +740,7 @@
 				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
 				  doc.text("Classes :" +classe,15, 50);
 				  doc.text("Matieres :" + Matiers, 15, 60);
-				  doc.text(schoolYear, 15, 70);
+				  doc.text("Annee scolaire :"+schoolYear, 15, 70);
 
 				  // Ajouter une nouvelle page
 				  doc.addPage();

@@ -419,8 +419,8 @@
   	});
 
 		/*******************Fin : Ajax Load Animation *************************/
-  		/************** DataTable du Tab : ClasseGeneriques **************/
-  		// Initialisation du DataTable ClasseGeneriques
+  		/************** DataTable du Tab : Cahier de texte **************/
+  		// Initialisation du DataTable Cahier de texte 
   		$('#data_table_cahierTexte').DataTable(
   			{	
   				"paging": true,
@@ -458,7 +458,7 @@
   		        ]
   			}
   		);
-  		/******* fonction pour charger la liste des ClasseGeneriques dans la TableData ClasseGeneriques ******/
+  		/******* fonction pour charger la liste des Cahiers de texte  dans la TableData Cahier de texte  ******/
 		function populateCahierTexteDirecteurDataTable(){
 			var tableData = $('#data_table_cahierTexte').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
@@ -483,10 +483,10 @@
 						tableData.row.add( [
 							  response[i].seance.date,
 							  response[i].activites[0].nom_Fr,
-							  "<div style='width: 200px;'><strong>Matière : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
-							  "</div style='width: 200px;'><div><strong>Module : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
-							  "</div style='width: 200px;'><div><strong>Chapitre: </strong>" + response[i].concepts[0].chapitre.nom +
-							  "</div style='width: 200px;'><div><strong>Concepts : </strong>" + response[i].concepts[0].nom +
+							  "<div style='width: 200px;'><strong>Matière        : </strong>" + response[i].seance.seanceGenerique.matiere.code + 
+							  "</div style='width: 200px;'><div><strong>Module  : </strong>" + response[i].seance.seanceGenerique.module.nom_Fr +
+							  "</div style='width: 200px;'><div><strong>Chapitre  : </strong>" + response[i].concepts[0].chapitre.nom +
+							  "</div style='width: 200px;'><div><strong>Concepts  : </strong>" + response[i].concepts[0].nom +
 							  "</div style='width: 200px;'><br><div><strong>Texte : </strong>" + response[i].texte + "</div>",
 							  response[i].etat, 
 							  btns
@@ -500,42 +500,30 @@
 			        }
 			});
 		};
-		
+
 		//Chargement des Classes Génériques dans le DataTable ClassesGeneriques
 			populateCahierTexteDirecteurDataTable();			
-	
 		
 		//Genertation du cahier de texte sous format PDF
 			function generatePDF(data) {
 				  // Récupérer les informations à ajouter dans le PDF
-				  var nom        = "${sessionScope.userLastName_Fr}";
-				  var prenom     = "${sessionScope.userFirstName_Fr}";
-				  var nomClasse  = $('#ClasseInfo').text();
-				  var selectedValue = $('#MatiereProf').val();
-				  var Matiers;
-				  if (selectedValue === 'default') {
-				    Matiers = $('#MatiereProf option[value!="default"]').map(function() {
-				      return $(this).text();
-				    }).get();
-				  } else {
-				    Matiers = $('#MatiereProf option:selected').text();
-				  }
-
-				  var schoolYear = $('#AnneeScolaireInfo').text();
+				  var classe    =data[0].seance.seanceGenerique.classe.code;
+			 	  var nom        = data[0].seance.seanceGenerique.professeur.nom_Fr;
+				  var prenom     = data[0].seance.seanceGenerique.professeur.prenom_Fr; 
+				  var Matiers=data[0].seance.seanceGenerique.matiere.code;
+				  var schoolYear =data[0].seance.seanceGenerique.classe.anneeScolaire.code;
 				  // Initialiser la bibliothèque jsPDF
 				  var doc = new jsPDF();
 				  // Ajouter les informations dans la première page du PDF
 				  doc.setFontSize(22);
 				  doc.setTextColor(255, 0, 0); // changer la couleur du texte en rouge
 				  doc.text("Informations générales", 60, 20);
-
 				  doc.setFontSize(16);
 				  doc.setTextColor("black"); // réinitialiser la couleur du texte en noir
 				  doc.text("Nom du professeur : " + nom +" "+prenom, 15, 40);
-				  doc.text("Classes :" +nomClasse,15, 50);
+				  doc.text("Classes :" +classe,15, 50);
 				  doc.text("Matieres :" + Matiers, 15, 60);
-				  doc.text(schoolYear, 15, 70);
-
+				  doc.text("Annee scolaire :"+schoolYear, 15, 70);
 				  // Ajouter une nouvelle page
 				  doc.addPage();
 				  // Ajouter un titre pour la nouvelle page
@@ -590,7 +578,6 @@
 }
 
 		
-  			
   		//detaits cahier texte
   			$('#data_table_cahierTexte').on('click','.CahierTexte-details', function(evt){
 			$this = $(this);
@@ -621,7 +608,7 @@
 		});
   		
   		
-  			/*********** Charger les infos de la classe  courante ********/
+  			/*********** Charger les infos de la classe  ********/
   			$.ajax({
   					url : '../Classe/Details?id='+<%= request.getParameter("id")%>,
   					type: "GET",

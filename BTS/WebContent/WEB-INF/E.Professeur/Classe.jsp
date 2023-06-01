@@ -407,14 +407,7 @@
   			}
   		);
 		
-		  	
- 
-	
-			
-	  		
-	  	
 		
-	
 		/******* fonction pour charger la liste des ClasseGeneriques dans la TableData ClasseGeneriques correspond a l'ID de professeur  ******/
 		
 	function populateClasseGeneriqueDataTable(){
@@ -439,7 +432,6 @@
 							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Infos</a> \
 							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Professeur/CahierTexte?id='+response[i].id+'" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Cahier Texte</a> \
 							  	<div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item classe-full-details text-primary" href="${pageContext.request.contextPath}/E.Professeur/Details?id='+response[i].id+'" classeId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Détails</a> \
 							  			</div> \
 							</div> ';
 						tableData.row.add( [
@@ -459,8 +451,6 @@
 		
 //Chargement des Classes Génériques dans le DataTable ClassesGeneriques:
 			populateClasseGeneriqueDataTable();
-
-			
 			/*********** Affichage des détails d'une ClasseGenerique******************
 			/* 1 - Récuperer l' Id de la filière séléctionner sur la DataTable Filiers
 			/* 2 - Charger par ajax la filière concernée

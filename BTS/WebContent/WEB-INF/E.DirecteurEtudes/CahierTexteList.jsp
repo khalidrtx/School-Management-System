@@ -236,7 +236,7 @@
 	   				<span id="ClasseGeneriqueInfo"></span>
 	   			 
 		    </div>
-			<table id="data_table_classeGeneriques" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<table id="data_table_profs" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -341,7 +341,7 @@
 		/*******************Fin : Ajax Load Animation *************************/
   		/************** DataTable du Tab : ClasseGeneriques **************/
   		// Initialisation du DataTable ClasseGeneriques
-  		$('#data_table_classeGeneriques').DataTable(
+  		$('#data_table_profs').DataTable(
   			{	
   				"paging": true,
   				"autoWidth": true,
@@ -380,7 +380,7 @@
   		);
   		/******* fonction pour charger la liste des Professeur dans la TableData prof ******/
 		function populatecahiertexteDataTable(){
-			var tableData = $('#data_table_classeGeneriques').DataTable();
+			var tableData = $('#data_table_profs').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
 			$.ajax({
 				url : "../CahierTexte/Listbyprof",

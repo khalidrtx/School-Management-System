@@ -231,9 +231,7 @@
 		<div class="col-md-9"> <!-- Col 1 -->
 			<div class="alert bg-light text-secondary" role="alert">
 	   			<i class="fa fa-chalkboard mr-2"></i>
-	   			Votre Classes de l'annee scolaire :
-	   				   				<span id="AnneeScolaireinfo"></span>
-	   			
+	   			Les Classes:
 		    </div>
 		
 			<table id="data_table_classeGeneriques" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -403,13 +401,11 @@
   			}
   		);
 	
-		/******* fonction pour charger la liste des ClasseGeneriques dans la TableData ClasseGeneriques correspond a l'ID de professeur  ******/
+		/******* fonction pour charger la liste des Classes dans la TableData ClasseGeneriques correspond a l'ID de professeur  ******/
 	function populateClasseGeneriqueDataTable(){
 			var tableData = $('#data_table_classeGeneriques').DataTable();
 			//tableData.DataTable().rows().remove().draw();		// Vider la TableData 
 			var profId=<%= request.getParameter("id")%>;
-			console.log("profId: " + profId);
-
 			$.ajax({
 				url : "../ProfClasseGeneriqueList?id="+profId,
 				type: "GET",
@@ -427,7 +423,6 @@
 						        <div class="dropdown-divider"></div> \
 							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
                                 <a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/CahierTexte?id=' + response[i].id + '&profId=' + profId + '" classeGeneriqueId="' + response[i].id + '"><span class="fa fa-cog mr-4"></span>Cahier Texte</a> \
-							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.Professeur/ProgrammeClasseGenerique?id='+response[i].id+'" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>Programme</a> \
 							  </div> \
 							</div> ';
 						tableData.row.add( [
@@ -491,23 +486,6 @@
 		
   	});
   	
-  	/*********** Charger l'annee scolaire courante ********/
-	$.ajax({
-			url : '../AnneeScolaireCourante/List',
-			type: "GET",
-			dataType: 'json',
-			success: function(response,textStatus ,jqXHR){
-				
-			$('#AnneeScolaireinfo').html(response.Code);
-				
-		    },
-		    error: function(response,textStatus ,jqXHR){
-		    	$("#modalError .modal-body p").html("");
-				$("#modalError .modal-body p").html(jqXHR.responseText);
-		   		$('#modalError .modal-body p').modal('show'); 
-		        }
-		});
-
     </script>
 </body>
 </html>

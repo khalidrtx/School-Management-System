@@ -232,7 +232,7 @@
 		<!-- Col 1 -->
 				<div class="alert bg-light text-secondary" role="alert">
 	   			<i class="fa fa-chalkboard mr-2"></i>
-	   			Cahier Texte:
+	   			La liste des professeurs:
 	   				<span id="ClasseGeneriqueInfo"></span>
 	   			 
 		    </div>
@@ -397,7 +397,6 @@
 							  <div class="dropdown-menu shadow p-3 mb-5 bg-white rounded" id="dropdownCycle"> \
 							    <div class="bg-info text-white px-3 py-1"><span class="fa fa-ellipsis-h mr-4"></span> Actions</div> \
 						        <div class="dropdown-divider"></div> \
-							  	<a class="dropdown-item classeGenerique-details text-primary" href="#" classeGeneriqueId="'+response[i].id+'"><span class="fa fa-info-circle mr-4"></span>Détails</a> \
 							  	<a class="dropdown-item classeGenerique-programme text-primary" href="${pageContext.request.contextPath}/E.DirecteurEtudes/ProfesseurClassesList?id='+response[i].id+'" cahierTexteID="'+response[i].id+'"><span class="fa fa-cog mr-4"></span>classes</a> \
 							  </div> \
 							</div> ';
