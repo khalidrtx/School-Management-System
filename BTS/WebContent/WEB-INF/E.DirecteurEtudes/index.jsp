@@ -378,9 +378,7 @@
 	<script src="${pageContext.request.contextPath}/js/buttons.print.min.js" type="text/javascript"></script>
     
     
-  	<script type="text/javascript">
-  	
-    </script>
+  
    
 </body>
 </html>

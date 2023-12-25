@@ -706,10 +706,7 @@
 
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js" ></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js" ></script>
-	
-	<script src="${pageContext.request.contextPath}/js/popper.js" type="text/javascript"></script>
-	
-	
+	<script src="${pageContext.request.contextPath}/js/popper.js" type="text/javascript"></script>	
 	<script src="${pageContext.request.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/dataTables.bootstrap.js" type="text/javascript"></script>

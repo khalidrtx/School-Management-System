@@ -951,7 +951,7 @@
 					data : form_data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-					success: function(response,textStatus ,jqXHR){
+					success:function(response,textStatus ,jqXHR){
 						if(response.success){
 							$("#modalSuccess .modal-body p").html("");
 							$("#modalSuccess .modal-body p").html(response.message);

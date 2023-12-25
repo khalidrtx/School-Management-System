@@ -39,7 +39,7 @@
 		    display: inline-block;
 		}
 		
-		.laureat-p,.professeur-p,.experience-p,.branche-p
+		.laureat-p,.professeur-p,.experience-p,.brawnche-p
 		{
 		    font-size: 24px;
 		    color: #000000;
@@ -516,7 +516,7 @@
 			return false;
 		});	
 	});
-	
+
 </script>
 
 </body>

@@ -131,7 +131,7 @@ public class UtilisateurDAO {
 		int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {
-            throw new SQLException("Impossible d'inserer l'utilisateur, aucun enregistrement n'est affecté");
+            throw new SQLException("Impossible d'inserer l'utilisateur, aucun enregistrement n'est affectï¿½");
             
         }
         

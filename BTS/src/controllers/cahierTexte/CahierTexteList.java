@@ -33,6 +33,7 @@ public class CahierTexteList extends HttpServlet {
 		int idclass = Integer.parseInt(request.getParameter("id"));
 		int userID= Integer.parseInt(request.getParameter("profId"));
 		ArrayList<CahierTexte> cahierTextes = new ArrayList<CahierTexte>();
+		
 		try {
 			cahierTextes = cahierTexteDAO.getCahiertexteByProfClass(userID, idclass);
 			String json = new Gson().toJson(cahierTextes);
